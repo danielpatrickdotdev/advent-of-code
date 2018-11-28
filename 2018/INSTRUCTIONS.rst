@@ -43,7 +43,7 @@ To run for both solutions::
 5. Solve the puzzle
 -------------------
 
-Add the input to ``day1/input.txt`` (kept in a separate file in case they're different).
+Edit ``day1/input.txt`` (note: separate file from test input in case they're different).
 
 If the solution requires a slightly different method to the test puzzle, edit the code below ``if __name__ == '__main__':`` in the solution to reflect this. For example, you may wish to give ``solve`` an optional additional parameter.
 
