@@ -45,7 +45,7 @@ To run for both solutions::
 
 Edit ``day1/input.txt`` (note: separate file from test input in case they're different).
 
-If the solution requires a slightly different method to the test puzzle, edit the code below ``if __name__ == '__main__':`` in the solution to reflect this. For example, you may wish to give ``solve`` an optional additional parameter.
+If the solution requires a slightly different method to the test puzzle, edit the code beneath ``if __name__ == '__main__':`` in the solution file to reflect this. For example, you may wish to give ``solve`` an optional additional parameter.
 
 To generate the solution, run::
 
