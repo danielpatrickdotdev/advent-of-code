@@ -29,6 +29,19 @@ class TestSolution(unittest.TestCase):
 class TestSolution1(TestSolution):
     module = solution1
 
+    def test_parse_input(self):
+        inputs_and_outputs = (
+            (0, [1, -2, 3, 1]),
+            (1, [1, 1, 1]),
+            (2, [1, 1, -2]),
+            (3, [-1, -2, -3]),
+        )
+
+        for n, expected in inputs_and_outputs:
+            input_text = self.get_input("test_input{}.txt".format(n))
+            parsed = solution1.parse_input(input_text)
+            self.assertEqual(parsed, expected)
+
     def test_solver_input1(self):
         input_text = self.get_input("test_input0.txt")
         solution = self.module.solve(input_text)

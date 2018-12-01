@@ -3,6 +3,9 @@
 
 from pathlib import Path
 
+def parse_input(input_text):
+    return [int(line) for line in input_text]
+
 
 def solve(input_text):
     return " ".join(input_text) + "!"
