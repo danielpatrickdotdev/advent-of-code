@@ -66,10 +66,30 @@ class TestSolution1(TestSolution):
 class TestSolution2(TestSolution):
     module = solution2
 
-    def test_solver(self):
-        input_text = self.get_input("test_input1.txt")
+    def test_solver_input1(self):
+        input_text = self.get_input("test_input0.txt")
         solution = self.module.solve(input_text)
-        #self.assertEqual("lorem ipsum?", solution)
+        self.assertEqual(2, solution)
+
+    def test_solver_input4(self):
+        input_text = self.get_input("test_input4.txt")
+        solution = self.module.solve(input_text)
+        self.assertEqual(0, solution)
+
+    def test_solver_input5(self):
+        input_text = self.get_input("test_input5.txt")
+        solution = self.module.solve(input_text)
+        self.assertEqual(10, solution)
+
+    def test_solver_input6(self):
+        input_text = self.get_input("test_input6.txt")
+        solution = self.module.solve(input_text)
+        self.assertEqual(5, solution)
+
+    def test_solver_input7(self):
+        input_text = self.get_input("test_input7.txt")
+        solution = self.module.solve(input_text)
+        self.assertEqual(14, solution)
 
 
 if __name__ == '__main__':
