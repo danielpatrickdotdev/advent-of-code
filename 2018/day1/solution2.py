@@ -8,7 +8,7 @@ from .solution1 import parse_input
 
 def solve(input_text):
     instructions = parse_input(input_text)
-    frequencies = [0]
+    frequencies = set([0])
 
     freq = 0
     while True:
@@ -18,7 +18,7 @@ def solve(input_text):
             if freq in frequencies:
                 return freq
 
-            frequencies.append(freq)
+            frequencies.add(freq)
 
 
 if __name__ == '__main__':
