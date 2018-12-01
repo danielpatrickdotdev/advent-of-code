@@ -13,7 +13,6 @@ SOLUTION_DIR = Path(__file__).parent
 
 class TestSolution(unittest.TestCase):
     module = None
-    input_filename = "test_input.txt"
     expected = None
 
     def setUp(self):
@@ -25,8 +24,11 @@ class TestSolution(unittest.TestCase):
             raise NotImplementedError(
                 "subclasses of TestSolution must provide expected value"
             )
-        self.input_path = SOLUTION_DIR.joinpath(self.input_filename)
-        self.input_text = get_input(self.input_path)
+
+    def get_input(self, filename):
+        input_path = SOLUTION_DIR.joinpath(filename)
+        input_text = get_input(input_path)
+        return input_text
 
 
 class TestSolution1(TestSolution):
@@ -34,7 +36,8 @@ class TestSolution1(TestSolution):
     expected = "lorem ipsum!"
 
     def test_solver(self):
-        solution = self.module.solve(self.input_text)
+        input_text = self.get_input("test_input.txt")
+        solution = self.module.solve(input_text)
         self.assertEqual(self.expected, solution)
 
 
@@ -43,7 +46,8 @@ class TestSolution2(TestSolution):
     expected = "lorem ipsum?"
 
     def test_solver(self):
-        solution = self.module.solve(self.input_text)
+        input_text = self.get_input("test_input.txt")
+        solution = self.module.solve(input_text)
         self.assertEqual(self.expected, solution)
 
 
