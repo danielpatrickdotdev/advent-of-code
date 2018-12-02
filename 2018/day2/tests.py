@@ -32,6 +32,23 @@ class TestSolution(unittest.TestCase):
 class TestSolution1(TestSolution):
     module = solution1
     expected = 12
+    box_ids = [
+        "abcdef",
+        "bababc",
+        "abbcde",
+        "abcccd",
+        "aabcdd",
+        "abcdee",
+        "ababab",
+    ]
+
+    def test_parser(self):
+        self.assertEqual(self.box_ids, solution1.parser(self.input_text))
+
+    def test_count_repeats(self):
+        twos, threes = solution1.count_repeats(self.box_ids)
+        self.assertEqual(4, twos)
+        self.assertEqual(3, threes)
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)
