@@ -32,6 +32,31 @@ class TestSolution(unittest.TestCase):
 class TestSolution1(TestSolution):
     module = solution1
     expected = 4
+    claim1_areas = [
+        (1, 3), (2, 3), (3, 3), (4, 3),
+        (1, 4), (2, 4), (3, 4), (4, 4),
+        (1, 5), (2, 5), (3, 5), (4, 5),
+        (1, 6), (2, 6), (3, 6), (4, 6),
+    ]
+    claim2_areas = [
+        (3, 1), (4, 1), (5, 1), (6, 1),
+        (3, 2), (4, 2), (5, 2), (6, 2),
+        (3, 3), (4, 3), (5, 3), (6, 3),
+        (3, 4), (4, 4), (5, 4), (6, 4),
+    ]
+    claim3_areas = [
+        (5, 5), (6, 5),
+        (5, 6), (6, 6),
+    ]
+
+    def test_parser(self):
+        claim1 = solution1.parse_claim(self.input_text[0])
+        claim2 = solution1.parse_claim(self.input_text[1])
+        claim3 = solution1.parse_claim(self.input_text[2])
+
+        self.assertCountEqual(self.claim1_areas, claim1)
+        self.assertCountEqual(self.claim2_areas, claim2)
+        self.assertCountEqual(self.claim3_areas, claim3)
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)
