@@ -31,7 +31,7 @@ def do_claims_overlap(claim1, claim2):
 
 def has_overlaps(claim, other_claims):
     for other_claim in other_claims:
-        if do_claims_overlap(claim, other_claim):
+        if do_claims_overlap(claim[1], other_claim[1]):
             return True
 
     return False
