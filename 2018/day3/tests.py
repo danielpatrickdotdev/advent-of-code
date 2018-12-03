@@ -90,6 +90,21 @@ class TestSolution2(TestSolution):
         self.assertCountEqual(self.claim2_areas, claim2)
         self.assertCountEqual(self.claim3_areas, claim3)
 
+    def test_do_claims_overlap(self):
+        self.assertTrue(solution2.do_claims_overlap(self.claim1_areas,
+                                                    self.claim2_areas))
+        self.assertTrue(solution2.do_claims_overlap(self.claim2_areas,
+                                                    self.claim1_areas))
+
+        self.assertFalse(solution2.do_claims_overlap(self.claim1_areas,
+                                                     self.claim3_areas))
+        self.assertFalse(solution2.do_claims_overlap(self.claim3_areas,
+                                                     self.claim1_areas))
+        self.assertFalse(solution2.do_claims_overlap(self.claim2_areas,
+                                                     self.claim3_areas))
+        self.assertFalse(solution2.do_claims_overlap(self.claim3_areas,
+                                                     self.claim2_areas))
+
     def test_has_overlaps(self):
         self.assertTrue(solution2.has_overlaps(
             self.claim1_areas, [self.claim2_areas, self.claim3_areas]))
