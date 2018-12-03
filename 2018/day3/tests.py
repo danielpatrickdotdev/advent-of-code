@@ -15,6 +15,22 @@ class TestSolution(unittest.TestCase):
     module = None
     input_filename = "test_input.txt"
     expected = None
+    claim1_areas = [
+        (1, 3), (2, 3), (3, 3), (4, 3),
+        (1, 4), (2, 4), (3, 4), (4, 4),
+        (1, 5), (2, 5), (3, 5), (4, 5),
+        (1, 6), (2, 6), (3, 6), (4, 6),
+    ]
+    claim2_areas = [
+        (3, 1), (4, 1), (5, 1), (6, 1),
+        (3, 2), (4, 2), (5, 2), (6, 2),
+        (3, 3), (4, 3), (5, 3), (6, 3),
+        (3, 4), (4, 4), (5, 4), (6, 4),
+    ]
+    claim3_areas = [
+        (5, 5), (6, 5),
+        (5, 6), (6, 6),
+    ]
 
     def setUp(self):
         if self.module is None:
@@ -32,22 +48,6 @@ class TestSolution(unittest.TestCase):
 class TestSolution1(TestSolution):
     module = solution1
     expected = 4
-    claim1_areas = [
-        (1, 3), (2, 3), (3, 3), (4, 3),
-        (1, 4), (2, 4), (3, 4), (4, 4),
-        (1, 5), (2, 5), (3, 5), (4, 5),
-        (1, 6), (2, 6), (3, 6), (4, 6),
-    ]
-    claim2_areas = [
-        (3, 1), (4, 1), (5, 1), (6, 1),
-        (3, 2), (4, 2), (5, 2), (6, 2),
-        (3, 3), (4, 3), (5, 3), (6, 3),
-        (3, 4), (4, 4), (5, 4), (6, 4),
-    ]
-    claim3_areas = [
-        (5, 5), (6, 5),
-        (5, 6), (6, 6),
-    ]
 
     def test_parser(self):
         claim1 = solution1.parse_claim(self.input_text[0])
@@ -75,7 +75,7 @@ class TestSolution1(TestSolution):
 
 class TestSolution2(TestSolution):
     module = solution2
-    expected = "lorem ipsum?"
+    expected = 3
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)
