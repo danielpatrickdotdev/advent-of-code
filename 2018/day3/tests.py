@@ -77,6 +77,27 @@ class TestSolution2(TestSolution):
     module = solution2
     expected = 3
 
+    def test_parser(self):
+        id1, claim1 = solution2.parse_claim(self.input_text[0])
+        id2, claim2 = solution2.parse_claim(self.input_text[1])
+        id3, claim3 = solution2.parse_claim(self.input_text[2])
+
+        self.assertEqual(1, id1)
+        self.assertEqual(2, id2)
+        self.assertEqual(3, id3)
+
+        self.assertCountEqual(self.claim1_areas, claim1)
+        self.assertCountEqual(self.claim2_areas, claim2)
+        self.assertCountEqual(self.claim3_areas, claim3)
+
+    def test_has_overlaps(self):
+        self.assertTrue(solution2.has_overlaps(
+            self.claim1_areas, [self.claim2_areas, self.claim3_areas]))
+        self.assertTrue(solution2.has_overlaps(
+            self.claim2_areas, [self.claim1_areas, self.claim3_areas]))
+        self.assertFalse(solution2.has_overlaps(
+            self.claim3_areas, [self.claim1_areas, self.claim2_areas]))
+
     def test_solver(self):
         solution = self.module.solve(self.input_text)
         self.assertEqual(self.expected, solution)
