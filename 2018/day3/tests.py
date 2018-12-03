@@ -105,15 +105,19 @@ class TestSolution2(TestSolution):
         self.assertFalse(solution2.do_claims_overlap(self.claim3_areas,
                                                      self.claim2_areas))
 
-    def test_has_overlaps(self):
+    def test_has_overlaps_claim1(self):
         self.assertTrue(solution2.has_overlaps(
             (1, self.claim1_areas),
             [(2, self.claim2_areas), (3, self.claim3_areas)]
         ))
+
+    def test_has_overlaps_claim2(self):
         self.assertTrue(solution2.has_overlaps(
             (2, self.claim2_areas),
             [(1, self.claim1_areas), (3, self.claim3_areas)]
         ))
+
+    def test_has_overlaps_claim3(self):
         self.assertFalse(solution2.has_overlaps(
             (3, self.claim3_areas),
             [(1, self.claim1_areas), (2, self.claim2_areas)]
