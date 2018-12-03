@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from collections import Counter
 from pathlib import Path
 import re
 
@@ -19,6 +20,16 @@ def parse_claim(claim_string):
             result.append((i, j))
 
     return result
+
+
+def combine_claims(claims_list):
+    combined_claims = Counter()
+
+    for claim in claims_list:
+        for area in claim:
+            combined_claims[area] += 1
+
+    return combined_claims
 
 
 def solve(input_text):

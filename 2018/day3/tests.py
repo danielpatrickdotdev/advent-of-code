@@ -58,6 +58,16 @@ class TestSolution1(TestSolution):
         self.assertCountEqual(self.claim2_areas, claim2)
         self.assertCountEqual(self.claim3_areas, claim3)
 
+    def test_combine_claims(self):
+        combined_claims = solution1.combine_claims(
+            [self.claim1_areas, self.claim2_areas, self.claim3_areas]
+        )
+        self.assertEqual(32, len(combined_claims))
+        self.assertEqual(1, combined_claims[(4, 1)])
+        self.assertEqual(1, combined_claims[(4, 6)])
+        self.assertEqual(2, combined_claims[(4, 4)])
+        self.assertEqual(0, combined_claims[(4, 8)])
+
     def test_solver(self):
         solution = self.module.solve(self.input_text)
         self.assertEqual(self.expected, solution)
