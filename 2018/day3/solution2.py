@@ -37,7 +37,13 @@ def check_for_overlaps(claim_areas, combined_claims):
 
 
 def solve(input_text):
-    return " ".join(input_text) + "?"
+    claims = [parse_claim(line) for line in input_text]
+    combined = combine_claims(claims)
+    for claim in claims:
+        if check_for_overlaps(claim[1], combined):
+            continue
+        else:
+            return claim[0]
 
 
 if __name__ == '__main__':
