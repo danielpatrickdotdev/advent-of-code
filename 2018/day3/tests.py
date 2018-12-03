@@ -91,76 +91,32 @@ class TestSolution2(TestSolution):
         self.assertCountEqual(self.claim2_areas, claim2)
         self.assertCountEqual(self.claim3_areas, claim3)
 
-    def test_do_claims_overlap(self):
-        self.assertTrue(solution2.do_claims_overlap(self.claim1_areas,
-                                                    self.claim2_areas))
-        self.assertTrue(solution2.do_claims_overlap(self.claim2_areas,
-                                                    self.claim1_areas))
-
-        self.assertFalse(solution2.do_claims_overlap(self.claim1_areas,
-                                                     self.claim3_areas))
-        self.assertFalse(solution2.do_claims_overlap(self.claim3_areas,
-                                                     self.claim1_areas))
-        self.assertFalse(solution2.do_claims_overlap(self.claim2_areas,
-                                                     self.claim3_areas))
-        self.assertFalse(solution2.do_claims_overlap(self.claim3_areas,
-                                                     self.claim2_areas))
-
-    def test_has_overlaps_claim1(self):
-        self.assertTrue(solution2.has_overlaps(
+    def test_combine_claims(self):
+        combined_claims = solution2.combine_claims([
             (1, self.claim1_areas),
-            [(2, self.claim2_areas), (3, self.claim3_areas)]
-        ))
-
-    def test_has_overlaps_claim2(self):
-        self.assertTrue(solution2.has_overlaps(
             (2, self.claim2_areas),
-            [(1, self.claim1_areas), (3, self.claim3_areas)]
-        ))
-
-    def test_has_overlaps_claim3(self):
-        self.assertFalse(solution2.has_overlaps(
             (3, self.claim3_areas),
-            [(1, self.claim1_areas), (2, self.claim2_areas)]
-        ))
+        ])
+        self.assertEqual(32, len(combined_claims))
+        self.assertEqual(1, combined_claims[(4, 1)])
+        self.assertEqual(1, combined_claims[(4, 6)])
+        self.assertEqual(2, combined_claims[(4, 4)])
+        self.assertEqual(0, combined_claims[(4, 8)])
 
-    def test_has_overlaps_updates_memo(self):
-        overlaps = set()
-        solution2.has_overlaps(
+    def test_check_for_overlaps(self):
+        # should probably create this manually rather than rely on
+        # combine_claims
+        combined_claims = solution2.combine_claims([
             (1, self.claim1_areas),
-            [(2, self.claim2_areas), (3, self.claim3_areas)],
-            overlaps
-        )
-        self.assertCountEqual([1, 2], overlaps)
-
-    def test_has_overlaps_with_no_hits_does_not_update_memo(self):
-        overlaps = set()
-        solution2.has_overlaps(
+            (2, self.claim2_areas),
             (3, self.claim3_areas),
-            [(1, self.claim1_areas), (2, self.claim2_areas)],
-            overlaps
+        ])
+        self.assertTrue(
+            solution2.check_for_overlaps(self.claim1_areas, combined_claims)
         )
-        self.assertCountEqual([], overlaps)
-
-    def test_has_overlaps_returns_early_if_claim_in_known_overlaps(self):
-        func_to_patch = "day3.solution2.do_claims_overlap"
-        with patch(func_to_patch) as patched_func:
-            solution2.has_overlaps(
-                (2, self.claim2_areas),
-                [(1, self.claim1_areas), (3, self.claim3_areas)],
-                [1, 2]
-            )
-            self.assertEqual(0, patched_func.call_count)
-
-    def test_has_overlaps_ignores_non_matching_known_overlaps(self):
-        func_to_patch = "day3.solution2.do_claims_overlap"
-        with patch(func_to_patch, return_value=False) as patched_func:
-            solution2.has_overlaps(
-                (3, self.claim3_areas),
-                [(1, self.claim1_areas), (2, self.claim2_areas)],
-                [1, 2]
-            )
-            self.assertEqual(2, patched_func.call_count)
+        self.assertFalse(
+            solution2.check_for_overlaps(self.claim3_areas, combined_claims)
+        )
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)

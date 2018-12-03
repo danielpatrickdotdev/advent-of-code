@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from collections import Counter
 from pathlib import Path
 import re
 
@@ -21,25 +22,18 @@ def parse_claim(claim_string):
     return (num, result)
 
 
-def do_claims_overlap(claim1, claim2):
-    for area in claim1:
-        if any([area == a for a in claim2]):
-            return True
+def combine_claims(claims_list):
+    combined_claims = Counter()
 
-    return False
+    for claim in claims_list:
+        for area in claim[1]:
+            combined_claims[area] += 1
+
+    return combined_claims
 
 
-def has_overlaps(claim, other_claims, known_overlaps=set()):
-    if claim[0] in known_overlaps:
-        return True
-
-    for other_claim in other_claims:
-        if do_claims_overlap(claim[1], other_claim[1]):
-            known_overlaps.add(claim[0])
-            known_overlaps.add(other_claim[0])
-            return True
-
-    return False
+def check_for_overlaps(claim_areas, combined_claims):
+    return any(combined_claims[area] > 1 for area in claim_areas)
 
 
 def solve(input_text):
