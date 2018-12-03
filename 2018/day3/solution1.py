@@ -33,7 +33,9 @@ def combine_claims(claims_list):
 
 
 def solve(input_text):
-    return " ".join(input_text) + "!"
+    claims = [parse_claim(line) for line in input_text]
+    combined = combine_claims(claims)
+    return sum([n > 1 for n in combined.values()])
 
 
 if __name__ == '__main__':
