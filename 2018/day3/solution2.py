@@ -2,6 +2,23 @@
 # -*- coding: utf-8 -*-
 
 from pathlib import Path
+import re
+
+
+claim_regex = re.compile("^#(\d+) @ (\d+),(\d+): (\d+)x(\d+)$")
+
+
+def parse_claim(claim_string):
+    match = claim_regex.match(claim_string)
+    groups = match.groups()
+    num, x, y, dx, dy = [int(group) for group in groups]
+
+    result = []
+    for i in range(x, x + dx):
+        for j in range(y, y + dy):
+            result.append((i, j))
+
+    return (num, result)
 
 
 def solve(input_text):
