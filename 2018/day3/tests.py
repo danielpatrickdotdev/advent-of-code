@@ -3,6 +3,7 @@
 
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 
 from shared.utils import get_input
 from . import solution1, solution2
@@ -122,6 +123,44 @@ class TestSolution2(TestSolution):
             (3, self.claim3_areas),
             [(1, self.claim1_areas), (2, self.claim2_areas)]
         ))
+
+    def test_has_overlaps_updates_memo(self):
+        overlaps = set()
+        solution2.has_overlaps(
+            (1, self.claim1_areas),
+            [(2, self.claim2_areas), (3, self.claim3_areas)],
+            overlaps
+        )
+        self.assertCountEqual([1, 2], overlaps)
+
+    def test_has_overlaps_with_no_hits_does_not_update_memo(self):
+        overlaps = set()
+        solution2.has_overlaps(
+            (3, self.claim3_areas),
+            [(1, self.claim1_areas), (2, self.claim2_areas)],
+            overlaps
+        )
+        self.assertCountEqual([], overlaps)
+
+    def test_has_overlaps_returns_early_if_claim_in_known_overlaps(self):
+        func_to_patch = "day3.solution2.do_claims_overlap"
+        with patch(func_to_patch) as patched_func:
+            solution2.has_overlaps(
+                (2, self.claim2_areas),
+                [(1, self.claim1_areas), (3, self.claim3_areas)],
+                [1, 2]
+            )
+            self.assertEqual(0, patched_func.call_count)
+
+    def test_has_overlaps_ignores_non_matching_known_overlaps(self):
+        func_to_patch = "day3.solution2.do_claims_overlap"
+        with patch(func_to_patch, return_value=False) as patched_func:
+            solution2.has_overlaps(
+                (3, self.claim3_areas),
+                [(1, self.claim1_areas), (2, self.claim2_areas)],
+                [1, 2]
+            )
+            self.assertEqual(2, patched_func.call_count)
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)

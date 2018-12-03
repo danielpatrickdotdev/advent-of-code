@@ -29,9 +29,14 @@ def do_claims_overlap(claim1, claim2):
     return False
 
 
-def has_overlaps(claim, other_claims):
+def has_overlaps(claim, other_claims, known_overlaps=set()):
+    if claim[0] in known_overlaps:
+        return True
+
     for other_claim in other_claims:
         if do_claims_overlap(claim[1], other_claim[1]):
+            known_overlaps.add(claim[0])
+            known_overlaps.add(other_claim[0])
             return True
 
     return False
