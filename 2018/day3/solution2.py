@@ -21,6 +21,15 @@ def parse_claim(claim_string):
     return (num, result)
 
 
+def has_overlaps(claim, other_claims):
+    for other_claim in other_claims:
+        for area in claim:
+            if any([area == a for a in other_claim]):
+                return True
+
+    return False
+
+
 def solve(input_text):
     return " ".join(input_text) + "?"
 
