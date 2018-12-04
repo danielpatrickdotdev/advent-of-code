@@ -6,6 +6,7 @@ import unittest
 
 from shared.utils import get_input
 from . import solution1, solution2
+from .shift import Shift
 
 
 SOLUTION_DIR = Path(__file__).parent
@@ -27,6 +28,22 @@ class TestSolution(unittest.TestCase):
             )
         self.input_path = SOLUTION_DIR.joinpath(self.input_filename)
         self.input_text = get_input(self.input_path)
+
+
+class TestShift(unittest.TestCase):
+    def test_create_shift_object(self):
+        events = {
+            25: "wakes up",
+            5: "falls asleep",
+            55: "wakes up",
+            0: "Guard #10 begins shift",
+            30: "falls asleep",
+        }
+        shift = Shift(events)
+        self.assertEqual(10, shift.guard_id)
+        self.assertEqual(0, shift.shift_started)
+        self.assertEqual(45, len(shift.sleeps))
+        self.assertEqual(list(range(5, 25)) + list(range(30, 55)), shift.sleeps)
 
 
 class TestSolution1(TestSolution):
