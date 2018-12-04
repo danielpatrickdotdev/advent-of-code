@@ -5,7 +5,7 @@ from pathlib import Path
 import unittest
 
 from shared.utils import get_input
-from . import solution1, solution2
+from . import solution1, solution2, common
 from .shift import Shift
 
 
@@ -46,9 +46,7 @@ class TestShift(unittest.TestCase):
         self.assertEqual(list(range(5, 25)) + list(range(30, 55)), shift.sleeps)
 
 
-class TestSolution1(TestSolution):
-    module = solution1
-    expected = 240
+class SleepTimesMixin:
     guard10_sleep_times = [
         5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
         15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
@@ -61,6 +59,10 @@ class TestSolution1(TestSolution):
         36, 37, 38, 39, 40, 41, 42, 43, 44, 45,
         45, 46, 47, 48, 49, 50, 51, 52, 53, 54,
     ]
+
+
+class TestCommon(unittest.TestCase, SleepTimesMixin):
+    module = common
     input_as_list = [
         "[1518-11-01 00:00] Guard #10 begins shift",
         "[1518-11-01 00:05] falls asleep",
@@ -137,6 +139,11 @@ class TestSolution1(TestSolution):
         sleep_times = self.module.guard_sleep_times(shifts)
         self.assertCountEqual(self.guard10_sleep_times, sleep_times[10])
         self.assertCountEqual(self.guard99_sleep_times, sleep_times[99])
+
+
+class TestSolution1(TestSolution, SleepTimesMixin):
+    module = solution1
+    expected = 240
 
     def test_get_longest_sleeper(self):
         sleep_times = {
