@@ -138,6 +138,17 @@ class TestSolution1(TestSolution):
         sleep_times = self.module.guard_sleep_times(shifts)
         self.assertEqual(10, self.module.get_longest_sleeper(sleep_times))
 
+    def test_get_guards_sleepiest_minute(self):
+        sleep_times = [
+            40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
+            36, 37, 38, 39, 40, 41, 42, 43, 44, 45,
+            45, 46, 47, 48, 49, 50, 51, 52, 53, 54,
+        ]
+        self.assertEqual(
+            45,
+            self.module.get_guards_sleepiest_minute(sleep_times)
+        )
+
     def test_solver(self):
         solution = self.module.solve(self.input_text)
         self.assertEqual(self.expected, solution)

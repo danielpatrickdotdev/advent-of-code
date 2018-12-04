@@ -4,6 +4,7 @@
 from collections import defaultdict
 from datetime import date, timedelta
 from pathlib import Path
+from statistics import mode
 import re
 
 from .shift import Shift
@@ -66,6 +67,10 @@ def get_longest_sleeper(sleep_times):
             sleepiest_guard = guard_id
 
     return sleepiest_guard
+
+
+def get_guards_sleepiest_minute(guard_sleep_times):
+    return mode(guard_sleep_times)
 
 
 def solve(input_text):
