@@ -156,6 +156,12 @@ class TestCommon(unittest.TestCase, SleepTimesMixin):
             [2, 3]
         )
 
+    def test_get_guards_sleepiest_minute_returns_None_for_empty_list(self):
+        self.assertEqual(
+            None,
+            self.module.get_guards_sleepiest_minute([])
+        )
+
 
 class TestSolution1(TestSolution, SleepTimesMixin):
     module = solution1

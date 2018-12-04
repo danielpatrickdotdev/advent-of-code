@@ -56,5 +56,8 @@ def guard_sleep_times(shifts):
 
 
 def get_guards_sleepiest_minute(guard_sleep_times):
+    if not guard_sleep_times:
+        return None
+
     counts = Counter(guard_sleep_times)
     return counts.most_common(1)[0][0]
