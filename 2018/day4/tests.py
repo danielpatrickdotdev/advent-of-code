@@ -140,6 +140,16 @@ class TestCommon(unittest.TestCase, SleepTimesMixin):
         self.assertCountEqual(self.guard10_sleep_times, sleep_times[10])
         self.assertCountEqual(self.guard99_sleep_times, sleep_times[99])
 
+    def test_get_guards_sleepiest_minute(self):
+        self.assertEqual(
+            24,
+            self.module.get_guards_sleepiest_minute(self.guard10_sleep_times)
+        )
+        self.assertEqual(
+            45,
+            self.module.get_guards_sleepiest_minute(self.guard99_sleep_times)
+        )
+
 
 class TestSolution1(TestSolution, SleepTimesMixin):
     module = solution1
@@ -151,16 +161,6 @@ class TestSolution1(TestSolution, SleepTimesMixin):
             99: self.guard99_sleep_times,
         }
         self.assertEqual(10, self.module.get_longest_sleeper(sleep_times))
-
-    def test_get_guards_sleepiest_minute(self):
-        self.assertEqual(
-            24,
-            self.module.get_guards_sleepiest_minute(self.guard10_sleep_times)
-        )
-        self.assertEqual(
-            45,
-            self.module.get_guards_sleepiest_minute(self.guard99_sleep_times)
-        )
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)

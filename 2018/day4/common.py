@@ -4,6 +4,7 @@
 from collections import defaultdict
 from datetime import date, timedelta
 import re
+from statistics import mode
 
 from .shift import Shift
 
@@ -53,3 +54,7 @@ def guard_sleep_times(shifts):
         sleep_times[shift.guard_id] += shift.sleeps
 
     return sleep_times
+
+
+def get_guards_sleepiest_minute(guard_sleep_times):
+    return mode(guard_sleep_times)
