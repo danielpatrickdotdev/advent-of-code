@@ -131,6 +131,13 @@ class TestSolution1(TestSolution):
             45, 46, 47, 48, 49, 50, 51, 52, 53, 54,
         ], sleep_times[99])
 
+    def test_get_longest_sleeper(self):
+        shifts = self.module.create_shift_objects(
+            self.module.parse(self.input_as_list)
+        )
+        sleep_times = self.module.guard_sleep_times(shifts)
+        self.assertEqual(10, self.module.get_longest_sleeper(sleep_times))
+
     def test_solver(self):
         solution = self.module.solve(self.input_text)
         self.assertEqual(self.expected, solution)

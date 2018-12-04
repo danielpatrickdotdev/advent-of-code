@@ -56,6 +56,18 @@ def guard_sleep_times(shifts):
     return sleep_times
 
 
+def get_longest_sleeper(sleep_times):
+    longest_asleep = 0
+    sleepiest_guard = None
+
+    for guard_id, times in sleep_times.items():
+        if len(times) > longest_asleep:
+            longest_asleep = len(times)
+            sleepiest_guard = guard_id
+
+    return sleepiest_guard
+
+
 def solve(input_text):
     return " ".join(input_text) + "!"
 
