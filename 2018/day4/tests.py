@@ -118,6 +118,19 @@ class TestSolution1(TestSolution):
         self.assertEqual(10, len(shift2.sleeps))
         self.assertEqual(list(range(40, 50)), shift2.sleeps)
 
+    def test_guard_sleep_times(self):
+        shifts = self.module.create_shift_objects(
+            self.module.parse(self.input_as_list)
+        )
+        sleep_times = self.module.guard_sleep_times(shifts)
+        self.assertEqual(50, len(sleep_times[10]))
+        self.assertEqual(30, len(sleep_times[99]))
+        self.assertCountEqual([
+            40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
+            36, 37, 38, 39, 40, 41, 42, 43, 44, 45,
+            45, 46, 47, 48, 49, 50, 51, 52, 53, 54,
+        ], sleep_times[99])
+
     def test_solver(self):
         solution = self.module.solve(self.input_text)
         self.assertEqual(self.expected, solution)

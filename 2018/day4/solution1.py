@@ -47,6 +47,15 @@ def create_shift_objects(shift_events_dict):
     return shifts
 
 
+def guard_sleep_times(shifts):
+    sleep_times = defaultdict(list)
+
+    for shift_date, shift in shifts.items():
+        sleep_times[shift.guard_id] += shift.sleeps
+
+    return sleep_times
+
+
 def solve(input_text):
     return " ".join(input_text) + "!"
 
