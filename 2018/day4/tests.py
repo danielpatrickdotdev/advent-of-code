@@ -49,6 +49,18 @@ class TestShift(unittest.TestCase):
 class TestSolution1(TestSolution):
     module = solution1
     expected = 240
+    guard10_sleep_times = [
+        5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+        15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
+        30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
+        40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
+        50, 51, 52, 53, 54, 24, 25, 26, 27, 28,
+    ]
+    guard99_sleep_times = [
+        40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
+        36, 37, 38, 39, 40, 41, 42, 43, 44, 45,
+        45, 46, 47, 48, 49, 50, 51, 52, 53, 54,
+    ]
     input_as_list = [
         "[1518-11-01 00:00] Guard #10 begins shift",
         "[1518-11-01 00:05] falls asleep",
@@ -123,30 +135,24 @@ class TestSolution1(TestSolution):
             self.module.parse(self.input_as_list)
         )
         sleep_times = self.module.guard_sleep_times(shifts)
-        self.assertEqual(50, len(sleep_times[10]))
-        self.assertEqual(30, len(sleep_times[99]))
-        self.assertCountEqual([
-            40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
-            36, 37, 38, 39, 40, 41, 42, 43, 44, 45,
-            45, 46, 47, 48, 49, 50, 51, 52, 53, 54,
-        ], sleep_times[99])
+        self.assertCountEqual(self.guard10_sleep_times, sleep_times[10])
+        self.assertCountEqual(self.guard99_sleep_times, sleep_times[99])
 
     def test_get_longest_sleeper(self):
-        shifts = self.module.create_shift_objects(
-            self.module.parse(self.input_as_list)
-        )
-        sleep_times = self.module.guard_sleep_times(shifts)
+        sleep_times = {
+            10: self.guard10_sleep_times,
+            99: self.guard99_sleep_times,
+        }
         self.assertEqual(10, self.module.get_longest_sleeper(sleep_times))
 
     def test_get_guards_sleepiest_minute(self):
-        sleep_times = [
-            40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
-            36, 37, 38, 39, 40, 41, 42, 43, 44, 45,
-            45, 46, 47, 48, 49, 50, 51, 52, 53, 54,
-        ]
+        self.assertEqual(
+            24,
+            self.module.get_guards_sleepiest_minute(self.guard10_sleep_times)
+        )
         self.assertEqual(
             45,
-            self.module.get_guards_sleepiest_minute(sleep_times)
+            self.module.get_guards_sleepiest_minute(self.guard99_sleep_times)
         )
 
     def test_solver(self):
