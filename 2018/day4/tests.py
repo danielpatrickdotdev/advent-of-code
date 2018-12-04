@@ -48,7 +48,7 @@ class TestShift(unittest.TestCase):
 
 class TestSolution1(TestSolution):
     module = solution1
-    expected = "lorem ipsum!"
+    expected = 240
     input_as_list = [
         "[1518-11-01 00:00] Guard #10 begins shift",
         "[1518-11-01 00:05] falls asleep",

@@ -74,7 +74,13 @@ def get_guards_sleepiest_minute(guard_sleep_times):
 
 
 def solve(input_text):
-    return " ".join(input_text) + "!"
+    shifts = create_shift_objects(parse(input_text))
+    sleep_times = guard_sleep_times(shifts)
+
+    guard = get_longest_sleeper(sleep_times)
+    minute = get_guards_sleepiest_minute(sleep_times[guard])
+
+    return guard * minute
 
 
 if __name__ == '__main__':
