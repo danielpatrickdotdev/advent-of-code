@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from collections import defaultdict
-from datetime import date, timedelta
 from pathlib import Path
-import re
 
 from .common import (
     create_shift_objects,
@@ -12,7 +9,6 @@ from .common import (
     guard_sleep_times,
     parse,
 )
-from .shift import Shift
 
 
 def get_longest_sleeper(sleep_times):
