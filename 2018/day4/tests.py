@@ -85,6 +85,39 @@ class TestSolution1(TestSolution):
         self.assertEqual("falls asleep", shift2[40])
         self.assertEqual("wakes up", shift2[50])
 
+    def test_create_shift_objects(self):
+        shift1_events = {
+            25: "wakes up",
+            55: "wakes up",
+            0: "Guard #10 begins shift",
+            5: "falls asleep",
+            30: "falls asleep",
+        }
+        shift2_events = {
+            40: "falls asleep",
+            50: "wakes up",
+            -2: "Guard #99 begins shift",
+        }
+        shift_events = {
+            (11, 1): shift1_events,
+            (11, 2): shift2_events,
+        }
+
+        shifts = self.module.create_shift_objects(shift_events)
+
+        shift1 = shifts[(11, 1)]
+        self.assertEqual(10, shift1.guard_id)
+        self.assertEqual(0, shift1.shift_started)
+        self.assertEqual(45, len(shift1.sleeps))
+        self.assertEqual(list(range(5, 25)) + list(range(30, 55)),
+                         shift1.sleeps)
+
+        shift2 = shifts[(11, 2)]
+        self.assertEqual(99, shift2.guard_id)
+        self.assertEqual(-2, shift2.shift_started)
+        self.assertEqual(10, len(shift2.sleeps))
+        self.assertEqual(list(range(40, 50)), shift2.sleeps)
+
     def test_solver(self):
         solution = self.module.solve(self.input_text)
         self.assertEqual(self.expected, solution)

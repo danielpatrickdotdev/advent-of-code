@@ -6,12 +6,15 @@ from datetime import date, timedelta
 from pathlib import Path
 import re
 
+from .shift import Shift
+
 
 shift_event_regex = re.compile("^\[1518-(\d{2})-(\d{2}) (\d{2}):(\d{2})\] ("
                                "(?:Guard #\d+ begins shift)|"
                                "(?:falls asleep)|"
                                "(?:wakes up)"
                                ")$")
+
 
 def parse(input_text):
     shifts = defaultdict(dict)
@@ -33,6 +36,16 @@ def parse(input_text):
         shifts[(month, day)][minute] = event
 
     return shifts
+
+
+def create_shift_objects(shift_events_dict):
+    shifts = {}
+
+    for shift_date, shift_events in shift_events_dict.items():
+        shifts[shift_date] = Shift(shift_events)
+
+    return shifts
+
 
 def solve(input_text):
     return " ".join(input_text) + "!"
