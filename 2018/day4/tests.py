@@ -169,7 +169,7 @@ class TestSolution1(TestSolution, SleepTimesMixin):
 
 class TestSolution2(TestSolution):
     module = solution2
-    expected = "lorem ipsum?"
+    expected = 4455
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)
