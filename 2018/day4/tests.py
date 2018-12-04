@@ -150,6 +150,12 @@ class TestCommon(unittest.TestCase, SleepTimesMixin):
             self.module.get_guards_sleepiest_minute(self.guard99_sleep_times)
         )
 
+    def test_get_guards_sleepiest_minute_can_handle_ties(self):
+        self.assertIn(
+            self.module.get_guards_sleepiest_minute([1, 1, 2, 2, 2, 3, 3, 3]),
+            [2, 3]
+        )
+
 
 class TestSolution1(TestSolution, SleepTimesMixin):
     module = solution1

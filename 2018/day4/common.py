@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from collections import defaultdict
+from collections import defaultdict, Counter
 from datetime import date, timedelta
 import re
-from statistics import mode
 
 from .shift import Shift
 
@@ -57,4 +56,5 @@ def guard_sleep_times(shifts):
 
 
 def get_guards_sleepiest_minute(guard_sleep_times):
-    return mode(guard_sleep_times)
+    counts = Counter(guard_sleep_times)
+    return counts.most_common(1)[0][0]
