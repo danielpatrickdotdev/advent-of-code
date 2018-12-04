@@ -167,9 +167,20 @@ class TestSolution1(TestSolution, SleepTimesMixin):
         self.assertEqual(self.expected, solution)
 
 
-class TestSolution2(TestSolution):
+class TestSolution2(TestSolution, SleepTimesMixin):
     module = solution2
     expected = 4455
+
+    def test_find_most_consistent_sleeper(self):
+        sleep_times = {
+            10: self.guard10_sleep_times,
+            99: self.guard99_sleep_times,
+        }
+        guard, minute = self.module.find_most_consistent_sleeper_and_minute(
+            sleep_times
+        )
+        self.assertEqual(99, guard)
+        self.assertEqual(45, minute)
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)
