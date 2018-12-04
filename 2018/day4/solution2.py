@@ -28,7 +28,12 @@ def find_most_consistent_sleeper_and_minute(sleep_times):
 
 
 def solve(input_text):
-    return " ".join(input_text) + "?"
+    shifts = create_shift_objects(parse(input_text))
+    sleep_times = guard_sleep_times(shifts)
+
+    guard, minute = find_most_consistent_sleeper_and_minute(sleep_times)
+
+    return guard * minute
 
 
 if __name__ == '__main__':
