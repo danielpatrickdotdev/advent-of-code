@@ -20,7 +20,16 @@ def remove_triggered_pairs(text):
 
 
 def solve(input_text):
-    return input_text + "!"
+    old_text = input_text
+
+    while True:
+        new_text = remove_triggered_pairs(old_text)
+        if new_text == old_text:
+            break
+
+        old_text = new_text
+
+    return len(new_text)
 
 
 if __name__ == '__main__':
