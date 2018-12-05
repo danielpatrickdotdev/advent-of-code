@@ -30,7 +30,15 @@ def react_polymer(text):
 
 
 def solve(input_text):
-    return input_text + "?"
+    shortest_length = 99999  # longer than solution to part 1
+
+    for unit_type in get_unit_types(input_text):
+        new_text = remove_unit_type(unit_type, input_text)
+        length = len(react_polymer(new_text))
+        if length < shortest_length:
+            shortest_length = length
+
+    return shortest_length
 
 
 if __name__ == '__main__':
