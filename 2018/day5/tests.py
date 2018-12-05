@@ -33,6 +33,15 @@ class TestSolution1(TestSolution):
     module = solution1
     expected = 10
 
+    def test_check_trigger(self):
+        self.assertTrue(self.module.check_trigger("a", "A"))
+        self.assertTrue(self.module.check_trigger("Z", "z"))
+
+        self.assertFalse(self.module.check_trigger("a", "a"))
+        self.assertFalse(self.module.check_trigger("Z", "Z"))
+        self.assertFalse(self.module.check_trigger("a", "Z"))
+        self.assertFalse(self.module.check_trigger("A", "z"))
+
     def test_solver(self):
         solution = self.module.solve(self.input_text)
         self.assertEqual(self.expected, solution)

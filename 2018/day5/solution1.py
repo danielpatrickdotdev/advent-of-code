@@ -4,6 +4,10 @@
 from pathlib import Path
 
 
+def check_trigger(one, two):
+    return one.lower() == two.lower() and one != two
+
+
 def solve(input_text):
     return input_text + "!"
 
