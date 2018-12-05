@@ -42,6 +42,21 @@ class TestSolution1(TestSolution):
         self.assertFalse(self.module.check_trigger("a", "Z"))
         self.assertFalse(self.module.check_trigger("A", "z"))
 
+    def test_remove_triggered_pairs(self):
+        result = self.module.remove_triggered_pairs("dabAcCaCBAcCcaDA")
+        self.assertEqual("dabAaCBAcaDA", result)
+
+        result = self.module.remove_triggered_pairs(result)
+        self.assertEqual("dabCBAcaDA", result)
+
+        result = self.module.remove_triggered_pairs(result)
+        self.assertEqual("dabCBAcaDA", result)
+
+        # check match at end handled correctly by implementation's loop
+        result = self.module.remove_triggered_pairs("aAbaAAa")
+        self.assertEqual("b", result)
+
+
     def test_solver(self):
         solution = self.module.solve(self.input_text)
         self.assertEqual(self.expected, solution)
