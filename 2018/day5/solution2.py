@@ -3,7 +3,7 @@
 
 from pathlib import Path
 
-from .common import remove_triggered_pairs
+from .common import react_polymer, remove_triggered_pairs
 
 
 def get_unit_types(text):
@@ -16,17 +16,6 @@ def remove_unit_type(unit_type, text):
     text = text.replace(unit_type, "")
     text = text.replace(unit_type.lower(), "")
     return text
-
-
-def react_polymer(text):
-    while True:
-        new_text = remove_triggered_pairs(text)
-        if new_text == text:
-            break
-
-        text = new_text
-
-    return new_text
 
 
 def solve(input_text):

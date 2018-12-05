@@ -14,3 +14,14 @@ def remove_triggered_pairs(text):
             n += 1
 
     return text
+
+
+def react_polymer(text):
+    while True:
+        new_text = remove_triggered_pairs(text)
+        if new_text == text:
+            break
+
+        text = new_text
+
+    return new_text

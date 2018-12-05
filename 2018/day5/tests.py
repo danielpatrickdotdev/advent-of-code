@@ -55,6 +55,10 @@ class TestCommon(unittest.TestCase):
         result = self.module.remove_triggered_pairs("aAbaAAa")
         self.assertEqual("b", result)
 
+    def test_react_polymer(self):
+        result = self.module.react_polymer("dabAcCaCBAcCcaDA")
+        self.assertEqual(result, "dabCBAcaDA")
+
 
 class TestSolution1(TestSolution):
     module = solution1
@@ -85,10 +89,6 @@ class TestSolution2(TestSolution):
 
         result = self.module.remove_unit_type("D", "dabAcCaCBAcCcaDA")
         self.assertEqual(result, "abAcCaCBAcCcaA")
-
-    def test_react_polymer(self):
-        result = self.module.react_polymer("dabAcCaCBAcCcaDA")
-        self.assertEqual(result, "dabCBAcaDA")
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)

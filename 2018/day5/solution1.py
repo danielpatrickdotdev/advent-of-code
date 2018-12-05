@@ -3,20 +3,11 @@
 
 from pathlib import Path
 
-from .common import remove_triggered_pairs
+from .common import react_polymer, remove_triggered_pairs
 
 
 def solve(input_text):
-    old_text = input_text
-
-    while True:
-        new_text = remove_triggered_pairs(old_text)
-        if new_text == old_text:
-            break
-
-        old_text = new_text
-
-    return len(new_text)
+    return len(react_polymer(input_text))
 
 
 if __name__ == '__main__':
