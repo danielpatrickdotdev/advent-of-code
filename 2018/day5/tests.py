@@ -26,7 +26,7 @@ class TestSolution(unittest.TestCase):
                 "subclasses of TestSolution must provide expected value"
             )
         self.input_path = SOLUTION_DIR.joinpath(self.input_filename)
-        self.input_text = get_input(self.input_path)
+        self.input_text = get_input(self.input_path)[0]
 
 
 class TestSolution1(TestSolution):

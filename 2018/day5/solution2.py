@@ -5,13 +5,13 @@ from pathlib import Path
 
 
 def solve(input_text):
-    return " ".join(input_text) + "?"
+    return input_text + "?"
 
 
 if __name__ == '__main__':
     from shared.utils import get_input
 
     input_path = Path(__file__).parent.joinpath("input.txt")
-    input_text = get_input(input_path)
+    input_text = get_input(input_path)[0]
     solution = solve(input_text)
     print(solution)
