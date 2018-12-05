@@ -56,6 +56,12 @@ class TestCommon(unittest.TestCase):
         self.assertEqual("b", result)
 
     def test_react_polymer(self):
+        result = self.module.react_polymer("dabAcC")
+        self.assertEqual(result, "dabA")
+
+        result = self.module.react_polymer("dabAcCa")
+        self.assertEqual(result, "dab")
+
         result = self.module.react_polymer("dabAcCaCBAcCcaDA")
         self.assertEqual(result, "dabCBAcaDA")
 
