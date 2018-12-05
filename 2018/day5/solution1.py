@@ -3,7 +3,7 @@
 
 from pathlib import Path
 
-from .common import check_trigger, remove_triggered_pairs
+from .common import remove_triggered_pairs
 
 
 def solve(input_text):
