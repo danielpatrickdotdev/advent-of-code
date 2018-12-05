@@ -5,7 +5,7 @@ from pathlib import Path
 import unittest
 
 from shared.utils import get_input
-from . import solution1, solution2
+from . import solution1, solution2, common
 
 
 SOLUTION_DIR = Path(__file__).parent
@@ -29,9 +29,8 @@ class TestSolution(unittest.TestCase):
         self.input_text = get_input(self.input_path)[0]
 
 
-class TestSolution1(TestSolution):
-    module = solution1
-    expected = 10
+class TestCommon(unittest.TestCase):
+    module = common
 
     def test_check_trigger(self):
         self.assertTrue(self.module.check_trigger("a", "A"))
@@ -56,6 +55,10 @@ class TestSolution1(TestSolution):
         result = self.module.remove_triggered_pairs("aAbaAAa")
         self.assertEqual("b", result)
 
+
+class TestSolution1(TestSolution):
+    module = solution1
+    expected = 10
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)
