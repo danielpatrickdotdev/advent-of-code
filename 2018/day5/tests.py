@@ -69,6 +69,10 @@ class TestSolution2(TestSolution):
     module = solution2
     expected = 4
 
+    def test_get_unit_types(self):
+        unit_types = self.module.get_unit_types("dabAcCaCBAcCcaDA")
+        self.assertCountEqual("ABCD", unit_types)
+
     def test_solver(self):
         solution = self.module.solve(self.input_text)
         self.assertEqual(self.expected, solution)

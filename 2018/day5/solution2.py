@@ -4,6 +4,12 @@
 from pathlib import Path
 
 
+def get_unit_types(text):
+    unit_types = set(char.upper() for char in text)
+
+    return "".join(unit_types)
+
+
 def solve(input_text):
     return input_text + "?"
 
