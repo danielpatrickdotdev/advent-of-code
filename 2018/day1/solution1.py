@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from functools import reduce
 from pathlib import Path
 
 
@@ -11,7 +10,7 @@ def parse_input(input_text):
 
 def solve(input_text):
     instructions = parse_input(input_text)
-    return reduce((lambda acc, item: acc + item), instructions, 0)
+    return sum(instructions)
 
 
 if __name__ == '__main__':
