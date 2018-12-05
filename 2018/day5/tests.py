@@ -73,6 +73,19 @@ class TestSolution2(TestSolution):
         unit_types = self.module.get_unit_types("dabAcCaCBAcCcaDA")
         self.assertCountEqual("ABCD", unit_types)
 
+    def test_remove_unit_type(self):
+        result = self.module.remove_unit_type("A", "dabAcCaCBAcCcaDA")
+        self.assertEqual(result, "dbcCCBcCcD")
+
+        result = self.module.remove_unit_type("B", "dabAcCaCBAcCcaDA")
+        self.assertEqual(result, "daAcCaCAcCcaDA")
+
+        result = self.module.remove_unit_type("C", "dabAcCaCBAcCcaDA")
+        self.assertEqual(result, "dabAaBAaDA")
+
+        result = self.module.remove_unit_type("D", "dabAcCaCBAcCcaDA")
+        self.assertEqual(result, "abAcCaCBAcCcaA")
+
     def test_solver(self):
         solution = self.module.solve(self.input_text)
         self.assertEqual(self.expected, solution)

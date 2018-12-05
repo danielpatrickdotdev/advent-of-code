@@ -10,6 +10,12 @@ def get_unit_types(text):
     return "".join(unit_types)
 
 
+def remove_unit_type(unit_type, text):
+    text = text.replace(unit_type, "")
+    text = text.replace(unit_type.lower(), "")
+    return text
+
+
 def solve(input_text):
     return input_text + "?"
 
