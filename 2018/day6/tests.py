@@ -29,7 +29,18 @@ class TestSolution(unittest.TestCase):
         self.input_text = get_input(self.input_path)
 
 
-class TestCommon(unittest.TestCase):
+class CoordsMixin:
+    test_coords = [
+        (1, 1),
+        (1, 6),
+        (8, 3),
+        (3, 4),
+        (5, 5),
+        (8, 9),
+    ]
+
+
+class TestCommon(unittest.TestCase, CoordsMixin):
     module = common
     test_input = [
         "1, 1",
@@ -38,14 +49,6 @@ class TestCommon(unittest.TestCase):
         "3, 4",
         "5, 5",
         "8, 9",
-    ]
-    test_coords = [
-        (1, 1),
-        (1, 6),
-        (8, 3),
-        (3, 4),
-        (5, 5),
-        (8, 9),
     ]
 
     def test_parse(self):
@@ -109,9 +112,14 @@ class TestSolution1(TestSolution):
         self.assertEqual(self.expected, solution)
 
 
-class TestSolution2(TestSolution):
+class TestSolution2(TestSolution, CoordsMixin):
     module = solution2
     expected = 16
+
+    def test_calculate_distance_from_all_coords(self):
+        result = self.module.calculate_distance_from_all_coords(
+            4, 3, self.test_coords)
+        self.assertEqual(30, result)
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)

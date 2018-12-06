@@ -3,6 +3,12 @@
 
 from pathlib import Path
 
+from .common import get_manhattan_distance
+
+
+def calculate_distance_from_all_coords(x, y, coords):
+    return sum(get_manhattan_distance(x, y, coord) for coord in coords)
+
 
 def solve(input_text):
     return " ".join(input_text) + "?"
