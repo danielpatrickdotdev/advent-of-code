@@ -71,6 +71,35 @@ class TestCommon(unittest.TestCase, CoordsMixin):
                 expected, self.module.get_manhattan_distance(x, y, coord)
             )
 
+    def test_complete_grid(self):
+        expected = [
+            [None, None, None, None, None, None, None, None, None, None],
+            [None, 0, None, None, None, None, None, None, None, None],
+            [None, None, None, None, None, None, None, None, None, None],
+            [None, None, None, None, None, None, None, None, 2, None],
+            [None, None, None, 3, None, None, None, None, None, None],
+            [None, None, None, None, None, 4, None, None, None, None],
+            [None, 1, None, None, None, None, None, None, None, None],
+            [None, None, None, None, None, None, None, None, None, None],
+            [None, None, None, None, None, None, None, None, None, None],
+            [None, None, None, None, None, None, None, None, 5, None],
+            [None, None, None, None, None, None, None, None, None, None],
+        ]
+
+        def some_pointless_func(x, y, coords):
+            if (x, y) in coords:
+                return coords.index((x, y))
+            else:
+                return None
+
+        grid = self.module.complete_grid(self.test_coords, some_pointless_func)
+        self.assertEqual(expected, grid)
+
+
+class TestSolution1(TestSolution, CoordsMixin):
+    module = solution1
+    expected = 17
+
     def test_get_closest_destination(self):
         values_to_test = [
             (0, 0, 0),
@@ -85,7 +114,7 @@ class TestCommon(unittest.TestCase, CoordsMixin):
                 self.module.get_closest_destination(x, y, self.test_coords)
             )
 
-    def test_complete_grid(self):
+    def test_complete_grid_with_get_closest_destination(self):
         expected = [
             [0, 0, 0, 0, 0, None, 2, 2, 2, 2],
             [0, 0, 0, 0, 0, None, 2, 2, 2, 2],
@@ -99,13 +128,10 @@ class TestCommon(unittest.TestCase, CoordsMixin):
             [1, 1, 1, None, 5, 5, 5, 5, 5, 5],
             [1, 1, 1, None, 5, 5, 5, 5, 5, 5],
         ]
-        grid = self.module.complete_grid(self.test_coords)
+        grid = common.complete_grid(self.test_coords,
+                                    self.module.get_closest_destination)
         self.assertEqual(expected, grid)
 
-
-class TestSolution1(TestSolution):
-    module = solution1
-    expected = 17
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)

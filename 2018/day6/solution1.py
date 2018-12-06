@@ -3,7 +3,23 @@
 
 from pathlib import Path
 
-from .common import complete_grid, parse
+from .common import complete_grid, get_manhattan_distance, parse
+
+
+def get_closest_destination(x, y, coords):
+    closest = None
+    closest_distance = 999  # further than biggest distance possible
+
+    for n, coord in enumerate(coords):
+        distance = get_manhattan_distance(x, y, coord)
+
+        if distance == closest_distance:
+            closest = None
+        elif distance < closest_distance:
+            closest_distance = distance
+            closest = n
+
+    return closest
 
 
 def is_bound(n, grid):
@@ -26,7 +42,7 @@ def is_bound(n, grid):
 
 def solve(input_text):
     coords = parse(input_text)
-    grid = complete_grid(coords)
+    grid = complete_grid(coords, get_closest_destination)
     flat_grid = [cell for row in grid for cell in row]
 
     biggest_range = 0
