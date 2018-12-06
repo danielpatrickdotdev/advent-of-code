@@ -12,14 +12,6 @@ def get_max_x_and_y(coords):
     return x, y
 
 
-def create_empty_grid(coords):
-    max_x, max_y = get_max_x_and_y(coords)
-    horizontal_len = max_x + round(max_x / 10)
-    vertical_len = max_y + round(max_y / 10)
-
-    return [[None for n in range(vertical_len)] for n in range(horizontal_len)]
-
-
 def get_manhattan_distance(x, y, coord):
     return abs(x - coord[0]) + abs(y - coord[1])
 

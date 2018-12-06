@@ -56,14 +56,6 @@ class TestCommon(unittest.TestCase):
         self.assertEqual(8, x)
         self.assertEqual(9, y)
 
-    def test_create_empty_grid(self):
-        grid = self.module.create_empty_grid(self.test_coords)
-        self.assertEqual(9, len(grid))  # horizontal
-        self.assertEqual(10, len(grid[0]))  # vertical
-        for col in grid:
-            for cell in col:
-                self.assertIsNone(cell)
-
     def test_get_manhattan_distance(self):
         values_to_test = [
             (0, 0, (1, 1), 2),
