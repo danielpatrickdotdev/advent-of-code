@@ -82,6 +82,23 @@ class TestCommon(unittest.TestCase):
                 self.module.get_closest_destination(x, y, self.test_coords)
             )
 
+    def test_complete_grid(self):
+        expected = [
+            [0, 0, 0, 0, 0, None, 2, 2, 2, 2],
+            [0, 0, 0, 0, 0, None, 2, 2, 2, 2],
+            [0, 0, 0, 3, 3, 4, 2, 2, 2, 2],
+            [0, 0, 3, 3, 3, 4, 2, 2, 2, 2],
+            [None, None, 3, 3, 3, 4, 4, 2, 2, 2],
+            [1, 1, None, 3, 4, 4, 4, 4, 2, 2],
+            [1, 1, 1, None, 4, 4, 4, 4, None, None],
+            [1, 1, 1, None, 4, 4, 4, 5, 5, 5],
+            [1, 1, 1, None, 4, 4, 5, 5, 5, 5],
+            [1, 1, 1, None, 5, 5, 5, 5, 5, 5],
+            [1, 1, 1, None, 5, 5, 5, 5, 5, 5],
+        ]
+        grid = self.module.complete_grid(self.test_coords)
+        self.assertEqual(expected, grid)
+
 
 class TestSolution1(TestSolution):
     module = solution1

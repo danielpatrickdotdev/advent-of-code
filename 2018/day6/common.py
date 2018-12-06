@@ -30,3 +30,17 @@ def get_closest_destination(x, y, coords):
             closest = n
 
     return closest
+
+
+def complete_grid(coords):
+    max_x, max_y = get_max_x_and_y(coords)
+    x_range = range(max_x + round(max_x / 10) + 1)
+    y_range = range(max_y + round(max_y / 10) + 1)
+
+    grid = [
+        [
+            get_closest_destination(x, y, coords) for x in x_range
+        ] for y in y_range
+    ]
+
+    return grid
