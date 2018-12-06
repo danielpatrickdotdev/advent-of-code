@@ -64,6 +64,32 @@ class TestCommon(unittest.TestCase):
             for cell in col:
                 self.assertIsNone(cell)
 
+    def test_get_manhattan_distance(self):
+        values_to_test = [
+            (0, 0, (1, 1), 2),
+            (5, 0, (1, 1), 5),
+            (5, 0, (5, 5), 5),
+            (1, 1, (1, 1), 0),
+        ]
+        for x, y, coord, expected in values_to_test:
+            self.assertEqual(
+                expected, self.module.get_manhattan_distance(x, y, coord)
+            )
+
+    def test_get_closest_destination(self):
+        values_to_test = [
+            (0, 0, 0),
+            (5, 0, None),
+            (5, 1, None),
+            (5, 2, 4),
+            (1, 1, 0),
+        ]
+        for x, y, expected in values_to_test:
+            self.assertEqual(
+                expected,
+                self.module.get_closest_destination(x, y, self.test_coords)
+            )
+
 
 class TestSolution1(TestSolution):
     module = solution1

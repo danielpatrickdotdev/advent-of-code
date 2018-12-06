@@ -18,3 +18,23 @@ def create_empty_grid(coords):
     vertical_len = max_y + round(max_y / 10)
 
     return [[None for n in range(vertical_len)] for n in range(horizontal_len)]
+
+
+def get_manhattan_distance(x, y, coord):
+    return abs(x - coord[0]) + abs(y - coord[1])
+
+
+def get_closest_destination(x, y, coords):
+    closest = None
+    closest_distance = 999  # further than biggest distance possible
+
+    for n, coord in enumerate(coords):
+        distance = get_manhattan_distance(x, y, coord)
+
+        if distance == closest_distance:
+            closest = None
+        elif distance < closest_distance:
+            closest_distance = distance
+            closest = n
+
+    return closest
