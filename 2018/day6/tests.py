@@ -51,6 +51,11 @@ class TestCommon(unittest.TestCase):
     def test_parse(self):
         self.assertEqual(self.test_coords, self.module.parse(self.test_input))
 
+    def test_get_max_x_and_y(self):
+        x, y = self.module.get_max_x_and_y(self.test_coords)
+        self.assertEqual(8, x)
+        self.assertEqual(9, y)
+
 
 class TestSolution1(TestSolution):
     module = solution1
