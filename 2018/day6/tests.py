@@ -56,6 +56,14 @@ class TestCommon(unittest.TestCase):
         self.assertEqual(8, x)
         self.assertEqual(9, y)
 
+    def test_create_empty_grid(self):
+        grid = self.module.create_empty_grid(self.test_coords)
+        self.assertEqual(9, len(grid))  # horizontal
+        self.assertEqual(10, len(grid[0]))  # vertical
+        for col in grid:
+            for cell in col:
+                self.assertIsNone(cell)
+
 
 class TestSolution1(TestSolution):
     module = solution1
