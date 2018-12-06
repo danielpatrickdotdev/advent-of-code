@@ -132,6 +132,17 @@ class TestSolution1(TestSolution, CoordsMixin):
                                     self.module.get_closest_destination)
         self.assertEqual(expected, grid)
 
+    def test_is_bound(self):
+        grid = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9],
+        ]
+
+        self.assertTrue(self.module.is_bound(5, grid))
+
+        for n in [1, 2, 3, 4, 6, 7, 8, 9]:
+            self.assertFalse(self.module.is_bound(n, grid))
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)
