@@ -102,7 +102,7 @@ class TestCommon(unittest.TestCase):
 
 class TestSolution1(TestSolution):
     module = solution1
-    expected = "lorem ipsum!"
+    expected = 17
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)
