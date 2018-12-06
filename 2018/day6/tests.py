@@ -5,7 +5,7 @@ from pathlib import Path
 import unittest
 
 from shared.utils import get_input
-from . import solution1, solution2
+from . import solution1, solution2, common
 
 
 SOLUTION_DIR = Path(__file__).parent
@@ -27,6 +27,29 @@ class TestSolution(unittest.TestCase):
             )
         self.input_path = SOLUTION_DIR.joinpath(self.input_filename)
         self.input_text = get_input(self.input_path)
+
+
+class TestCommon(unittest.TestCase):
+    module = common
+    test_input = [
+        "1, 1",
+        "1, 6",
+        "8, 3",
+        "3, 4",
+        "5, 5",
+        "8, 9",
+    ]
+    test_coords = [
+        (1, 1),
+        (1, 6),
+        (8, 3),
+        (3, 4),
+        (5, 5),
+        (8, 9),
+    ]
+
+    def test_parse(self):
+        self.assertEqual(self.test_coords, self.module.parse(self.test_input))
 
 
 class TestSolution1(TestSolution):
