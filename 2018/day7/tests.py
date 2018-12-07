@@ -128,18 +128,24 @@ class TestSolution2(TestSolution):
 
     def test_increment_workers(self):
         workers = [Worker(), Worker()]
+
+        result = self.module.increment_workers(workers)
+        self.assertEqual([], result)
+
         workers[0].work_on("A", 1)
         workers[1].work_on("B", 2)
 
-        self.module.increment_workers(workers)
+        result = self.module.increment_workers(workers)
 
         self.assertTrue(workers[0].is_idle())
         self.assertFalse(workers[1].is_idle())
+        self.assertEqual(["A"], result)
 
-        self.module.increment_workers(workers)
+        result = self.module.increment_workers(workers)
 
         self.assertTrue(workers[0].is_idle())
         self.assertTrue(workers[1].is_idle())
+        self.assertEqual(["B"], result)
 
     def test_time_to_complete_char(self):
         self.assertEqual(1, self.module.time_to_complete_char("A", 0))

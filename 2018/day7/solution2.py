@@ -4,11 +4,18 @@
 from pathlib import Path
 
 from .common import get_available, get_steps, parse
+from .worker import Worker
 
 
 def increment_workers(workers):
+    completed = []
+
     for worker in workers:
-        worker.work()
+        char = worker.work()
+        if char is not None:
+            completed.append(char)
+
+    return completed
 
 
 def time_to_complete_char(char, offset):
