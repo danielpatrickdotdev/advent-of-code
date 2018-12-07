@@ -5,7 +5,7 @@ from pathlib import Path
 import unittest
 
 from shared.utils import get_input
-from . import solution1, solution2
+from . import solution1, solution2, common
 
 
 SOLUTION_DIR = Path(__file__).parent
@@ -27,6 +27,30 @@ class TestSolution(unittest.TestCase):
             )
         self.input_path = SOLUTION_DIR.joinpath(self.input_filename)
         self.input_text = get_input(self.input_path)
+
+
+class TestCommon(unittest.TestCase):
+    module = common
+    test_input = [
+        "Step C must be finished before step A can begin.",
+        "Step C must be finished before step F can begin.",
+        "Step A must be finished before step B can begin.",
+        "Step A must be finished before step D can begin.",
+        "Step B must be finished before step E can begin.",
+        "Step D must be finished before step E can begin.",
+        "Step F must be finished before step E can begin.",
+    ]
+    requirements_dict = {
+        "C": ["A", "F"],
+        "A": ["B", "D"],
+        "B": ["E"],
+        "D": ["E"],
+        "F": ["E"],
+    }
+
+    def test_parser(self):
+        self.assertEqual(self.requirements_dict,
+                         self.module.parse(self.test_input))
 
 
 class TestSolution1(TestSolution):
