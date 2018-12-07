@@ -116,6 +116,21 @@ class TestSolution2(TestSolution):
     module = solution2
     expected = 15
 
+    def test_increment_workers(self):
+        workers = [Worker(), Worker()]
+        workers[0].work_on("A", 1)
+        workers[1].work_on("B", 2)
+
+        self.module.increment_workers(workers)
+
+        self.assertTrue(workers[0].is_idle())
+        self.assertFalse(workers[1].is_idle())
+
+        self.module.increment_workers(workers)
+
+        self.assertTrue(workers[0].is_idle())
+        self.assertTrue(workers[1].is_idle())
+
     def test_solver(self):
         solution = self.module.solve(self.input_text)
         self.assertEqual(self.expected, solution)

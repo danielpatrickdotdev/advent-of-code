@@ -5,6 +5,12 @@ from pathlib import Path
 
 from .common import get_available, get_steps, parse
 
+
+def increment_workers(workers):
+    for worker in workers:
+        worker.work()
+
+
 def solve(input_text, num_workers=2, offset=0):
     return " ".join(input_text) + "?"
 
