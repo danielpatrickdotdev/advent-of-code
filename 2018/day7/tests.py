@@ -56,6 +56,12 @@ class TestCommon(unittest.TestCase):
         self.assertEqual(set("ABCDEF"),
                          self.module.get_steps(self.requirements_dict))
 
+    def test_get_available(self):
+        self.assertEqual(
+            set("C"),
+            self.module.get_available(self.requirements_dict, set("ABCDEF"))
+        )
+
 
 class TestSolution1(TestSolution):
     module = solution1
