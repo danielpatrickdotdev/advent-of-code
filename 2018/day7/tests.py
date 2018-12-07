@@ -6,6 +6,7 @@ import unittest
 
 from shared.utils import get_input
 from . import solution1, solution2, common
+from .worker import Worker
 
 
 SOLUTION_DIR = Path(__file__).parent
@@ -70,6 +71,45 @@ class TestSolution1(TestSolution):
     def test_solver(self):
         solution = self.module.solve(self.input_text)
         self.assertEqual(self.expected, solution)
+
+
+class TestWorker(unittest.TestCase):
+    def test_construct_worker(self):
+        worker1 = Worker()
+        self.assertTrue(worker1.is_idle())
+        self.assertIsNone(worker1.current_job)
+        self.assertIsNone(worker1.last_job)
+
+    def test_work_on(self):
+        worker1 = Worker()
+        worker1.work_on("A", 1)
+        self.assertFalse(worker1.is_idle())
+        self.assertEqual("A", worker1.current_job)
+
+    def test_work_on_when_busy(self):
+        worker1 = Worker()
+        worker1.work_on("A", 1)
+
+        with self.assertRaises(Exception):
+            worker1.work_on("B", 2)
+
+    def test_work(self):
+        worker1 = Worker()
+        worker1.work_on("A", 1)
+        self.assertFalse(worker1.is_idle())
+
+        worker1.work()
+        self.assertTrue(worker1.is_idle())
+        self.assertIsNone(worker1.current_job)
+        self.assertEqual("A", worker1.last_job)
+
+    def test_last_job(self):
+        worker1 = Worker()
+        worker1.work_on("A", 1)
+        self.assertIsNone(worker1.last_job)
+
+        worker1.work()
+        self.assertEqual("A", worker1.last_job)
 
 
 class TestSolution2(TestSolution):
