@@ -7,6 +7,7 @@ class Worker:
     def __init__(self):
         self.current_job = None
         self.last_job = None
+        self.time_left = 0
 
     def work_on(self, job, secs):
         if self.current_job is not None:
