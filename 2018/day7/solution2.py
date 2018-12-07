@@ -41,7 +41,7 @@ def time_to_complete_char(char, offset):
 
 def assign_jobs_if_possible(workers, requirements, steps, offset):
     available = sorted(list(get_available(requirements, steps)),
-                        reverse=True)
+                       reverse=True)
 
     while available and num_available_workers(workers) > 0:
         next_char = available.pop()
