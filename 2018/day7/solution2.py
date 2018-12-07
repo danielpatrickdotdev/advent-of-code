@@ -18,6 +18,10 @@ def increment_workers(workers):
     return completed
 
 
+def num_available_workers(workers):
+    return sum(worker.is_idle() for worker in workers)
+
+
 def time_to_complete_char(char, offset):
     return ord(char) - 64 + offset
 

@@ -147,6 +147,19 @@ class TestSolution2(TestSolution):
         self.assertTrue(workers[1].is_idle())
         self.assertEqual(["B"], result)
 
+    def test_num_available_workers(self):
+        workers = [Worker(), Worker()]
+        self.assertEqual(2, self.module.num_available_workers(workers))
+
+        workers[0].work_on("A", 1)
+        self.assertEqual(1, self.module.num_available_workers(workers))
+
+        workers[1].work_on("B", 2)
+        self.assertEqual(0, self.module.num_available_workers(workers))
+
+        workers[0].work()
+        self.assertEqual(1, self.module.num_available_workers(workers))
+
     def test_time_to_complete_char(self):
         self.assertEqual(1, self.module.time_to_complete_char("A", 0))
         self.assertEqual(61, self.module.time_to_complete_char("A", 60))
