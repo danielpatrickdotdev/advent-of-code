@@ -131,6 +131,14 @@ class TestSolution2(TestSolution):
         self.assertTrue(workers[0].is_idle())
         self.assertTrue(workers[1].is_idle())
 
+    def test_time_to_complete_char(self):
+        self.assertEqual(1, self.module.time_to_complete_char("A", 0))
+        self.assertEqual(61, self.module.time_to_complete_char("A", 60))
+        self.assertEqual(2, self.module.time_to_complete_char("B", 0))
+        self.assertEqual(62, self.module.time_to_complete_char("B", 60))
+        self.assertEqual(26, self.module.time_to_complete_char("Z", 0))
+        self.assertEqual(86, self.module.time_to_complete_char("Z", 60))
+
     def test_solver(self):
         solution = self.module.solve(self.input_text)
         self.assertEqual(self.expected, solution)

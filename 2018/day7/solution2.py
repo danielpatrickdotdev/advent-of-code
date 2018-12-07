@@ -11,6 +11,10 @@ def increment_workers(workers):
         worker.work()
 
 
+def time_to_complete_char(char, offset):
+    return ord(char) - 64 + offset
+
+
 def solve(input_text, num_workers=2, offset=0):
     return " ".join(input_text) + "?"
 
