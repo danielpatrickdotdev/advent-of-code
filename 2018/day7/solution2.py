@@ -49,7 +49,8 @@ def solve(input_text, num_workers=2, offset=0):
     workers = [Worker() for n in range(num_workers)]
 
     while len(result) < expected_result_len:
-        available = sorted(list(get_available(requirements, steps)), reverse=True)
+        available = sorted(list(get_available(requirements, steps)),
+                           reverse=True)
 
         while available and num_available_workers(workers) > 0:
             next_char = available.pop()
