@@ -19,3 +19,9 @@ def parse(input_text):
             requirements[char1] = [char2]
 
     return requirements
+
+
+def get_steps(requirements):
+    result = set(requirements.keys())
+    result.update(v for values in requirements.values() for v in values)
+    return result

@@ -52,6 +52,10 @@ class TestCommon(unittest.TestCase):
         self.assertEqual(self.requirements_dict,
                          self.module.parse(self.test_input))
 
+    def test_get_steps(self):
+        self.assertEqual(set("ABCDEF"),
+                         self.module.get_steps(self.requirements_dict))
+
 
 class TestSolution1(TestSolution):
     module = solution1
