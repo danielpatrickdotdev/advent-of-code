@@ -160,6 +160,17 @@ class TestSolution2(TestSolution):
         workers[0].work()
         self.assertEqual(1, self.module.num_available_workers(workers))
 
+    def test_assign_work(self):
+        workers = [Worker(), Worker()]
+        self.module.assign_work(workers, "A", 1)
+        self.module.assign_work(workers, "B", 2)
+
+        self.assertEqual("B", workers[1].current_job)
+        self.assertEqual("B", workers[1].current_job)
+
+        with self.assertRaises(Exception):
+            self.module.assign_work(workers, "C", 3)
+
     def test_time_to_complete_char(self):
         self.assertEqual(1, self.module.time_to_complete_char("A", 0))
         self.assertEqual(61, self.module.time_to_complete_char("A", 60))

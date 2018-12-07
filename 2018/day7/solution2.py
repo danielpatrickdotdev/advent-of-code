@@ -22,6 +22,19 @@ def num_available_workers(workers):
     return sum(worker.is_idle() for worker in workers)
 
 
+def assign_work(workers, char, time):
+    assigned = False
+
+    for worker in workers:
+        if worker.is_idle():
+            worker.work_on(char, time)
+            assigned = True
+            break
+
+    if not assigned:
+        raise Exception("Unable to assign work - everyone's busy")
+
+
 def time_to_complete_char(char, offset):
     return ord(char) - 64 + offset
 
