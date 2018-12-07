@@ -24,6 +24,10 @@ class Worker:
         if self.current_job is not None and self.time_left > 0:
             self.time_left -= 1
 
-        if self.time_left == 0:
-            self.last_job = self.current_job
-            self.current_job = None
+            if self.time_left == 0:
+                self.last_job = self.current_job
+                self.current_job = None
+
+                return self.last_job
+
+        return None

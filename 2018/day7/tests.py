@@ -96,13 +96,22 @@ class TestWorker(unittest.TestCase):
 
     def test_work(self):
         worker1 = Worker()
+
+        result = worker1.work()
+        self.assertIsNone(result)
+
         worker1.work_on("A", 1)
         self.assertFalse(worker1.is_idle())
 
-        worker1.work()
+        result = worker1.work()
         self.assertTrue(worker1.is_idle())
         self.assertIsNone(worker1.current_job)
         self.assertEqual("A", worker1.last_job)
+        self.assertEqual("A", result)
+
+        result = worker1.work()
+        self.assertEqual("A", worker1.last_job)
+        self.assertIsNone(result)
 
     def test_last_job(self):
         worker1 = Worker()
