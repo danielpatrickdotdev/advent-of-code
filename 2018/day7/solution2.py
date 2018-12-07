@@ -40,7 +40,32 @@ def time_to_complete_char(char, offset):
 
 
 def solve(input_text, num_workers=2, offset=0):
-    return " ".join(input_text) + "?"
+    requirements = parse(input_text)
+    steps = get_steps(requirements)
+
+    count = 0
+    expected_result_len = len(steps)
+    result = []
+    workers = [Worker() for n in range(num_workers)]
+
+    while len(result) < expected_result_len:
+        available = sorted(list(get_available(requirements, steps)), reverse=True)
+
+        while available and num_available_workers(workers) > 0:
+            next_char = available.pop()
+            steps.remove(next_char)
+            time = time_to_complete_char(next_char, offset)
+            assign_work(workers, next_char, time)
+
+        completed_jobs = increment_workers(workers)
+        for char in completed_jobs:
+            result.append(char)
+            if char in requirements:
+                del requirements[char]
+
+        count += 1
+
+    return count
 
 
 if __name__ == '__main__':
