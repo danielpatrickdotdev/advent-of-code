@@ -3,9 +3,22 @@
 
 from pathlib import Path
 
+from .common import parse
+from .tree import Tree
+
+
+def sum_nodes(node):
+    if not node.children:
+        return sum(node.meta)
+    else:
+        return sum(
+            sum_nodes(child) for child in node.children
+        ) + sum(node.meta)
+
 
 def solve(input_text):
-    return " ".join(input_text) + "!"
+    tree = Tree(parse(input_text))
+    return sum_nodes(tree)
 
 
 if __name__ == '__main__':
