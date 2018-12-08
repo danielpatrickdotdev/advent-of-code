@@ -106,7 +106,19 @@ class TestSolution1(TestSolution):
 
 class TestSolution2(TestSolution):
     module = solution2
-    expected = "lorem ipsum?"
+    expected = 66
+    parsed_input = [2, 3, 0, 3, 10, 11, 12, 1, 1, 0, 1, 99, 2, 1, 1, 2]
+
+    def test_sum_nodes(self):
+        tree = Tree(self.parsed_input)
+        node1 = tree.children[0]
+        node2 = tree.children[1]
+        node3 = tree.children[1].children[0]
+
+        self.assertEqual(33, self.module.sum_nodes(node1))
+        self.assertEqual(0, self.module.sum_nodes(node2))
+        self.assertEqual(99, self.module.sum_nodes(node3))
+        self.assertEqual(66, self.module.sum_nodes(tree))
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)
