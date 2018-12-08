@@ -20,7 +20,7 @@ class Tree:
         if num_children > 0:
             for _ in range(num_children):
                 new_child = Tree(data, start)
-                start += len(new_child)
+                start += new_child._length
                 children.append(new_child)
 
         if num_metas > 0:
@@ -32,6 +32,3 @@ class Tree:
         length += end
 
         return children, meta, length
-
-    def __len__(self):
-        return self._length

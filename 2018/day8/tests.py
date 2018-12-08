@@ -33,12 +33,12 @@ class TestSolution(unittest.TestCase):
 class TestTree(unittest.TestCase):
     test_input = [2, 3, 0, 3, 10, 11, 12, 1, 1, 0, 1, 99, 2, 1, 1, 2]
 
-    def test_len(self):
+    def test_tree_length(self):
         tree = Tree(self.test_input, 9)
-        self.assertEqual(3, len(tree))
+        self.assertEqual(3, tree._length)
 
         tree = Tree(self.test_input, 0)
-        self.assertEqual(16, len(tree))
+        self.assertEqual(16, tree._length)
 
     def test_parse_node_with_leaf(self):
         self.assertEqual(
