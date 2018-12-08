@@ -6,6 +6,7 @@ import unittest
 
 from shared.utils import get_input
 from . import solution1, solution2, common
+from .tree import Tree
 
 
 SOLUTION_DIR = Path(__file__).parent
@@ -27,6 +28,50 @@ class TestSolution(unittest.TestCase):
             )
         self.input_path = SOLUTION_DIR.joinpath(self.input_filename)
         self.input_text = get_input(self.input_path)
+
+
+class TestTree(unittest.TestCase):
+    test_input = [2, 3, 0, 3, 10, 11, 12, 1, 1, 0, 1, 99, 2, 1, 1, 2]
+
+    def test_len(self):
+        tree = Tree(self.test_input, 9)
+        self.assertEqual(3, len(tree))
+
+        tree = Tree(self.test_input, 0)
+        self.assertEqual(16, len(tree))
+
+    def test_parse_node_with_leaf(self):
+        self.assertEqual(
+            ([], [99]),
+            Tree.parse_node(None, self.test_input, 9)
+        )
+
+    def test_parse_node_with_root(self):
+        child_nodes, metadata = Tree.parse_node(None, self.test_input, 0)
+        self.assertEqual(2, len(child_nodes))
+        self.assertEqual([1, 1, 2], metadata)
+
+    def test_create_single_node_tree(self):
+        tree = Tree(self.test_input, 9)
+        self.assertEqual([], tree.children)
+        self.assertEqual([99], tree.meta)
+
+    def test_create_multi_node_tree(self):
+        tree = Tree(self.test_input)
+        self.assertEqual(2, len(tree.children))
+        self.assertEqual([1, 1, 2], tree.meta)
+
+        child1 = tree.children[0]
+        self.assertEqual([], child1.children)
+        self.assertEqual([10, 11, 12], child1.meta)
+
+        child2 = tree.children[1]
+        self.assertEqual(1, len(child2.children))
+        self.assertEqual([2], child2.meta)
+
+        grandchild = child2.children[0]
+        self.assertEqual([], grandchild.children)
+        self.assertEqual([99], grandchild.meta)
 
 
 class TestCommon(unittest.TestCase):
