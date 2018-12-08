@@ -4,9 +4,11 @@
 
 class Tree:
     def __init__(self, data, start=0):
-        self.children, self.meta = self.parse_node(data, start)
+        self.children, self.meta, self._length = self.parse_node(data, start)
 
     def parse_node(self, data, start):
+        length = -start
+
         num_children = data[start]
         num_metas = data[start + 1]
 
@@ -24,8 +26,12 @@ class Tree:
         if num_metas > 0:
             end = start + num_metas
             meta = data[start: end]
+        else:
+            end = start
 
-        return children, meta
+        length += end
+
+        return children, meta, length
 
     def __len__(self):
-        return sum(len(child) for child in self.children) + len(self.meta) + 2
+        return self._length

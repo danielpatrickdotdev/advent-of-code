@@ -42,14 +42,15 @@ class TestTree(unittest.TestCase):
 
     def test_parse_node_with_leaf(self):
         self.assertEqual(
-            ([], [99]),
+            ([], [99], 3),
             Tree.parse_node(None, self.test_input, 9)
         )
 
     def test_parse_node_with_root(self):
-        child_nodes, metadata = Tree.parse_node(None, self.test_input, 0)
-        self.assertEqual(2, len(child_nodes))
+        children, metadata, length = Tree.parse_node(None, self.test_input, 0)
+        self.assertEqual(2, len(children))
         self.assertEqual([1, 1, 2], metadata)
+        self.assertEqual(16, length)
 
     def test_create_single_node_tree(self):
         tree = Tree(self.test_input, 9)
