@@ -11,9 +11,7 @@ def sum_nodes(node):
     if not node.children:
         return sum(node.meta)
     else:
-        return sum(
-            sum_nodes(child) for child in node.children
-        ) + sum(node.meta)
+        return sum(sum_nodes(child) for child in node.children) + sum(node.meta)
 
 
 def solve(input_text):
