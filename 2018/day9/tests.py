@@ -58,6 +58,14 @@ class TestCommon(unittest.TestCase):
 class TestSolution1(TestSolution):
     module = solution1
     expected = 32
+    clockwise_test_values = [
+        (0, 1, 1),
+        (0, 4, 4),
+        (0, 5, 0),
+        (1, 3, 4),
+        (1, 4, 0),
+        (4, 3, 2),
+    ]
     test_inputs_and_outputs = [
         (9, 25, 25),
         (10, 1618, 8317),
@@ -66,6 +74,22 @@ class TestSolution1(TestSolution):
         (21, 6111, 54718),
         (30, 5807, 37305),
     ]
+
+    def test_n_places_clockwise(self):
+        circle = [n for n in range(5)]
+        for current_value, n, expected in self.clockwise_test_values:
+            self.assertEqual(
+                expected,
+                self.module.n_places_clockwise(circle, current_value, n)
+            )
+
+    def test_n_places_counter_clockwise(self):
+        circle = [n for n in range(5)]
+        for expected, n, current_value in self.clockwise_test_values:
+            self.assertEqual(
+                expected,
+                self.module.n_places_counter_clockwise(circle, current_value, n)
+            )
 
     def test_play_game(self):
         for players, marbles, expected in self.test_inputs_and_outputs:

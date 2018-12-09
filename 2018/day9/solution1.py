@@ -3,6 +3,17 @@
 
 from pathlib import Path
 
+def n_places_clockwise(circle, current_marble, n):
+    current_marble += n
+    current_marble %= len(circle)
+    return current_marble
+
+
+def n_places_counter_clockwise(circle, current_marble, n):
+    current_marble -= n
+    current_marble %= len(circle)
+    return current_marble
+
 
 def solve(input_text):
     return " ".join(input_text) + "!"
