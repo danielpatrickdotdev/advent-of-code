@@ -66,6 +66,12 @@ class TestSolution1(TestSolution):
         (1, 4, 0),
         (4, 3, 2),
     ]
+    test_place_marble_values = [
+        ([0], 0, 1, ([0, 1], 1)),
+        ([0, 1], 1, 2, ([0, 2, 1], 1)),
+        ([0, 2, 1], 1, 3, ([0, 2, 1, 3], 3)),
+        ([0, 2, 1, 3], 3, 4, ([0, 4, 2, 1, 3], 1)),
+    ]
     test_inputs_and_outputs = [
         (9, 25, 25),
         (10, 1618, 8317),
@@ -89,6 +95,12 @@ class TestSolution1(TestSolution):
             self.assertEqual(
                 expected,
                 self.module.n_places_counter_clockwise(circle, current_value, n)
+            )
+
+    def test_place_marble(self):
+        for circle, pos, marble, expected in self.test_place_marble_values:
+            self.assertEqual(
+                expected, self.module.place_marble(circle, pos, marble)
             )
 
     def test_play_game(self):
