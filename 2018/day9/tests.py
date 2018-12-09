@@ -72,8 +72,13 @@ class TestSolution1(TestSolution):
         ([0, 2, 1], 1, 3, ([0, 2, 1, 3], 3)),
         ([0, 2, 1, 3], 3, 4, ([0, 4, 2, 1, 3], 1)),
     ]
-    test_inputs_and_outputs = [
-        (9, 25, 25),
+    test_play_game_values = [
+        (9, 1, [0, 0, 0, 0, 0, 0, 0, 0, 0]),
+        (9, 23, [0, 0, 0, 0, 32, 0, 0, 0, 0]),
+        (9, 25, [0, 0, 0, 0, 32, 0, 0, 0, 0]),
+    ]
+    test_play_game_winning_scores = [
+        (9, 25, 32),
         (10, 1618, 8317),
         (13, 7999, 146373),
         (17, 1104, 2764),
@@ -104,7 +109,14 @@ class TestSolution1(TestSolution):
             )
 
     def test_play_game(self):
-        for players, marbles, expected in self.test_inputs_and_outputs:
+        for players, marbles, expected in self.test_play_game_values:
+            self.assertEqual(
+                expected,
+                self.module.play_game(players, marbles)
+            )
+
+    def test_play_game_with_winning_scores(self):
+        for players, marbles, expected in self.test_play_game_winning_scores:
             self.assertEqual(
                 expected,
                 max(self.module.play_game(players, marbles))
