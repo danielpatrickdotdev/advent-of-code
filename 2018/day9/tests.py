@@ -31,7 +31,22 @@ class TestSolution(unittest.TestCase):
 
 class TestSolution1(TestSolution):
     module = solution1
-    expected = "lorem ipsum!"
+    expected = 32
+    test_inputs_and_outputs = [
+        (9, 25, 25),
+        (10, 1618, 8317),
+        (13, 7999, 146373),
+        (17, 1104, 2764),
+        (21, 6111, 54718),
+        (30, 5807, 37305),
+    ]
+
+    def test_play_game(self):
+        for players, marbles, expected in self.test_inputs_and_outputs:
+            self.assertEqual(
+                expected,
+                max(self.module.play_game(players, marbles))
+            )
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)
