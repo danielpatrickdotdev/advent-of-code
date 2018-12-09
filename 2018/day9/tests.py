@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from collections import deque
 from pathlib import Path
 import unittest
 
@@ -49,19 +50,11 @@ class TestCommon(unittest.TestCase):
         (30, 5807),
         (458, 71307),
     ]
-    clockwise_test_values = [
-        (0, 1, 1),
-        (0, 4, 4),
-        (0, 5, 0),
-        (1, 3, 4),
-        (1, 4, 0),
-        (4, 3, 2),
-    ]
     test_place_marble_values = [
-        ([0], 0, 1, ([0, 1], 1)),
-        ([0, 1], 1, 2, ([0, 2, 1], 1)),
-        ([0, 2, 1], 1, 3, ([0, 2, 1, 3], 3)),
-        ([0, 2, 1, 3], 3, 4, ([0, 4, 2, 1, 3], 1)),
+        ([0], 1, [0, 1]),
+        ([0, 1], 2, [1, 0, 2]),
+        ([1, 0, 2], 3, [0, 2, 1, 3]),
+        ([0, 2, 1, 3], 4, [2, 1, 3, 0, 4]),
     ]
     test_play_game_values = [
         (9, 1, [0, 0, 0, 0, 0, 0, 0, 0, 0]),
@@ -81,27 +74,11 @@ class TestCommon(unittest.TestCase):
         for test_input, expected in zip(self.test_inputs, self.expected_values):
             self.assertEqual(expected, self.module.parse(test_input))
 
-    def test_n_places_clockwise(self):
-        circle = [n for n in range(5)]
-        for current_value, n, expected in self.clockwise_test_values:
-            self.assertEqual(
-                expected,
-                self.module.n_places_clockwise(circle, current_value, n)
-            )
-
-    def test_n_places_counter_clockwise(self):
-        circle = [n for n in range(5)]
-        for expected, n, current_value in self.clockwise_test_values:
-            self.assertEqual(
-                expected,
-                self.module.n_places_counter_clockwise(circle, current_value, n)
-            )
-
     def test_place_marble(self):
-        for circle, pos, marble, expected in self.test_place_marble_values:
-            self.assertEqual(
-                expected, self.module.place_marble(circle, pos, marble)
-            )
+        for circle, marble, expected in self.test_place_marble_values:
+            circle = deque(circle)
+            self.module.place_marble(circle, marble)
+            self.assertEqual(expected, list(circle))
 
     def test_play_game(self):
         for players, marbles, expected in self.test_play_game_values:
