@@ -3,6 +3,9 @@
 
 from pathlib import Path
 
+from .common import parse
+
+
 def n_places_clockwise(circle, current_marble, n):
     current_marble += n
     current_marble %= len(circle)
@@ -53,7 +56,8 @@ def play_game(num_players, num_marbles):
 
 
 def solve(input_text):
-    return " ".join(input_text) + "!"
+    num_players, num_marbles = parse(input_text)
+    return max(play_game(num_players, num_marbles))
 
 
 if __name__ == '__main__':
