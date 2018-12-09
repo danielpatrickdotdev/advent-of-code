@@ -49,15 +49,6 @@ class TestCommon(unittest.TestCase):
         (30, 5807),
         (458, 71307),
     ]
-
-    def test_parser(self):
-        for test_input, expected in zip(self.test_inputs, self.expected_values):
-            self.assertEqual(expected, self.module.parse(test_input))
-
-
-class TestSolution1(TestSolution):
-    module = solution1
-    expected = 32
     clockwise_test_values = [
         (0, 1, 1),
         (0, 4, 4),
@@ -85,6 +76,10 @@ class TestSolution1(TestSolution):
         (21, 6111, 54718),
         (30, 5807, 37305),
     ]
+
+    def test_parser(self):
+        for test_input, expected in zip(self.test_inputs, self.expected_values):
+            self.assertEqual(expected, self.module.parse(test_input))
 
     def test_n_places_clockwise(self):
         circle = [n for n in range(5)]
@@ -121,6 +116,11 @@ class TestSolution1(TestSolution):
                 expected,
                 max(self.module.play_game(players, marbles))
             )
+
+
+class TestSolution1(TestSolution):
+    module = solution1
+    expected = 32
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)
