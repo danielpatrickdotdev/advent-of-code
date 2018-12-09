@@ -5,7 +5,7 @@ from pathlib import Path
 import unittest
 
 from shared.utils import get_input
-from . import solution1, solution2
+from . import solution1, solution2, common
 
 
 SOLUTION_DIR = Path(__file__).parent
@@ -27,6 +27,32 @@ class TestSolution(unittest.TestCase):
             )
         self.input_path = SOLUTION_DIR.joinpath(self.input_filename)
         self.input_text = get_input(self.input_path)
+
+
+class TestCommon(unittest.TestCase):
+    module = common
+    test_inputs = [
+        ["9 players; last marble is worth 25 points"],
+        ["10 players; last marble is worth 1618 points"],
+        ["13 players; last marble is worth 7999 points"],
+        ["17 players; last marble is worth 1104 points"],
+        ["21 players; last marble is worth 6111 points"],
+        ["30 players; last marble is worth 5807 points"],
+        ["458 players; last marble is worth 71307 points"],
+    ]
+    expected_values = [
+        (9, 25),
+        (10, 1618),
+        (13, 7999),
+        (17, 1104),
+        (21, 6111),
+        (30, 5807),
+        (458, 71307),
+    ]
+
+    def test_parser(self):
+        for test_input, expected in zip(self.test_inputs, self.expected_values):
+            self.assertEqual(expected, self.module.parse(test_input))
 
 
 class TestSolution1(TestSolution):
