@@ -3,9 +3,13 @@
 
 from pathlib import Path
 
+from .common import parse, play_game
+
 
 def solve(input_text):
-    return " ".join(input_text) + "?"
+    num_players, num_marbles = parse(input_text)
+    num_marbles *= 100
+    return max(play_game(num_players, num_marbles))
 
 
 if __name__ == '__main__':
