@@ -47,15 +47,16 @@ def find_time_with_closest_fit(lights):
     best_time = 0
 
     for interval in intervals:
+        # increase by interval unless it makes distance between lights greater
         while new_distance <= last_distance:
             advance(lights, interval)
-            best_time += interval
+            best_time += interval  # track how much we've advanced by
 
             last_distance = new_distance
             new_distance = get_distance(lights)
 
-        advance(lights, -interval)
-        new_distance = last_distance
-        best_time -= interval
+        advance(lights, -interval)  # reverse to get back to best
+        new_distance = last_distance  # reset new_distance ready for next loop
+        best_time -= interval  # track reversed amount
 
     return best_time
