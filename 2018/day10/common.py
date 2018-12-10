@@ -38,6 +38,7 @@ def get_distance(lights):
 
 
 def find_time_with_closest_fit(lights):
+    # make sure we're not modifying original lights object
     lights = [light[:] for light in lights]
     intervals = [1000000, 100000, 10000, 1000, 100, 10, 1]
 
