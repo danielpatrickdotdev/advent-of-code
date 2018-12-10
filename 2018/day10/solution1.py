@@ -3,7 +3,7 @@
 
 from pathlib import Path
 
-from .common import parse, find_time_with_closest_fit, advance
+from .common import parse, find_time_with_closest_fit
 from .rescue import RescueMessage
 
 

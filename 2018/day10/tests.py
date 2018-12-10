@@ -208,58 +208,12 @@ class TestCommon(unittest.TestCase, TestValues):
             self.module.parse(self.test_inputs)
         )
 
-    def test_advance_0(self):
-        lights = [light[:] for light in self.parser_outputs]
-        self.module.advance(lights, 0)
-        rm = RescueMessage(lights)
-        self.assertEqual("\n".join(self.zero_seconds), str(rm))
-
-    def test_advance_1(self):
-        lights = [light[:] for light in self.parser_outputs]
-        self.module.advance(lights, 1)
-        rm = RescueMessage(lights)
-        self.assertEqual("\n".join(self.one_second), str(rm))
-
-    def test_advance_2(self):
-        lights = [light[:] for light in self.parser_outputs]
-        self.module.advance(lights, 2)
-        rm = RescueMessage(lights)
-        self.assertEqual("\n".join(self.two_seconds), str(rm))
-
-    def test_advance_3(self):
-        lights = [light[:] for light in self.parser_outputs]
-        self.module.advance(lights, 3)
-        rm = RescueMessage(lights)
-        self.assertEqual("\n".join(self.three_seconds), str(rm))
-
-    def test_advance_4(self):
-        lights = [light[:] for light in self.parser_outputs]
-        self.module.advance(lights, 4)
-        rm = RescueMessage(lights)
-        self.assertEqual("\n".join(self.four_seconds), str(rm))
-
-    def test_advance_minus_1(self):
-        lights = [light[:] for light in self.parser_outputs]
-        self.module.advance(lights, 4)
-        self.module.advance(lights, -1)
-        rm = RescueMessage(lights)
-        self.assertEqual("\n".join(self.three_seconds), str(rm))
-
     def test_find_time_with_closest_fit(self):
         rm = RescueMessage(self.parser_outputs)
 
         self.assertEqual(
             3, self.module.find_time_with_closest_fit(rm)
         )
-
-    def test_get_distance(self):
-        lights = [
-            [(0, 0), (0, 0)],
-            [(1, 1), (0, 0)],
-            [(2, 2), (0, 0)],
-            [(3, 3), (0, 0)],
-        ]
-        self.assertEqual(20, self.module.get_distance(lights))
 
 
 class TestSolution1(TestSolution):

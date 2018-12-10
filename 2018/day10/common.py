@@ -21,22 +21,6 @@ def parse(input_text):
     return result
 
 
-def advance(lights, n):
-    for light in lights:
-        (x, y), (dx, dy) = light
-        light[0] = (x + dx * n, y + dy * n)
-
-
-def get_distance(lights):
-    total = 0
-    for pair in combinations(lights, 2):
-        dx = abs(pair[0][0][0] - pair[1][0][0])
-        dy = abs(pair[0][0][1] - pair[1][0][1])
-        total += dx + dy
-
-    return total
-
-
 def find_time_with_closest_fit(rescue_message):
     intervals = [1000000, 100000, 10000, 1000, 100, 10, 1]
 
