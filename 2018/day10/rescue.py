@@ -65,7 +65,7 @@ class RescueMessage:
     def __str__(self):
         return "\n".join(
             "".join(
-                "#" if self.grid[y][x] else "." for x in range(
+                "\u2588" if self.grid[y][x] else "." for x in range(
                     self.min_col, self.max_col + 1
                 )
             ) for y in range(self.min_row, self.max_row + 1)
