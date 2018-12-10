@@ -218,6 +218,11 @@ class TestCommon(unittest.TestCase, TestValues):
         rm = RescueMessage(lights)
         self.assertEqual("\n".join(self.three_seconds), str(rm))
 
+    def test_find_time_with_closest_fit(self):
+        self.assertEqual(
+            3, self.module.find_time_with_closest_fit(self.parser_outputs)
+        )
+
 
 class TestSolution1(TestSolution):
     module = solution1
