@@ -9,8 +9,8 @@ from .rescue import RescueMessage
 def solve(input_text):
     def advance_lights(lights, n):
         for light in lights:
-            (y, x), (dy, dx) = light
-            light[0] = (y + dy * n, x + dx * n)
+            (x, y), (dx, dy) = light
+            light[0] = (x + dx * n, y + dy * n)
 
     data = parse(input_text)
 
