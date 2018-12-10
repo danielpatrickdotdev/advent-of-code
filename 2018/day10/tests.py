@@ -194,30 +194,6 @@ class TestRescueMessage(unittest.TestCase, TestValues):
         rm = RescueMessage(self.parser_outputs)
         self.assertEqual("\n".join(self.zero_seconds), str(rm))
 
-    def test_advance(self):
-        rm = RescueMessage(self.parser_outputs)
-
-        rm.advance()
-        self.assertEqual("\n".join(self.one_second), str(rm))
-
-        rm.advance()
-        self.assertEqual("\n".join(self.two_seconds), str(rm))
-
-        rm.advance()
-        self.assertEqual("\n".join(self.three_seconds), str(rm))
-
-        rm.advance()
-        self.assertEqual("\n".join(self.four_seconds), str(rm))
-
-    def test_advance_using_n(self):
-        rm = RescueMessage(self.parser_outputs)
-
-        rm.advance(1)
-        self.assertEqual("\n".join(self.one_second), str(rm))
-
-        rm.advance(3)
-        self.assertEqual("\n".join(self.four_seconds), str(rm))
-
 
 class TestCommon(unittest.TestCase, TestValues):
     module = common

@@ -28,26 +28,11 @@ class RescueMessage:
     def construct_grid(self):
         return defaultdict(lambda: defaultdict(list))
 
-    def advance(self, n=1):
-        new_grid = self.construct_grid()
-
-        for row_key in self.grid:
-            for col_key in self.grid[row_key]:
-                cell = self.grid[row_key][col_key]
-                while cell:
-                    dy, dx = cell.pop()
-                    new_row = row_key + dy * n
-                    new_col = col_key + dx * n
-                    new_grid[new_row][new_col].append((dy, dx))
-
-        self.grid = new_grid
-
     def __str__(self):
         return "\n".join(
             "".join(
                 "#" if self.grid[y][x] else "." for x in range(
                     self.min_col, self.max_col + 1
                 )
-            ) for y in range(self.min_row, self.max_row +1)
+            ) for y in range(self.min_row, self.max_row + 1)
         )
-
