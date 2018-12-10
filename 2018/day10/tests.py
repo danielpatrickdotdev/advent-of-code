@@ -231,11 +231,20 @@ class TestCommon(unittest.TestCase, TestValues):
 
 class TestSolution1(TestSolution):
     module = solution1
-    expected = TestValues.three_seconds
+    expected = [
+        "#...#..###",
+        "#...#...#.",
+        "#...#...#.",
+        "#####...#.",
+        "#...#...#.",
+        "#...#...#.",
+        "#...#...#.",
+        "#...#..###",
+    ]
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)
-        self.assertEqual(self.expected, solution)
+        self.assertEqual("\n".join(self.expected), solution)
 
 
 class TestSolution2(TestSolution):
