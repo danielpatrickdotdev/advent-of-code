@@ -230,7 +230,7 @@ class TestCommon(unittest.TestCase, TestValues):
             [(2, 2), (0, 0)],
             [(3, 3), (0, 0)],
         ]
-        self.assertEqual(10, self.module.get_distance(lights))
+        self.assertEqual(20, self.module.get_distance(lights))
 
 
 class TestSolution1(TestSolution):

@@ -30,7 +30,9 @@ def advance(lights, n):
 def get_distance(lights):
     total = 0
     for pair in combinations(lights, 2):
-        total += abs(pair[0][0][0] - pair[1][0][0])
+        dx = abs(pair[0][0][0] - pair[1][0][0])
+        dy = abs(pair[0][0][1] - pair[1][0][1])
+        total += dx + dy
 
     return total
 
