@@ -37,26 +37,24 @@ def get_distance(lights):
     return total
 
 
-def find_time_with_closest_fit(lights):
-    # make sure we're not modifying original lights object
-    lights = [light[:] for light in lights]
+def find_time_with_closest_fit(rescue_message):
     intervals = [1000000, 100000, 10000, 1000, 100, 10, 1]
 
-    last_distance = get_distance(lights)
-    new_distance = last_distance
+    last_size = rescue_message.size
+    new_size = last_size
     best_time = 0
 
     for interval in intervals:
         # increase by interval unless it makes distance between lights greater
-        while new_distance <= last_distance:
-            advance(lights, interval)
+        while new_size <= last_size:
+            rescue_message.advance(interval)
             best_time += interval  # track how much we've advanced by
 
-            last_distance = new_distance
-            new_distance = get_distance(lights)
+            last_size = new_size
+            new_size = rescue_message.size
 
-        advance(lights, -interval)  # reverse to get back to best
-        new_distance = last_distance  # reset new_distance ready for next loop
+        rescue_message.advance(-interval)  # reverse to get back to best
+        new_size = last_size  # reset new_distance ready for next loop
         best_time -= interval  # track reversed amount
 
     return best_time

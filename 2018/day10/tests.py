@@ -246,8 +246,10 @@ class TestCommon(unittest.TestCase, TestValues):
         self.assertEqual("\n".join(self.three_seconds), str(rm))
 
     def test_find_time_with_closest_fit(self):
+        rm = RescueMessage(self.parser_outputs)
+
         self.assertEqual(
-            3, self.module.find_time_with_closest_fit(self.parser_outputs)
+            3, self.module.find_time_with_closest_fit(rm)
         )
 
     def test_get_distance(self):

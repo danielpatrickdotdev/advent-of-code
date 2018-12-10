@@ -58,6 +58,10 @@ class RescueMessage:
 
         self.grid = new_grid
 
+    @property
+    def size(self):
+        return (self.max_col - self.min_col) * (self.max_row - self.min_row)
+
     def __str__(self):
         return "\n".join(
             "".join(

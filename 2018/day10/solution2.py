@@ -3,14 +3,15 @@
 
 from pathlib import Path
 
-
 from .common import parse, find_time_with_closest_fit
+from .rescue import RescueMessage
 
 
 def solve(input_text):
     data = parse(input_text)
+    rescue_message = RescueMessage(data)
 
-    best_time = find_time_with_closest_fit(data[:100])
+    best_time = find_time_with_closest_fit(rescue_message)
 
     return best_time
 

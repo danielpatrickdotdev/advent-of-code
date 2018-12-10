@@ -8,10 +8,9 @@ from .rescue import RescueMessage
 
 def solve(input_text):
     data = parse(input_text)
-
-    best_time = find_time_with_closest_fit(data[:100])
-    advance(data, best_time)
     rescue_message = RescueMessage(data)
+
+    find_time_with_closest_fit(rescue_message)
 
     return str(rescue_message)
 
