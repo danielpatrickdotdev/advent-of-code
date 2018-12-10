@@ -2,20 +2,15 @@
 # -*- coding: utf-8 -*-
 
 from pathlib import Path
-from .common import parse, find_time_with_closest_fit
+from .common import parse, find_time_with_closest_fit, advance
 from .rescue import RescueMessage
 
 
 def solve(input_text):
-    def advance_lights(lights, n):
-        for light in lights:
-            (x, y), (dx, dy) = light
-            light[0] = (x + dx * n, y + dy * n)
-
     data = parse(input_text)
 
     best_time = find_time_with_closest_fit(data[:100])
-    advance_lights(data, best_time)
+    advance(data, best_time)
     rescue_message = RescueMessage(data)
 
     return str(rescue_message)
