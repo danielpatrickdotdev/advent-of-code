@@ -6,6 +6,7 @@ import unittest
 
 from shared.utils import get_input
 from . import solution1, solution2, common
+from .rescue import RescueMessage
 
 
 SOLUTION_DIR = Path(__file__).parent
@@ -186,6 +187,12 @@ class TestValues:
         "......................",
         "......................",
     ]
+
+
+class TestRescueMessage(unittest.TestCase, TestValues):
+    def test_constructor(self):
+        rm = RescueMessage(self.parser_outputs)
+        self.assertEqual("\n".join(self.zero_seconds), str(rm))
 
 
 class TestCommon(unittest.TestCase, TestValues):
