@@ -223,6 +223,15 @@ class TestCommon(unittest.TestCase, TestValues):
             3, self.module.find_time_with_closest_fit(self.parser_outputs)
         )
 
+    def test_get_distance(self):
+        lights = [
+            [(0, 0), (0, 0)],
+            [(1, 1), (0, 0)],
+            [(2, 2), (0, 0)],
+            [(3, 3), (0, 0)],
+        ]
+        self.assertEqual(10, self.module.get_distance(lights))
+
 
 class TestSolution1(TestSolution):
     module = solution1

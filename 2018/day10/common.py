@@ -27,16 +27,17 @@ def advance(lights, n):
         light[0] = (x + dx * n, y + dy * n)
 
 
+def get_distance(lights):
+    total = 0
+    for pair in combinations(lights, 2):
+        total += abs(pair[0][0][0] - pair[1][0][0])
+
+    return total
+
+
 def find_time_with_closest_fit(lights):
     lights = [light[:] for light in lights]
     intervals = [1000000, 100000, 10000, 1000, 100, 10, 1]
-
-    def get_distance(lights):
-        total = 0
-        for pair in combinations(lights, 2):
-            total += abs(pair[0][0][0] - pair[1][0][0])
-
-        return total
 
     last_distance = get_distance(lights)
     new_distance = last_distance
