@@ -7,7 +7,7 @@ from collections import defaultdict
 
 class RescueMessage:
     def __init__(self, data):
-        self.grid = defaultdict(self.construct_row)
+        self.grid = self.construct_grid()
         self.min_col = None
         self.max_col = None
         self.min_row = None
@@ -25,8 +25,8 @@ class RescueMessage:
 
             self.grid[y][x].append((dy, dx))
 
-    def construct_row(self):
-        return defaultdict(list)
+    def construct_grid(self):
+        return defaultdict(lambda: defaultdict(list))
 
     def __str__(self):
         return "\n".join(
