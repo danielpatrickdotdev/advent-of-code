@@ -96,6 +96,24 @@ class TestValues:
         [(14, 7), (-2, 0)],
         [(-3, 6), (2, -1)],
     ]
+    three_seconds = [
+        "......................",
+        "......................",
+        "......................",
+        "......................",
+        "......#...#..###......",
+        "......#...#...#.......",
+        "......#...#...#.......",
+        "......#####...#.......",
+        "......#...#...#.......",
+        "......#...#...#.......",
+        "......#...#...#.......",
+        "......#...#..###......",
+        "......................",
+        "......................",
+        "......................",
+        "......................",
+    ]
 
 
 class TestCommon(unittest.TestCase, TestValues):
@@ -110,7 +128,7 @@ class TestCommon(unittest.TestCase, TestValues):
 
 class TestSolution1(TestSolution):
     module = solution1
-    expected = "HI"
+    expected = TestValues.three_seconds
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)
