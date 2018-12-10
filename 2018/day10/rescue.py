@@ -40,6 +40,24 @@ class RescueMessage:
     def construct_grid(self):
         return defaultdict(lambda: defaultdict(list))
 
+    def advance(self, n=1):
+        new_grid = self.construct_grid()
+        self.reset_boundaries()
+
+        for row_key in self.grid:
+            for col_key in self.grid[row_key]:
+                cell = self.grid[row_key][col_key]
+                #for dy, dx in cell:
+                while cell:
+                    dy, dx = cell.pop()
+                    new_row = row_key + dy * n
+                    new_col = col_key + dx * n
+                    new_grid[new_row][new_col].append((dy, dx))
+                    self.update_x_boundaries(new_col)
+                    self.update_y_boundaries(new_row)
+
+        self.grid = new_grid
+
     def __str__(self):
         return "\n".join(
             "".join(
