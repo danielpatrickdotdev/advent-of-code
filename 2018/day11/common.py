@@ -14,11 +14,11 @@ def create_grid(serial):
     ]
 
 
-def get_squares_power(x, y, grid):
+def get_squares_power(x, y, grid, size=3):
     power = 0
 
-    for dx in range(3):
-        for dy in range(3):
+    for dx in range(size):
+        for dy in range(size):
             power += grid[x + dx][y + dy]
 
     return power

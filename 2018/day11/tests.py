@@ -27,6 +27,10 @@ class TestCommon(unittest.TestCase):
         self.assertEqual(12, self.module.get_squares_power(31, 43, grid))
         self.assertEqual(26, self.module.get_squares_power(32, 43, grid))
         self.assertEqual(29, self.module.get_squares_power(32, 44, grid))
+        self.assertEqual(113, self.module.get_squares_power(89, 268, grid, 16))
+
+        grid = self.module.create_grid(42)
+        self.assertEqual(119, self.module.get_squares_power(231, 250, grid, 12))
 
 
 class TestSolution1(unittest.TestCase):
