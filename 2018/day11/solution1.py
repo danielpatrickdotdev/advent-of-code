@@ -6,7 +6,7 @@ from .common import get_cell_power_level, create_grid, get_squares_power
 
 
 
-def get_best_coords_and_power(grid):
+def get_best_square(grid):
     best_power = 0
     best_x = None
     best_y = None
@@ -19,12 +19,12 @@ def get_best_coords_and_power(grid):
                 best_x = x
                 best_y = y
 
-    return (best_x + 1, best_y + 1, best_power)
+    return (best_x + 1, best_y + 1)
 
 
 def solve(input_value):
     grid = create_grid(input_value)
-    x, y, power = get_best_coords_and_power(grid)
+    x, y = get_best_square(grid)
 
     return "{},{}".format(x, y)
 

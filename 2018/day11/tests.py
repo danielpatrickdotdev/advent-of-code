@@ -32,14 +32,14 @@ class TestCommon(unittest.TestCase):
 class TestSolution1(unittest.TestCase):
     module = solution1
 
-    def test_get_best_coords_and_power(self):
+    def test_get_best_square(self):
         self.assertEqual(
-            (33, 45, 29),
-            self.module.get_best_coords_and_power(common.create_grid(18))
+            (33, 45),
+            self.module.get_best_square(common.create_grid(18))
         )
         self.assertEqual(
-            (21, 61, 30),
-            self.module.get_best_coords_and_power(common.create_grid(42))
+            (21, 61),
+            self.module.get_best_square(common.create_grid(42))
         )
 
     def test_solver(self):
