@@ -53,11 +53,10 @@ class TestSolution1(unittest.TestCase):
 
 class TestSolution2(unittest.TestCase):
     module = solution2
-    expected = "?"
 
     def test_solver(self):
-        solution = self.module.solve("!")
-        self.assertEqual(self.expected, solution)
+        self.assertEqual("90,269,16", self.module.solve(18))
+        self.assertEqual("232,251,12", self.module.solve(42))
 
 
 if __name__ == '__main__':
