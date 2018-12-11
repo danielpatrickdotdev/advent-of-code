@@ -3,11 +3,11 @@
 
 import unittest
 
-from . import solution1, solution2
+from . import solution1, solution2, common
 
 
-class TestSolution1(unittest.TestCase):
-    module = solution1
+class TestCommon(unittest.TestCase):
+    module = common
 
     def test_get_cell_power_level(self):
         self.assertEqual(4, self.module.get_cell_power_level(3, 5, 8))
@@ -28,14 +28,18 @@ class TestSolution1(unittest.TestCase):
         self.assertEqual(26, self.module.get_squares_power(32, 43, grid))
         self.assertEqual(29, self.module.get_squares_power(32, 44, grid))
 
+
+class TestSolution1(unittest.TestCase):
+    module = solution1
+
     def test_get_best_coords_and_power(self):
         self.assertEqual(
             (33, 45, 29),
-            self.module.get_best_coords_and_power(self.module.create_grid(18))
+            self.module.get_best_coords_and_power(common.create_grid(18))
         )
         self.assertEqual(
             (21, 61, 30),
-            self.module.get_best_coords_and_power(self.module.create_grid(42))
+            self.module.get_best_coords_and_power(common.create_grid(42))
         )
 
     def test_solver(self):
