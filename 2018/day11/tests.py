@@ -22,9 +22,25 @@ class TestSolution1(unittest.TestCase):
         self.assertEqual([-2, -4, 4, 1, -1], grid[31][43:48])
         self.assertEqual([4, -5, -4, -3, -2], grid[35][43:48])
 
+    def test_get_squares_power(self):
+        grid = self.module.create_grid(18)
+        self.assertEqual(12, self.module.get_squares_power(31, 43, grid))
+        self.assertEqual(26, self.module.get_squares_power(32, 43, grid))
+        self.assertEqual(29, self.module.get_squares_power(32, 44, grid))
+
+    def test_get_best_coords_and_power(self):
+        self.assertEqual(
+            (33, 45, 29),
+            self.module.get_best_coords_and_power(self.module.create_grid(18))
+        )
+        self.assertEqual(
+            (21, 61, 30),
+            self.module.get_best_coords_and_power(self.module.create_grid(42))
+        )
+
     def test_solver(self):
-        self.assertEqual(29, self.module.solve(18))
-        self.assertEqual(30, self.module.solve(42))
+        self.assertEqual("33,45", self.module.solve(18))
+        self.assertEqual("21,61", self.module.solve(42))
 
 
 class TestSolution2(unittest.TestCase):
