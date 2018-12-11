@@ -2,7 +2,17 @@
 # -*- coding: utf-8 -*-
 
 
-from .common import create_grid, get_squares_power
+from .common import create_grid
+
+
+def get_squares_power(x, y, grid, size=3):
+    power = 0
+
+    for dx in range(size):
+        for dy in range(size):
+            power += grid[x + dx][y + dy]
+
+    return power
 
 
 def get_best_square(grid):
