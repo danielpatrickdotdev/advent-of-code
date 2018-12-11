@@ -54,6 +54,16 @@ class TestSolution1(unittest.TestCase):
 class TestSolution2(unittest.TestCase):
     module = solution2
 
+    def test_get_best_square(self):
+        self.assertEqual(
+            (90, 269, 16),
+            self.module.get_best_square(common.create_grid(18))
+        )
+        self.assertEqual(
+            (232, 251, 12),
+            self.module.get_best_square(common.create_grid(42))
+        )
+
     def test_solver(self):
         self.assertEqual("90,269,16", self.module.solve(18))
         self.assertEqual("232,251,12", self.module.solve(42))
