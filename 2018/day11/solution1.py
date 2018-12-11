@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-from .common import get_cell_power_level, create_grid, get_squares_power
-
+from .common import create_grid, get_squares_power
 
 
 def get_best_square(grid):
