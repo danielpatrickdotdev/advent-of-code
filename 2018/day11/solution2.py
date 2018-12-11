@@ -6,13 +6,16 @@ from .common import create_grid
 
 
 def get_squares_power(x, y, grid, size=3):
-    power = 0
+    to_deduct = 0
 
-    for dx in range(size):
-        for dy in range(size):
-            power += grid[x + dx][y + dy]
+    if x > 0:
+        to_deduct += grid[x - 1][y + size - 1]
+    if y > 0:
+        to_deduct += grid[x + size - 1][y - 1]
+    if x > 0 and y > 0:
+        to_deduct -= grid[x - 1][y - 1]
 
-    return power
+    return grid[x + size - 1][y + size - 1] - to_deduct
 
 
 def get_best_square(grid):
@@ -21,9 +24,7 @@ def get_best_square(grid):
     best_y = None
     best_size = None
 
-
     for size in range(1, 301):
-        print(size)
         for x in range(300):
             if (size + x) > 300:
                 break
@@ -45,8 +46,29 @@ def get_best_square(grid):
     return (best_x + 1, best_y + 1, best_size)
 
 
-def solve(input_value):
+def create_optimised_grid(input_value):
     grid = create_grid(input_value)
+    new_grid = []
+
+    for x in range(300):
+        col = []
+        for y in range(300):
+            if x == 0:
+                col.append(sum(grid[0][:y + 1]))
+            else:
+                prev_col = new_grid[x - 1][y]
+                this_col = sum(grid[x][:y + 1])
+                col.append(
+                    prev_col + this_col
+                )
+
+        new_grid.append(col)
+
+    return new_grid
+
+
+def solve(input_value):
+    grid = create_optimised_grid(input_value)
     x, y, size = get_best_square(grid)
 
     return "{},{},{}".format(x, y, size)

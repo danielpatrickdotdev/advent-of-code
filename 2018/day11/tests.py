@@ -54,14 +54,34 @@ class TestSolution1(unittest.TestCase):
 class TestSolution2(unittest.TestCase):
     module = solution2
 
+    def test_create_optimised_grid(self):
+        grid = self.module.create_optimised_grid(18)
+        self.assertEqual(300, len(grid))
+        self.assertEqual(300, len(grid[0]))
+        self.assertEqual(-5, grid[1][1])
+
+    def test_get_squares_power(self):
+        grid = self.module.create_optimised_grid(18)
+        self.assertEqual(-5, self.module.get_squares_power(0, 0, grid, 2))
+        self.assertEqual(-2, self.module.get_squares_power(0, 0, grid, 1))
+        self.assertEqual(0, self.module.get_squares_power(1, 1, grid, 1))
+        self.assertEqual(-2, self.module.get_squares_power(31, 43, grid, 1))
+        self.assertEqual(12, self.module.get_squares_power(31, 43, grid))
+        self.assertEqual(26, self.module.get_squares_power(32, 43, grid))
+        self.assertEqual(29, self.module.get_squares_power(32, 44, grid))
+        self.assertEqual(113, self.module.get_squares_power(89, 268, grid, 16))
+
+        grid = self.module.create_optimised_grid(42)
+        self.assertEqual(119, self.module.get_squares_power(231, 250, grid, 12))
+
     def test_get_best_square(self):
         self.assertEqual(
             (90, 269, 16),
-            self.module.get_best_square(common.create_grid(18))
+            self.module.get_best_square(self.module.create_optimised_grid(18))
         )
         self.assertEqual(
             (232, 251, 12),
-            self.module.get_best_square(common.create_grid(42))
+            self.module.get_best_square(self.module.create_optimised_grid(42))
         )
 
     def test_solver(self):
