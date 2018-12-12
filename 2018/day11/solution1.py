@@ -2,7 +2,14 @@
 # -*- coding: utf-8 -*-
 
 
-from .common import create_grid
+from .common import get_cell_power_level
+
+
+def create_grid(serial):
+    return [
+        [get_cell_power_level(x, y, serial) for y in range(1, 301)]
+        for x in range(1, 301)
+    ]
 
 
 def get_squares_power(x, y, grid, size=3):

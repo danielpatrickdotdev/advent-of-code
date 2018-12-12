@@ -15,16 +15,16 @@ class TestCommon(unittest.TestCase):
         self.assertEqual(0, self.module.get_cell_power_level(217, 196, 39))
         self.assertEqual(4, self.module.get_cell_power_level(101, 153, 71))
 
+
+class TestSolution1(unittest.TestCase):
+    module = solution1
+
     def test_create_grid(self):
         grid = self.module.create_grid(18)
         self.assertEqual(300, len(grid))
         self.assertEqual(300, len(grid[0]))
         self.assertEqual([-2, -4, 4, 1, -1], grid[31][43:48])
         self.assertEqual([4, -5, -4, -3, -2], grid[35][43:48])
-
-
-class TestSolution1(unittest.TestCase):
-    module = solution1
 
     def test_get_squares_power(self):
         grid = self.module.create_grid(18)
@@ -39,11 +39,11 @@ class TestSolution1(unittest.TestCase):
     def test_get_best_square(self):
         self.assertEqual(
             (33, 45),
-            self.module.get_best_square(common.create_grid(18))
+            self.module.get_best_square(self.module.create_grid(18))
         )
         self.assertEqual(
             (21, 61),
-            self.module.get_best_square(common.create_grid(42))
+            self.module.get_best_square(self.module.create_grid(42))
         )
 
     def test_solver(self):
