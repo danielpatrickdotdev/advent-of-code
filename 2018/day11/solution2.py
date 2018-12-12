@@ -46,23 +46,17 @@ def get_best_square(grid):
 
 def create_optimised_grid(input_value):
     grid = create_grid(input_value)
-    new_grid = []
 
     for x in range(300):
-        col = []
         for y in range(300):
-            if x == 0:
-                col.append(sum(grid[0][:y + 1]))
-            else:
-                prev_col = new_grid[x - 1][y]
-                this_col = sum(grid[x][:y + 1])
-                col.append(
-                    prev_col + this_col
-                )
+            if y > 0:
+                grid[x][y] += grid[x][y - 1]  # add value from cell above
+            if x > 0:
+                grid[x][y] += grid[x - 1][y]  # add value from cell to the left
+            if x > 0 and y > 0:
+                grid[x][y] -= grid[x -1][y - 1]  # remove double counted region
 
-        new_grid.append(col)
-
-    return new_grid
+    return grid
 
 
 def solve(input_value):
