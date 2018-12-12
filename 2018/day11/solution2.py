@@ -58,7 +58,7 @@ def create_optimised_grid(input_value):
             if x > 0:
                 grid[x][y] += grid[x - 1][y]  # add value from cell to the left
             if x > 0 and y > 0:
-                grid[x][y] -= grid[x -1][y - 1]  # remove double counted region
+                grid[x][y] -= grid[x - 1][y - 1]  # remove double counted region
 
     return grid
 
