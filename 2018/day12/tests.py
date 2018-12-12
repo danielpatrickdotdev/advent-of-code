@@ -5,10 +5,29 @@ from pathlib import Path
 import unittest
 
 from shared.utils import get_input
-from . import solution1, solution2
+from . import solution1, solution2, common
 
 
 SOLUTION_DIR = Path(__file__).parent
+
+
+class TestCommon(unittest.TestCase):
+    module = common
+
+    def test_parser(self):
+        test_input = [
+            "initial state: ..#..",
+            "",
+            "..#.. => #",
+            ".###. => #",
+            "..... => .",
+        ]
+        expected_rules = ["..#..", ".###."]
+
+        state, rules = self.module.parse(test_input)
+
+        self.assertEqual("..#..", state)
+        self.assertEqual(expected_rules, rules)
 
 
 class TestSolution(unittest.TestCase):
