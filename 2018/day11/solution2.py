@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-from .common import create_grid
+from .common import get_cell_power_level
 
 
 def get_squares_power(x, y, grid, size=3):
@@ -45,10 +45,14 @@ def get_best_square(grid):
 
 
 def create_optimised_grid(input_value):
-    grid = create_grid(input_value)
+    grid = []
 
     for x in range(300):
+        grid.append([])
+
         for y in range(300):
+            grid[x].append(get_cell_power_level(x + 1, y + 1, input_value))
+
             if y > 0:
                 grid[x][y] += grid[x][y - 1]  # add value from cell above
             if x > 0:
