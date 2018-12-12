@@ -3,9 +3,18 @@
 
 from pathlib import Path
 
+from .common import parse
+from .plantpots import PlantPots
+
 
 def solve(input_text):
-    return " ".join(input_text) + "!"
+    plant_state, rules = parse(input_text)
+    plantpots = PlantPots(plant_state)
+
+    for n in range(20):
+        plantpots = plantpots.advance(rules)
+
+    return plantpots.score()
 
 
 if __name__ == '__main__':
