@@ -6,6 +6,7 @@ import unittest
 
 from shared.utils import get_input
 from . import solution1, solution2, common
+from .plantpots import PlantPots
 
 
 SOLUTION_DIR = Path(__file__).parent
@@ -28,6 +29,53 @@ class TestCommon(unittest.TestCase):
 
         self.assertEqual("..#..", state)
         self.assertEqual(expected_rules, rules)
+
+
+class TestPlantPots(unittest.TestCase):
+    def test_constructor(self):
+        plantpots = PlantPots("#..#..#.")
+        self.assertEqual(11, len(plantpots))
+        self.assertEqual("..#..#..#..", str(plantpots))
+        self.assertEqual(2, plantpots.offset)
+
+    def test_pad_and_trim(self):
+        to_test = [
+            ("#..", "..#..", 2),
+            (".#..", "..#..", 1),
+            ("..#..", "..#..", 0),
+            ("...#..", "..#..", -1),
+            ("....#..", "..#..", -2),
+            (".....#..", "..#..", -3),
+            ("..#", "..#..", 0),
+            ("..#.", "..#..", 0),
+            ("..#..", "..#..", 0),
+            ("..#...", "..#..", 0),
+            ("..#....", "..#..", 0),
+            ("..", ".....", 0),
+        ]
+
+        for arg, string, offset in to_test:
+            plantpots = PlantPots(arg)
+            self.assertEqual(string, str(plantpots))
+            self.assertEqual(offset, plantpots.offset)
+
+    def test_advance(self):
+        rules = {
+            "...#.": "#",
+            ".#...": "#",
+        }
+
+        plantpots = PlantPots("..#..#..")
+        new_plantpots = plantpots.advance(rules)
+        self.assertEqual("..#....#..", str(new_plantpots))
+        self.assertEqual(1, new_plantpots.offset)
+
+    def test__next_get(self):
+        plantpots = PlantPots("..#..")
+        rules = {
+            "..#..": "#",
+        }
+        self.assertEqual("#", plantpots._next_gen(2, rules))
 
 
 class TestSolution(unittest.TestCase):
