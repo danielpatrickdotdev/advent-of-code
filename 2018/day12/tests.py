@@ -3,6 +3,7 @@
 
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 
 from shared.utils import get_input
 from . import solution1, solution2, common
@@ -107,11 +108,24 @@ class TestSolution1(TestSolution):
 
 class TestSolution2(TestSolution):
     module = solution2
-    expected = "lorem ipsum?"
+    expected = 325
 
     def test_solver(self):
-        solution = self.module.solve(self.input_text)
+        solution = self.module.solve(self.input_text, 20)
         self.assertEqual(self.expected, solution)
+
+    def test_solver_short_circuits_after_finding_match(self):
+        more_test_input = [
+            "initial state: ..#..",
+            "",
+            "..#.. => #",
+        ]
+
+        with patch.object(PlantPots, "advance",
+                          return_value=PlantPots("..#..")) as mock_method:
+            solution = self.module.solve(more_test_input, 50_000_000_000)
+            self.assertEqual(2, solution)
+            self.assertEqual(1, mock_method.call_count)
 
 
 if __name__ == '__main__':
