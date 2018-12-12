@@ -37,8 +37,14 @@ def find_time_with_closest_fit(rescue_message):
             last_size = new_size
             new_size = rescue_message.size
 
-        rescue_message.advance(-interval)  # reverse to get back to best
-        new_size = last_size  # reset new_distance ready for next loop
-        best_time -= interval  # track reversed amount
+        if interval == 1:
+            rescue_message.advance(-interval)
+            best_time -= interval
+            break
+
+        rescue_message.advance(-(interval * 2))  # reverse to get back to best
+        new_size = rescue_message.size  # reset new_size
+        last_size = new_size
+        best_time -= (interval * 2)  # track reversed amount
 
     return best_time
