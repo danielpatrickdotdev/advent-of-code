@@ -38,10 +38,8 @@ def get_best_square(grid):
                     best_y = y
                     best_size = size
 
-        if size > (best_size + 5):
-            # accept we're probably not going to improve
-            # yes, this is terribly naive
-            break
+        # Uncomment the following line to get runtime down to ~1 sec
+        # if size > (best_size + 5): break
 
     return (best_x + 1, best_y + 1, best_size)
 
