@@ -3,9 +3,22 @@
 
 from pathlib import Path
 
+from .common import move_carts, parse
+
 
 def solve(input_text):
-    return " ".join(input_text) + "!"
+    tracks, carts = parse(input_text)
+    crashed_carts = []
+
+    while True:
+        move_carts(carts, tracks)
+
+        crashed_carts = [cart for cart in carts if cart.has_crashed()]
+
+        if len(crashed_carts) >= 1:
+            break
+
+    return "{},{}".format(crashed_carts[0].x, crashed_carts[0].y)
 
 
 if __name__ == '__main__':
