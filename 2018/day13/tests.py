@@ -6,6 +6,7 @@ import unittest
 
 from shared.utils import get_input
 from . import solution1, solution2
+from .tracks import Tracks
 
 
 SOLUTION_DIR = Path(__file__).parent
@@ -27,6 +28,25 @@ class TestSolution(unittest.TestCase):
             )
         self.input_path = SOLUTION_DIR.joinpath(self.input_filename)
         self.input_text = get_input(self.input_path)
+
+
+class TestValues:
+    initial_tracks = [
+        ["/",  "-", "-",  "-", "\\", " ", " ", " ",  " ", " ",  " ", " ", " "],
+        ["|",  " ", " ",  " ", "|",  " ", " ", "/",  "-", "-",  "-", "-", "\\"],
+        ["|",  " ", "/",  "-", "+",  "-", "-", "+",  "-", "\\", " ", " ", "|"],
+        ["|",  " ", "|",  " ", "|",  " ", " ", "|",  " ", "|",  " ", " ", "|"],
+        ["\\", "-", "+",  "-", "/",  " ", " ", "\\", "-", "+",  "-", "-", "/"],
+        [" ",  " ", "\\", "-", "-",  "-", "-", "-",  "-", "/",  " ", " ", " "],
+    ]
+
+
+class TestTracks(unittest.TestCase, TestValues):
+    input_filename = "test_input.txt"
+
+    def test_get(self):
+        tracks = Tracks(self.initial_tracks)
+        self.assertEqual("-", tracks.get(1, 0))
 
 
 class TestSolution1(TestSolution):
