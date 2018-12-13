@@ -211,7 +211,8 @@ class TestSolution1(TestSolution):
 
 class TestSolution2(TestSolution):
     module = solution2
-    expected = "lorem ipsum?"
+    input_filename = "test_input2.txt"
+    expected = "6,4"
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)
