@@ -5,7 +5,7 @@ from pathlib import Path
 import unittest
 
 from shared.utils import get_input
-from . import solution1, solution2
+from . import solution1, solution2, common
 from .tracks import Tracks
 from .cart import Cart
 
@@ -32,6 +32,14 @@ class TestSolution(unittest.TestCase):
 
 
 class TestValues:
+    initial_data = [
+        ["/",  "-", ">",  "-", "\\", " ", " ", " ",  " ", " ",  " ", " ", " "],
+        ["|",  " ", " ",  " ", "|",  " ", " ", "/",  "-", "-",  "-", "-", "\\"],
+        ["|",  " ", "/",  "-", "+",  "-", "-", "+",  "-", "\\", " ", " ", "|"],
+        ["|",  " ", "|",  " ", "|",  " ", " ", "|",  " ", "v",  " ", " ", "|"],
+        ["\\", "-", "+",  "-", "/",  " ", " ", "\\", "-", "+",  "-", "-", "/"],
+        [" ",  " ", "\\", "-", "-",  "-", "-", "-",  "-", "/",  " ", " ", " "],
+    ]
     initial_tracks = [
         ["/",  "-", "-",  "-", "\\", " ", " ", " ",  " ", " ",  " ", " ", " "],
         ["|",  " ", " ",  " ", "|",  " ", " ", "/",  "-", "-",  "-", "-", "\\"],
@@ -107,6 +115,89 @@ class TestTracks(unittest.TestCase, TestValues):
     def test_get(self):
         tracks = Tracks(self.initial_tracks)
         self.assertEqual("-", tracks.get(1, 0))
+
+
+class TestCommon(unittest.TestCase, TestValues):
+    module = common
+
+    def test_get_missing_track(self):
+        to_test = [
+            ([[" ", "|", " "], ["-", "<", "-"], [" ", "|", " "]], "+"),
+            ([[" ", "\\", " "], ["-", "<", "-"], [" ", "\\", " "]], "+"),
+            ([[" ", "\\", " "], ["-", "<", "-"], [" ", "|", " "]], "+"),
+            ([[" ", "\\", " "], ["-", "<", "-"], [" ", "/", " "]], "+"),
+            ([[" ", "/", " "], ["-", "<", "-"], [" ", "/", " "]], "+"),
+            ([[" ", "|", " "], ["-", "<", "-"], [" ", "/", " "]], "+"),
+            ([[" ", "/", " "], ["-", "<", "-"], [" ", "|", " "]], "+"),
+            ([[" ", " ", " "], ["-", "<", "-"], [" ", " ", " "]], "-"),
+            ([["-", "-", "-"], ["-", "<", "-"], ["-", "-", "-"]], "-"),
+            ([[" ", " ", " "], ["\\", "<", "-"], [" ", " ", " "]], "-"),
+            ([[" ", " ", " "], ["/", "<", "-"], [" ", " ", " "]], "-"),
+            ([[" ", " ", " "], ["/", "<", "\\"], [" ", " ", " "]], "-"),
+            ([[" ", " ", " "], ["-", "<", "\\"], [" ", " ", " "]], "-"),
+            ([[" ", " ", " "], ["\\", "<", "\\"], [" ", " ", " "]], "-"),
+            ([[" ", " ", " "], ["\\", "<", "/"], [" ", " ", " "]], "-"),
+            ([[" ", " ", " "], ["-", "<", "/"], [" ", " ", " "]], "-"),
+            ([[" ", " ", " "], ["/", "<", "/"], [" ", " ", " "]], "-"),
+            ([[" ", "|", " "], [" ", "^", " "], [" ", "|", " "]], "|"),
+            ([[" ", "|", "|"], ["\\", "^", "|"], ["|", "|", "|"]], "|"),
+            ([[" ", "|", " "], [" ", "^", " "], [" ", "/", " "]], "|"),
+            ([[" ", "/", " "], [" ", "^", " "], [" ", "|", " "]], "|"),
+            ([[" ", "/", " "], [" ", "^", " "], [" ", "/", " "]], "|"),
+            ([[" ", "/", " "], [" ", "^", " "], [" ", "\\", " "]], "|"),
+            ([[" ", "\\", " "], [" ", "^", " "], [" ", "/", " "]], "|"),
+            ([[" ", "\\", " "], [" ", "^", " "], [" ", "|", " "]], "|"),
+            ([[" ", "\\", " "], [" ", "^", " "], [" ", "\\", " "]], "|"),
+            ([[" ", "|", " "], [" ", "^", " "], [" ", "\\", " "]], "|"),
+        ]
+        for data, expected in to_test:
+            self.assertEqual(
+                expected, self.module.get_missing_track(data, 1, 1)
+            )
+
+    def test_parser(self):
+        tracks, carts = self.module.parse(self.initial_data)
+        self.assertEqual(self.initial_tracks, tracks.data)
+        self.assertEqual(2, len(carts))
+        self.assertCountEqual(
+            ["2, 0, >", "9, 3, v"],
+            [str(cart) for cart in carts]
+        )
+
+    def test_move_carts(self):
+        tracks = Tracks(self.initial_tracks)
+        carts = [Cart(0, 0, ">"), Cart(4, 0, "<")]
+        self.module.move_carts(carts, tracks)
+
+        self.assertEqual("1, 0, >", str(carts[0]))
+        self.assertFalse(carts[0].has_crashed())
+        self.assertEqual("3, 0, <", str(carts[1]))
+        self.assertFalse(carts[1].has_crashed())
+
+        self.module.move_carts(carts, tracks)
+
+        self.assertEqual("2, 0, >", str(carts[0]))
+        self.assertTrue(carts[0].has_crashed())
+        self.assertEqual("2, 0, <", str(carts[1]))
+        self.assertTrue(carts[1].has_crashed())
+
+    def test_move_carts2(self):
+        track_arg = [
+            "/""-""-""-""\\"" "" ",
+            "|"" "" "" ""|"" "" ",
+            "|"" ""/""-""+""-""\\",
+            "|"" ""|"" ""|"" ""|",
+            "\\""-""+""-""/"" ""|",
+            " "" ""|"" "" "" ""|",
+            " "" ""\\""-""-""-""/",
+        ]
+        tracks = Tracks(track_arg)
+        carts = [Cart(1, 4, ">"), Cart(3, 4, "<")]
+        self.module.move_carts(carts, tracks)
+        self.assertEqual("2, 4, ^", str(carts[0]))
+        self.assertTrue(carts[0].has_crashed())
+        self.assertEqual("2, 4, v", str(carts[1]))
+        self.assertTrue(carts[1].has_crashed())
 
 
 class TestSolution1(TestSolution):
