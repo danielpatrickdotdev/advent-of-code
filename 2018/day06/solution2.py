@@ -32,4 +32,4 @@ if __name__ == '__main__':
     end = timer()
     print()
     print("-" * 80)
-    print("Time elapsed: {:.3f}".format(end - start))
+    print("Time elapsed: {:.3f}s".format(end - start))
