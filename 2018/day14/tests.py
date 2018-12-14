@@ -18,10 +18,12 @@ class TestSolution1(unittest.TestCase):
 
 class TestSolution2(unittest.TestCase):
     module = solution2
-    expected = "lorem ipsum?"
 
     def test_solver(self):
-        self.assertEqual(self.expected, self.module.solve("lorem ipsum"))
+        self.assertEqual(9, self.module.solve("51589"))
+        self.assertEqual(5, self.module.solve("01245"))
+        self.assertEqual(18, self.module.solve("92510"))
+        self.assertEqual(2018, self.module.solve("59414"))
 
 
 if __name__ == '__main__':
