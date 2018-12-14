@@ -16,7 +16,7 @@ def make_hot_chocolate(recipes, elf1, elf2):
     recipes.append(new_recipe_total % 10)
     elf1 = update_elf_pos(recipes, elf1)
     elf2 = update_elf_pos(recipes, elf2)
-    return (recipes, elf1, elf2)
+    return (elf1, elf2)
 
 
 def solve(input_value):
@@ -24,7 +24,7 @@ def solve(input_value):
     elf1 = 0
     elf2 = 1
     while len(recipes) < (input_value + 10):
-        recipes, elf1, elf2 = make_hot_chocolate(recipes, elf1, elf2)
+        elf1, elf2 = make_hot_chocolate(recipes, elf1, elf2)
 
     return "".join(str(val) for val in recipes[input_value: input_value + 10])
 

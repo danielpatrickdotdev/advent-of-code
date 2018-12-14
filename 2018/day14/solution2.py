@@ -16,7 +16,7 @@ def make_hot_chocolate(recipes, elf1, elf2):
     recipes.append(new_recipe_total % 10)
     elf1 = update_elf_pos(recipes, elf1)
     elf2 = update_elf_pos(recipes, elf2)
-    return (recipes, elf1, elf2)
+    return (elf1, elf2)
 
 
 def solve(input_value):
@@ -29,7 +29,7 @@ def solve(input_value):
     length2 = len(input_value) + 1
 
     while input_value not in (recipes[-length1:], recipes[-length2: -1]):
-        recipes, elf1, elf2 = make_hot_chocolate(recipes, elf1, elf2)
+        elf1, elf2 = make_hot_chocolate(recipes, elf1, elf2)
 
     if recipes[-length1:] == input_value:
         return len(recipes) - length1
