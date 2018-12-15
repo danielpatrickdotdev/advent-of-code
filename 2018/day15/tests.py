@@ -6,6 +6,7 @@ import unittest
 
 from shared.utils import get_input
 from . import solution1, solution2
+from .caves import Caves
 
 
 SOLUTION_DIR = Path(__file__).parent
@@ -27,6 +28,41 @@ class TestSolution(unittest.TestCase):
             )
         self.input_path = SOLUTION_DIR.joinpath(self.input_filename)
         self.input_text = get_input(self.input_path)
+
+
+class TestCaves(unittest.TestCase):
+    example_input1 = [
+        "#########",
+        "#G..G..G#",
+        "#.......#",
+        "#.......#",
+        "#G..E..G#",
+        "#.......#",
+        "#.......#",
+        "#G..G..G#",
+        "#########",
+    ]
+    example_cave1 = [
+        ["#", "#", "#", "#", "#", "#", "#", "#", "#"],
+        ["#", "G", ".", ".", "G", ".", ".", "G", "#"],
+        ["#", ".", ".", ".", ".", ".", ".", ".", "#"],
+        ["#", ".", ".", ".", ".", ".", ".", ".", "#"],
+        ["#", "G", ".", ".", "E", ".", ".", "G", "#"],
+        ["#", ".", ".", ".", ".", ".", ".", ".", "#"],
+        ["#", ".", ".", ".", ".", ".", ".", ".", "#"],
+        ["#", "G", ".", ".", "G", ".", ".", "G", "#"],
+        ["#", "#", "#", "#", "#", "#", "#", "#", "#"],
+    ]
+    example_elves1 = [(4, 4)]
+    example_goblins1 = [
+        (1, 1), (4, 1), (7, 1), (1, 4), (7, 4), (1, 7), (4, 7), (7, 7)
+    ]
+
+    def test_constructor(self):
+        caves = Caves(self.example_input1)
+        self.assertEqual(self.example_cave1, caves.grid)
+        self.assertEqual(self.example_elves1, caves.elves)
+        self.assertEqual(self.example_goblins1, caves.goblins)
 
 
 class TestSolution1(TestSolution):
