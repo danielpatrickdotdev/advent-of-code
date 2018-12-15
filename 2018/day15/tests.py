@@ -117,17 +117,18 @@ class TestCaves(unittest.TestCase):
         "#G..G..G#",
         "#########",
     ]
-    example_cave1 = [
-        ["#", "#", "#", "#", "#", "#", "#", "#", "#"],
-        ["#", "G", ".", ".", "G", ".", ".", "G", "#"],
-        ["#", ".", ".", ".", ".", ".", ".", ".", "#"],
-        ["#", ".", ".", ".", ".", ".", ".", ".", "#"],
-        ["#", "G", ".", ".", "E", ".", ".", "G", "#"],
-        ["#", ".", ".", ".", ".", ".", ".", ".", "#"],
-        ["#", ".", ".", ".", ".", ".", ".", ".", "#"],
-        ["#", "G", ".", ".", "G", ".", ".", "G", "#"],
-        ["#", "#", "#", "#", "#", "#", "#", "#", "#"],
     ]
+    example_cave1 = (
+        "#########\n"
+        "#G..G..G#\n"
+        "#.......#\n"
+        "#.......#\n"
+        "#G..E..G#\n"
+        "#.......#\n"
+        "#.......#\n"
+        "#G..G..G#\n"
+        "#########"
+    )
     example_elves1 = [(4, 4)]
     example_goblins1 = [
         (1, 1), (4, 1), (7, 1), (1, 4), (7, 4), (1, 7), (4, 7), (7, 7)
@@ -135,7 +136,7 @@ class TestCaves(unittest.TestCase):
 
     def test_constructor(self):
         caves = Caves(self.example_input1)
-        self.assertEqual(self.example_cave1, caves.grid)
+        self.assertEqual(self.example_cave1, str(caves))
         self.assertEqual(self.example_elves1, caves.elves)
         self.assertEqual(self.example_goblins1, caves.goblins)
 

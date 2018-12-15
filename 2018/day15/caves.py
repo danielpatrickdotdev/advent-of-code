@@ -62,3 +62,6 @@ class Caves:
     def sort(self):
         self.elves.sort(key=itemgetter(1, 0))
         self.goblins.sort(key=itemgetter(1, 0))
+
+    def __str__(self):
+        return "\n".join("".join(row) for row in self.grid)
