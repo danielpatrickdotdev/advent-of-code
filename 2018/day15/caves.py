@@ -4,7 +4,9 @@
 from operator import itemgetter
 
 
-class ElfOrGoblin:
+class CombatantBaseClass:
+    letter = None
+
     def __init__(self, x, y):
         self.is_dead = False
         self.hit_points = 200
@@ -22,6 +24,17 @@ class ElfOrGoblin:
 
     def attack(self, other):
         other.damage(self.attack_power)
+
+    def __str__(self):
+        return self.letter
+
+
+class Elf(CombatantBaseClass):
+    letter = "E"
+
+
+class Goblin(CombatantBaseClass):
+    letter = "G"
 
 
 class Caves:

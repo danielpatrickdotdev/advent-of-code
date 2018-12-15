@@ -6,7 +6,7 @@ import unittest
 
 from shared.utils import get_input
 from . import solution1, solution2
-from .caves import Caves, ElfOrGoblin
+from .caves import Caves, CombatantBaseClass, Elf, Goblin
 
 
 SOLUTION_DIR = Path(__file__).parent
@@ -30,51 +30,79 @@ class TestSolution(unittest.TestCase):
         self.input_text = get_input(self.input_path)
 
 
-class TestElfOrGoblin(unittest.TestCase):
+class Orc(CombatantBaseClass):
+    letter = "O"
+
+
+class Pixie(CombatantBaseClass):
+    letter = "P"
+
+
+class TestCombatantBaseClass(unittest.TestCase):
+
     def test_constructor(self):
-        goblin = ElfOrGoblin(0, 1)
-        self.assertEqual(0, goblin.x)
-        self.assertEqual(1, goblin.y)
-        self.assertEqual(200, goblin.hit_points)
-        self.assertEqual(3, goblin.attack_power)
-        self.assertFalse(goblin.is_dead)
+        pixie = Pixie(0, 1)
+        self.assertEqual(0, pixie.x)
+        self.assertEqual(1, pixie.y)
+        self.assertEqual(200, pixie.hit_points)
+        self.assertEqual(3, pixie.attack_power)
+        self.assertFalse(pixie.is_dead)
 
     def test_move(self):
-        goblin = ElfOrGoblin(0, 1)
-        goblin.move(4, 5)
-        self.assertEqual(4, goblin.x)
-        self.assertEqual(5, goblin.y)
+        pixie = Pixie(0, 1)
+        pixie.move(4, 5)
+        self.assertEqual(4, pixie.x)
+        self.assertEqual(5, pixie.y)
 
     def test_damage(self):
-        goblin = ElfOrGoblin(0, 1)
-        goblin.hit_points = 1
-        goblin.damage(3)
+        pixie = Pixie(0, 1)
+        pixie.hit_points = 1
+        pixie.damage(3)
 
-        self.assertEqual(0, goblin.hit_points)
-        self.assertTrue(goblin.is_dead)
+        self.assertEqual(0, pixie.hit_points)
+        self.assertTrue(pixie.is_dead)
 
-    def test_attack(self):
-        goblin = ElfOrGoblin(0, 1)
-        elf = ElfOrGoblin(1, 1)
-        goblin.attack(goblin)
-        self.assertEqual(197, goblin.hit_points)
-        self.assertFalse(goblin.is_dead)
+    def test_attack(sorc):
+        orc = Orc(1, 1)
+        pixie = Pixie(0, 1)
+        pixie.attack(pixie)
+        sorc.assertEqual(197, pixie.hit_points)
+        sorc.assertFalse(pixie.is_dead)
 
-        elf.hit_points = 3
-        goblin.attack(elf)
-        self.assertEqual(0, elf.hit_points)
-        self.assertTrue(elf.is_dead)
+        orc.hit_points = 3
+        pixie.attack(orc)
+        sorc.assertEqual(0, orc.hit_points)
+        sorc.assertTrue(orc.is_dead)
 
-        elf2 = ElfOrGoblin(1,1)
-        elf2.attack_power = 2
-        elf2.attack(goblin)
-        self.assertEqual(195, goblin.hit_points)
-        self.assertFalse(goblin.is_dead)
+        orc2 = Orc(1, 1)
+        orc2.attack_power = 2
+        orc2.attack(pixie)
+        sorc.assertEqual(195, pixie.hit_points)
+        sorc.assertFalse(pixie.is_dead)
 
-        goblin.hit_points = 1
-        elf2.attack(goblin)
-        self.assertEqual(0, goblin.hit_points)
-        self.assertTrue(goblin.is_dead)
+        pixie.hit_points = 1
+        orc2.attack(pixie)
+        sorc.assertEqual(0, pixie.hit_points)
+        sorc.assertTrue(pixie.is_dead)
+
+    def test_str(self):
+        orc = Orc(1, 1)
+        self.assertEqual("O", str(orc))
+
+        pixie = Pixie(0, 1)
+        self.assertEqual("P", str(pixie))
+
+
+class TestElf(unittest.TestCase):
+    def test_str(self):
+        elf = Elf(1, 1)
+        self.assertEqual("E", str(elf))
+
+
+class TestGoblin(unittest.TestCase):
+    def test_str(self):
+        goblin = Goblin(0, 1)
+        self.assertEqual("G", str(goblin))
 
 
 class TestCaves(unittest.TestCase):
