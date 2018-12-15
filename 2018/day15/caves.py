@@ -4,6 +4,26 @@
 from operator import itemgetter
 
 
+class ElfOrGoblin:
+    def __init__(self, x, y):
+        self.is_dead = False
+        self.hit_points = 200
+        self.attack_power = 3
+        self.x = x
+        self.y = y
+
+    def move(self, x, y):
+        self.x = x
+        self.y = y
+
+    def damage(self, power):
+        self.hit_points = max(0, self.hit_points - power)
+        self.is_dead = self.hit_points == 0
+
+    def attack(self, other):
+        other.damage(self.attack_power)
+
+
 class Caves:
     def __init__(self, data):
         self.grid = []
