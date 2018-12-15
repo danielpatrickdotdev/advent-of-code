@@ -48,6 +48,13 @@ class TestCombatantBaseClass(unittest.TestCase):
         self.assertEqual(3, pixie.attack_power)
         self.assertFalse(pixie.is_dead)
 
+    def test_get_location(self):
+        pixie = Pixie(0, 1)
+        self.assertEqual((0, 1), pixie.get_location())
+
+        pixie.move(1, 1)
+        self.assertEqual((1, 1), pixie.get_location())
+
     def test_move(self):
         pixie = Pixie(0, 1)
         pixie.move(4, 5)
