@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from operator import itemgetter
+from operator import attrgetter
 
 
 class CombatantBaseClass:
@@ -53,18 +53,25 @@ class Caves:
             for y in range(len(data)):
                 cell_contents = data[y][x]
 
-                col.append(cell_contents)
 
                 if cell_contents == "G":
-                    self.goblins.append((x, y))
+                    new_goblin = Goblin(x, y)
+                    self.goblins.append(new_goblin)
+                    col.append(new_goblin)
                 elif cell_contents == "E":
-                    self.elves.append((x, y))
+                    new_elf = Elf(x, y)
+                    self.elves.append(new_elf)
+                    col.append(new_elf)
+                else:
+                    col.append(cell_contents)
 
         self.sort()
 
     def sort(self):
-        self.elves.sort(key=itemgetter(1, 0))
-        self.goblins.sort(key=itemgetter(1, 0))
+        self.elves.sort(key=attrgetter("y", "x"))
+        self.goblins.sort(key=attrgetter("y", "x"))
 
     def __str__(self):
-        return "\n".join("".join(row) for row in self.grid)
+        return "\n".join(
+            "".join(str(item) for item in row) for row in self.grid
+        )

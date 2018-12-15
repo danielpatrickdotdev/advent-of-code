@@ -136,7 +136,7 @@ class TestCaves(unittest.TestCase):
         "#G..G..G#\n"
         "#########"
     )
-    example_elves1 = [(4, 4)]
+    example_elf1 = (4, 4)
     example_goblins1 = [
         (1, 1), (4, 1), (7, 1), (1, 4), (7, 4), (1, 7), (4, 7), (7, 7)
     ]
@@ -144,8 +144,11 @@ class TestCaves(unittest.TestCase):
     def test_constructor(self):
         caves = Caves(self.example_input1)
         self.assertEqual(self.example_cave1, str(caves))
-        self.assertEqual(self.example_elves1, caves.elves)
-        self.assertEqual(self.example_goblins1, caves.goblins)
+        self.assertEqual(1, len(caves.elves))
+        self.assertEqual(self.example_elf1, caves.elves[0].get_location())
+        self.assertEqual(8, len(caves.goblins))
+        for n, coords in enumerate(self.example_goblins1):
+            self.assertEqual(coords, caves.goblins[n].get_location())
 
 
 class TestSolution1(TestSolution):
