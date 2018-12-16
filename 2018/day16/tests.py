@@ -32,6 +32,13 @@ class TestSolution(unittest.TestCase):
 class TestSolution1(TestSolution):
     module = solution1
     expected = 1
+    test_values = [
+        [[3, 2, 1, 1], [9, 2, 1, 2], [3, 2, 2, 1]],
+        [[5, 3, 4, 6], [10, 7, 1, 1], [5, 7, 4, 6]],
+    ]
+
+    def test_parser(self):
+        self.assertEqual(self.test_values, self.module.parse(self.input_text))
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)
