@@ -6,6 +6,7 @@ import unittest
 
 from shared.utils import get_input
 from . import solution1, solution2
+from .survey import Survey
 
 
 SOLUTION_DIR = Path(__file__).parent
@@ -27,6 +28,48 @@ class TestSolution(unittest.TestCase):
             )
         self.input_path = SOLUTION_DIR.joinpath(self.input_filename)
         self.input_text = get_input(self.input_path)
+
+
+class DataForTesting:
+    test_input = [
+        "x=495, y=2..7",
+        "y=7, x=495..501",
+        "x=501, y=3..7",
+        "x=498, y=2..4",
+        "x=506, y=1..2",
+        "x=498, y=10..13",
+        "x=504, y=10..13",
+        "y=13, x=498..504",
+    ]
+    initial_survey = (
+        "......+.......\n"
+        "............#.\n"
+        ".#..#.......#.\n"
+        ".#..#..#......\n"
+        ".#..#..#......\n"
+        ".#.....#......\n"
+        ".#.....#......\n"
+        ".#######......\n"
+        "..............\n"
+        "..............\n"
+        "....#.....#...\n"
+        "....#.....#...\n"
+        "....#.....#...\n"
+        "....#######..."
+    )
+
+
+class TestSurvey(unittest.TestCase, DataForTesting):
+    def setUp(self):
+        self.oldMaxDiff = self.maxDiff
+
+    def test_constructor(self):
+        self.maxDiff = None
+        survey = Survey(self.test_input)
+        self.assertEqual(self.initial_survey, str(survey))
+
+    def tearDown(self):
+        self.maxDiff = self.oldMaxDiff
 
 
 class TestSolution1(TestSolution):
