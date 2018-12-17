@@ -76,45 +76,38 @@ class Survey:
     def set(self, x, y, value):
         self.grid[y][x] = value
 
+    def get_left_boundary(self, x, y):
+        while self.get(x, y) != "#" and self.get(x, y + 1) in "#~":
+            x -= 1
+        return x
+
+    def get_right_boundary(self, x, y):
+        while self.get(x, y) != "#" and self.get(x, y + 1) in "#~":
+            x += 1
+        return x
+
     def fill(self, x, y):
         if x == 18 and y == (self.height - 95):
             self.set(x, y - 2, "*")
-        x1 = x - 1
-        x2 = x + 1
-        bound = True  # Has # at both ends
 
         # Get left boundary of area to fill
-        while x1 >= 0 and \
-                self.get(x1, y) != "#" and self.get(x1, y + 1) in "#~":
-            x1 -= 1
+        x1 = self.get_left_boundary(x - 1, y)
+        x2 = self.get_right_boundary(x + 1, y)
 
-        # Check if bound by clay (#) to the left or empty square (.) below
-        if x1 < 0 or self.get(x1, y) != "#":
-            bound = False
+        # Check whether bound by clay (#) to the sides or overflowing into
+        # empty square (.) below
+        bound = x1 >= 0 and self.get(x1, y) == "#" and \
+            x2 < self.width and self.get(x2, y) == "#"
 
-        # Get right boundary of area to fill
-        while x2 < self.width and \
-                self.get(x2, y) != "#" and self.get(x2, y + 1) in "#~":
-            x2 += 1
+        if bound or self.get(x1, y) != ".":
+            x1 += 1
 
-        # Check if bound by clay (#) to the right or empty square (.) below
-        if x2 >= self.width or self.get(x2, y) != "#":
-            bound = False
+        if bound or self.get(x2, y) != ".":
+            x2 -= 1
 
-        if bound:
-            # Standing water
-            char = "~"
-        else:
-            # Overflowing
-            char = "|"
-            if x1 >= 0 and self.get(x1, y) == ".":
-                # No clay to the left
-                self.set(x1, y, "|")
-            if x2 < self.width and self.get(x2, y) == ".":
-                # No clay to the right
-                self.set(x2, y, "|")
+        char = "~" if bound else "|"
 
-        for x in range(x1 + 1, x2):
+        for x in range(x1, x2 + 1):
             self.set(x, y, char)
 
         return bound
