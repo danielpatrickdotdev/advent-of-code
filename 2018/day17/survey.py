@@ -9,57 +9,18 @@ regex = re.compile("^([xy])=(\d+), ([xy])=(\d+)\.\.(\d+)$")
 
 class Survey:
     def __init__(self, data):
+        self.max_x = self.min_x = self.min_y = self.max_y = None
         to_fill = []
-        max_x = min_x = min_y = max_y = None
 
         for line in data:
-            match = regex.match(line)
-            axis1, coord1, axis2, range_start, range_end = match.groups()
-            coord1 = int(coord1)
-            range_start = int(range_start)
-            range_end = int(range_end)
+            to_fill.extend(self._parse_line(line))
 
-            if range_start > range_end:
-                raise Exception("You've got to be shitting me, "
-                                "I've not prepared for that")
+        self.width = self.max_x - self.min_x + 3
+        self.height = self.max_y + 1
 
-            if axis1 == "x":
-                to_fill.extend(
-                    [(coord1, y) for y in range(range_start, range_end + 1)]
-                )
+        self._create_grid(to_fill)
 
-                if max_x is None or coord1 > max_x:
-                    max_x = coord1
-
-                if min_x is None or coord1 < min_x:
-                    min_x = coord1
-
-                if min_y is None or range_start < min_y:
-                    min_y = range_start
-
-                if max_y is None or range_end > max_y:
-                    max_y = range_end
-
-            else:
-                if min_y is None or coord1 < min_y:
-                    min_y = coord1
-
-                if max_y is None or coord1 > max_y:
-                    max_y = coord1
-
-                if min_x is None or range_end < min_x:
-                    min_x = range_end
-
-                if max_x is None or range_end > max_x:
-                    max_x = range_end
-
-                to_fill.extend(
-                    [(x, coord1) for x in range(range_start, range_end + 1)]
-                )
-
-        self.width = max_x - min_x + 3
-        self.height = max_y + 1
-
+    def _create_grid(self, to_fill):
         self.grid = [
             ["." for n in range(self.width)]
             for row in range(self.height)
@@ -67,14 +28,47 @@ class Survey:
 
         # create clay seams
         for x, y in to_fill:
-            self.set(x - min_x + 1, y, "#")
+            self.set(x - self.min_x + 1, y, "#")
 
         # add spring
-        self.origin = (x, y) = (500 - min_x + 1, 0)
+        self.origin = (x, y) = (500 - self.min_x + 1, 0)
         self.set(x, y, "+")
 
-        # store value as we need it for count_water
-        self.min_y = min_y
+    def _update_min_and_max_x(self, value):
+        if self.min_x is None or value < self.min_x:
+            self.min_x = value
+
+        if self.max_x is None or value > self.max_x:
+            self.max_x = value
+
+    def _update_min_and_max_y(self, value):
+        if self.min_y is None or value < self.min_y:
+            self.min_y = value
+
+        if self.max_y is None or value > self.max_y:
+            self.max_y = value
+
+    def _parse_line(self, line):
+        match = regex.match(line)
+        axis1, coord1, axis2, range_start, range_end = match.groups()
+        coord1 = int(coord1)
+        range_start = int(range_start)
+        range_end = int(range_end)
+
+        if range_start > range_end:
+            raise Exception("You've got to be shitting me, "
+                            "I've not prepared for that")
+
+        if axis1 == "x":
+            self._update_min_and_max_x(coord1)
+            self._update_min_and_max_y(range_start)
+            self._update_min_and_max_y(range_end)
+            return [(coord1, y) for y in range(range_start, range_end + 1)]
+        else:
+            self._update_min_and_max_y(coord1)
+            self._update_min_and_max_x(range_start)
+            self._update_min_and_max_x(range_end)
+            return [(x, coord1) for x in range(range_start, range_end + 1)]
 
     def get(self, x, y):
         return self.grid[y][x]
