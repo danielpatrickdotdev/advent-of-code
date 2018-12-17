@@ -39,7 +39,7 @@ class Survey:
 
             else:
                 if max_y is None or coord1 > max_y:
-                    max_x = coord1
+                    max_y = coord1
 
                 if min_x is None or range_end < min_x:
                     min_x = range_end
