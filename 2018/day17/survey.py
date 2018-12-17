@@ -61,7 +61,8 @@ class Survey:
             self.grid[y][x - min_x + 1] = "#"
 
         # add spring
-        self.grid[0][500 - min_x + 1] = "+"
+        self.origin = (x, y) = (500 - min_x + 1, 0)
+        self.grid[y][x] = "+"
 
     def __str__(self):
         return "\n".join("".join(row) for row in self.grid)

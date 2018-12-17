@@ -67,6 +67,7 @@ class TestSurvey(unittest.TestCase, DataForTesting):
         self.maxDiff = None
         survey = Survey(self.test_input)
         self.assertEqual(self.initial_survey, str(survey))
+        self.assertEqual((6, 0), survey.origin)
 
     def tearDown(self):
         self.maxDiff = self.oldMaxDiff
