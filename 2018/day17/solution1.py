@@ -3,9 +3,13 @@
 
 from pathlib import Path
 
+from .survey import Survey
+
 
 def solve(input_text):
-    return " ".join(input_text) + "!"
+    survey = Survey(input_text)
+    survey.flow()
+    return survey.count_water()
 
 
 if __name__ == '__main__':

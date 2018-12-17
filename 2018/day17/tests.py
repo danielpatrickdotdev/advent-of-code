@@ -57,6 +57,22 @@ class DataForTesting:
         "....#.....#...\n"
         "....#######..."
     )
+    final_survey = (
+        "......+.......\n"
+        "......|.....#.\n"
+        ".#..#||||...#.\n"
+        ".#..#~~#|.....\n"
+        ".#..#~~#|.....\n"
+        ".#~~~~~#|.....\n"
+        ".#~~~~~#|.....\n"
+        ".#######|.....\n"
+        "........|.....\n"
+        "...|||||||||..\n"
+        "...|#~~~~~#|..\n"
+        "...|#~~~~~#|..\n"
+        "...|#~~~~~#|..\n"
+        "...|#######|.."
+    )
 
 
 class TestSurvey(unittest.TestCase, DataForTesting):
@@ -68,6 +84,26 @@ class TestSurvey(unittest.TestCase, DataForTesting):
         survey = Survey(self.test_input)
         self.assertEqual(self.initial_survey, str(survey))
         self.assertEqual((6, 0), survey.origin)
+
+    def test_flow(self):
+        self.maxDiff = None
+        survey = Survey(self.test_input)
+        survey.flow()
+
+        self.assertEqual(self.final_survey, str(survey))
+
+    def test_count_water(self):
+        survey = Survey(self.test_input)
+        survey.flow()
+
+        self.assertEqual(57, survey.count_water())
+
+    def test_drain(self):
+        survey = Survey(self.test_input)
+        survey.flow()
+        survey.drain()
+
+        self.assertEqual(29, survey.count_water())
 
     def tearDown(self):
         self.maxDiff = self.oldMaxDiff
@@ -84,7 +120,7 @@ class TestSolution1(TestSolution):
 
 class TestSolution2(TestSolution):
     module = solution2
-    expected = "lorem ipsum?"
+    expected = 29
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)
