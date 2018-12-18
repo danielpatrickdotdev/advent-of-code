@@ -1,11 +1,41 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from collections import Counter
 from pathlib import Path
+
+from .lumber import LumberCollectionArea
+
+
+def score(area):
+    counts = Counter(str(area))
+    return counts["|"] * counts["#"]
 
 
 def solve(input_text):
-    return " ".join(input_text) + "?"
+    area = LumberCollectionArea(input_text)
+
+    previous_areas = []
+    repeated = False
+    n = 0
+
+    while n < 1_000_000_000:
+        area.update_squares()
+
+        if not repeated:
+            string = str(area)
+            if string in previous_areas:
+                repeated = True
+                repeats_after = n - previous_areas.index(string)
+                remaining = 1_000_000_000 - n
+                advance_by = (remaining // repeats_after) * repeats_after
+                n += advance_by
+            else:
+                previous_areas.append(string)
+
+        n += 1
+
+    return score(area)
 
 
 if __name__ == '__main__':
