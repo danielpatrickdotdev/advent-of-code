@@ -1,11 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from collections import Counter
 from pathlib import Path
 
+from .lumber import LumberCollectionArea
 
 def solve(input_text):
-    return " ".join(input_text) + "!"
+    area = LumberCollectionArea(input_text)
+    for n in range(10):
+        area.update_squares()
+
+    counts = Counter(str(area))
+    return counts["|"] * counts["#"]
 
 
 if __name__ == '__main__':
