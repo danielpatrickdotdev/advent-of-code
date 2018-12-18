@@ -62,6 +62,40 @@ class TestLumberCollectionArea(unittest.TestCase, ValuesToTest):
         area = LumberCollectionArea(self.test_input)
         self.assertEqual(self.initial_str, str(area))
 
+    def test_get(self):
+        values_to_test = [
+            (0, 0, "."),
+            (0, 4, "#"),
+            (0, 9, "."),
+            (4, 0, "."),
+            (9, 0, "."),
+            (9, 4, "|"),
+            (9, 9, "."),
+            (4, 9, "."),
+            (4, 4, "|")
+        ]
+        area = LumberCollectionArea(self.test_input)
+
+        for x, y, expected in values_to_test:
+            self.assertEqual(expected, area.get(x, y))
+
+    def test_get_surrounding_square_contents(self):
+        values_to_test = [
+            (0, 0, 0, 1, 2),
+            (0, 9, 1, 0, 2),
+            (9, 0, 1, 2, 0),
+            (9, 9, 2, 0, 1),
+            (5, 5, 4, 1, 3),
+        ]
+        area = LumberCollectionArea(self.test_input)
+
+        for x, y, num_trees, num_lumberyards, num_open in values_to_test:
+            surrounding = area.get_surrounding_square_contents(x, y)
+
+            self.assertEqual(num_trees, surrounding["|"])
+            self.assertEqual(num_lumberyards, surrounding["#"])
+            self.assertEqual(num_open, surrounding["."])
+
 
 class TestSolution1(TestSolution):
     module = solution1
