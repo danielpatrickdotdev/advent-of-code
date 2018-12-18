@@ -52,5 +52,11 @@ class LumberCollectionArea:
         else:
             return "."
 
+    def update_squares(self):
+        self.data = [
+            [self.change_square(x, y) for x in range(self.size)]
+            for y in range(self.size)
+        ]
+
     def __str__(self):
         return "\n".join("".join(line) for line in self.data)

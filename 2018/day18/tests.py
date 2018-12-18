@@ -55,6 +55,126 @@ class ValuesToTest:
         "|.||||..|.\n"
         "...#.|..|."
     )
+    str_at_minute1 = (
+        ".......##.\n"
+        "......|###\n"
+        ".|..|...#.\n"
+        "..|#||...#\n"
+        "..##||.|#|\n"
+        "...#||||..\n"
+        "||...|||..\n"
+        "|||||.||.|\n"
+        "||||||||||\n"
+        "....||..|."
+    )
+    str_at_minute2 = (
+        ".......#..\n"
+        "......|#..\n"
+        ".|.|||....\n"
+        "..##|||..#\n"
+        "..###|||#|\n"
+        "...#|||||.\n"
+        "|||||||||.\n"
+        "||||||||||\n"
+        "||||||||||\n"
+        ".|||||||||"
+    )
+    str_at_minute3 = (
+        ".......#..\n"
+        "....|||#..\n"
+        ".|.||||...\n"
+        "..###|||.#\n"
+        "...##|||#|\n"
+        ".||##|||||\n"
+        "||||||||||\n"
+        "||||||||||\n"
+        "||||||||||\n"
+        "||||||||||"
+    )
+    str_at_minute4 = (
+        ".....|.#..\n"
+        "...||||#..\n"
+        ".|.#||||..\n"
+        "..###||||#\n"
+        "...###||#|\n"
+        "|||##|||||\n"
+        "||||||||||\n"
+        "||||||||||\n"
+        "||||||||||\n"
+        "||||||||||"
+    )
+    str_at_minute5 = (
+        "....|||#..\n"
+        "...||||#..\n"
+        ".|.##||||.\n"
+        "..####|||#\n"
+        ".|.###||#|\n"
+        "|||###||||\n"
+        "||||||||||\n"
+        "||||||||||\n"
+        "||||||||||\n"
+        "||||||||||"
+    )
+    str_at_minute6 = (
+        "...||||#..\n"
+        "...||||#..\n"
+        ".|.###|||.\n"
+        "..#.##|||#\n"
+        "|||#.##|#|\n"
+        "|||###||||\n"
+        "||||#|||||\n"
+        "||||||||||\n"
+        "||||||||||\n"
+        "||||||||||"
+    )
+    str_at_minute7 = (
+        "...||||#..\n"
+        "..||#|##..\n"
+        ".|.####||.\n"
+        "||#..##||#\n"
+        "||##.##|#|\n"
+        "|||####|||\n"
+        "|||###||||\n"
+        "||||||||||\n"
+        "||||||||||\n"
+        "||||||||||"
+    )
+    str_at_minute8 = (
+        "..||||##..\n"
+        "..|#####..\n"
+        "|||#####|.\n"
+        "||#...##|#\n"
+        "||##..###|\n"
+        "||##.###||\n"
+        "|||####|||\n"
+        "||||#|||||\n"
+        "||||||||||\n"
+        "||||||||||"
+    )
+    str_at_minute9 = (
+        "..||###...\n"
+        ".||#####..\n"
+        "||##...##.\n"
+        "||#....###\n"
+        "|##....##|\n"
+        "||##..###|\n"
+        "||######||\n"
+        "|||###||||\n"
+        "||||||||||\n"
+        "||||||||||"
+    )
+    str_at_minute10 = (
+        ".||##.....\n"
+        "||###.....\n"
+        "||##......\n"
+        "|##.....##\n"
+        "|##.....##\n"
+        "|##....##|\n"
+        "||##.####|\n"
+        "||#####|||\n"
+        "||||#|||||\n"
+        "||||||||||"
+    )
 
 
 class TestLumberCollectionArea(unittest.TestCase, ValuesToTest):
@@ -109,6 +229,26 @@ class TestLumberCollectionArea(unittest.TestCase, ValuesToTest):
 
         for x, y, expected in values_to_test:
             self.assertEqual(expected, area.change_square(x, y))
+
+    def test_update_squares(self):
+        expected_values = [
+            self.str_at_minute1,
+            self.str_at_minute2,
+            self.str_at_minute3,
+            self.str_at_minute4,
+            self.str_at_minute5,
+            self.str_at_minute6,
+            self.str_at_minute7,
+            self.str_at_minute8,
+            self.str_at_minute9,
+            self.str_at_minute10
+        ]
+
+        area = LumberCollectionArea(self.test_input)
+
+        for expected in expected_values:
+            area.update_squares()
+            self.assertEqual(expected, str(area))
 
 
 class TestSolution1(TestSolution):
