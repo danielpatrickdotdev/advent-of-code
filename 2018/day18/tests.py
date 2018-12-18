@@ -6,6 +6,7 @@ import unittest
 
 from shared.utils import get_input
 from . import solution1, solution2
+from .lumber import LumberCollectionArea
 
 
 SOLUTION_DIR = Path(__file__).parent
@@ -27,6 +28,39 @@ class TestSolution(unittest.TestCase):
             )
         self.input_path = SOLUTION_DIR.joinpath(self.input_filename)
         self.input_text = get_input(self.input_path)
+
+
+class ValuesToTest:
+    test_input = [
+        ".#.#...|#.",
+        ".....#|##|",
+        ".|..|...#.",
+        "..|#.....#",
+        "#.#|||#|#|",
+        "...#.||...",
+        ".|....|...",
+        "||...#|.#|",
+        "|.||||..|.",
+        "...#.|..|.",
+    ]
+    initial_str = (
+        ".#.#...|#.\n"
+        ".....#|##|\n"
+        ".|..|...#.\n"
+        "..|#.....#\n"
+        "#.#|||#|#|\n"
+        "...#.||...\n"
+        ".|....|...\n"
+        "||...#|.#|\n"
+        "|.||||..|.\n"
+        "...#.|..|."
+    )
+
+
+class TestLumberCollectionArea(unittest.TestCase, ValuesToTest):
+    def test_constructor(self):
+        area = LumberCollectionArea(self.test_input)
+        self.assertEqual(self.initial_str, str(area))
 
 
 class TestSolution1(TestSolution):
