@@ -34,5 +34,23 @@ class LumberCollectionArea:
 
         return Counter(surrounding_square_contents)
 
+    def change_square(self, x, y):
+        contents = self.get(x, y)
+        surrounding = self.get_surrounding_square_contents(x, y)
+        if contents == ".":
+            if surrounding["|"] >= 3:
+                return "|"
+            else:
+                return "."
+        elif contents == "|":
+            if surrounding["#"] >= 3:
+                return "#"
+            else:
+                return "|"
+        elif surrounding["#"] >= 1 and surrounding["|"] >= 1:
+            return "#"
+        else:
+            return "."
+
     def __str__(self):
         return "\n".join("".join(line) for line in self.data)

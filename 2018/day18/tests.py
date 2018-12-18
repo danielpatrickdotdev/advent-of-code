@@ -96,6 +96,20 @@ class TestLumberCollectionArea(unittest.TestCase, ValuesToTest):
             self.assertEqual(num_lumberyards, surrounding["#"])
             self.assertEqual(num_open, surrounding["."])
 
+    def test_change_square(self):
+        values_to_test = [
+            (0, 0, "."),
+            (2, 7, "|"),
+            (1, 2, "|"),
+            (7, 0, "#"),
+            (8, 1, "#"),
+            (1, 0, ".")
+        ]
+        area = LumberCollectionArea(self.test_input)
+
+        for x, y, expected in values_to_test:
+            self.assertEqual(expected, area.change_square(x, y))
+
 
 class TestSolution1(TestSolution):
     module = solution1
