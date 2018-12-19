@@ -8,8 +8,8 @@ class Program:
         "setr", "seti", "gtir", "gtri", "gtrr", "eqir", "eqri", "eqrr",
     ]
 
-    def __init__(self, lines_to_parse):
-        self.register = [0] * 6
+    def __init__(self, lines_to_parse, register=[0, 0, 0, 0, 0, 0]):
+        self.register = register
         self.instructions = []
         self.next_instruction = 0
 
