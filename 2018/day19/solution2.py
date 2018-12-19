@@ -3,9 +3,13 @@
 
 from pathlib import Path
 
+from .program import Program
+
 
 def solve(input_text):
-    return " ".join(input_text) + "?"
+    program = Program(input_text, [1, 0, 0, 0, 0, 0])
+    program.execute()
+    return program.register[0]
 
 
 if __name__ == '__main__':
