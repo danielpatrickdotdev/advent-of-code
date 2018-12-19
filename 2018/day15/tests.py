@@ -363,11 +363,69 @@ class TestSolution1(TestSolution):
 
 class TestSolution2(TestSolution):
     module = solution2
-    expected = "lorem ipsum?"
+    expected = 4988
+    input_text2 = [
+        "#######",
+        "#E..EG#",
+        "#.#G.E#",
+        "#E.##E#",
+        "#G..#.#",
+        "#..E#.#",
+        "#######",
+    ]
+    expected2 = 31284
+    input_text3 = [
+        "#######",
+        "#E.G#.#",
+        "#.#G..#",
+        "#G.#.G#",
+        "#G..#.#",
+        "#...E.#",
+        "#######",
+    ]
+    expected3 = 3478
+    input_text4 = [
+        "#######",
+        "#.E...#",
+        "#.#..G#",
+        "#.###.#",
+        "#E#G#G#",
+        "#...#G#",
+        "#######",
+    ]
+    expected4 = 6474
+    input_text5 = [
+        "#########",
+        "#G......#",
+        "#.E.#...#",
+        "#..##..G#",
+        "#...##..#",
+        "#...#...#",
+        "#.G...G.#",
+        "#.....G.#",
+        "#########",
+    ]
+    expected5 = 1140
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)
         self.assertEqual(self.expected, solution)
+
+    def test_solver2(self):
+        solution = self.module.solve(self.input_text2)
+        self.assertEqual(self.expected2, solution)
+
+    def test_solver3(self):
+        solution = self.module.solve(self.input_text3)
+        self.assertEqual(self.expected3, solution)
+
+    def test_solver4(self):
+        solution = self.module.solve(self.input_text4)
+        self.assertEqual(self.expected4, solution)
+
+    def test_solver5(self):
+        solution = self.module.solve(self.input_text5)
+        self.assertEqual(self.expected5, solution)
 
 
 if __name__ == '__main__':
