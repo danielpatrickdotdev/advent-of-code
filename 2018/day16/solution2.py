@@ -166,6 +166,7 @@ def solve(input_text):
                 opcode_numbers[key] = opcode
                 for value in potentials.values():
                     value.discard(opcode)
+        loops += 1
 
     if loops == 1000:
         raise Exception("Something's up")
