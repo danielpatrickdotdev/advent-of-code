@@ -26,10 +26,9 @@ class Node:
 
     def update_distance(self, n):
         if self.distance > n:
+            self.distance = n
             for child in self.children:
                 child.update_distance(n + 1)
-
-        self.distance = min(self.distance, n)
 
     def add_child(self, child_node):
         self.children.append(child_node)
