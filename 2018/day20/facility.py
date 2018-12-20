@@ -110,6 +110,8 @@ class FacilityMap:
         )
 
     def __str__(self):
+        # This monstrosity is basically only here to make the constructor easier
+        # to test!
         if self.tree is not None:
             coords = sorted(self.tree.directory.keys())
             min_x = coords[0][0]
