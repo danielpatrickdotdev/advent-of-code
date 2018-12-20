@@ -100,7 +100,8 @@ class FacilityMap:
 
     def get_farthest_room(self):
         return sorted(
-            (node.distance for node in self.tree.directory.values()), reverse=True
+            (node.distance for node in self.tree.directory.values()),
+            reverse=True
         )[0]
 
     def get_rooms_n_doors_away(self, n):

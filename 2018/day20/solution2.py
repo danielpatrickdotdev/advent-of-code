@@ -3,7 +3,6 @@
 
 from pathlib import Path
 
-
 from .facility import FacilityMap
 
 
