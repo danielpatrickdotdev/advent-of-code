@@ -57,9 +57,10 @@ class Node:
 class FacilityMap:
     def __init__(self, path_regex="^$"):
         self.instructions = self.parse(path_regex)
+        self.tree = None
+
         if self.instructions:
             self.create_tree()
-            self.create_grid()
 
     def parse(self, path_regex, start=1):
         path = []
@@ -98,48 +99,6 @@ class FacilityMap:
         self.tree = Node()
         self.parse_node(self.tree, self.instructions)
 
-    def create_grid(self):
-        coords = sorted(self.tree.directory.keys(), key=itemgetter(0, 1))
-        min_x = coords[0][0]
-        max_x = coords[-1][0]
-
-        coords = sorted(self.tree.directory.keys(), key=itemgetter(1, 0))
-        min_y = coords[0][1]
-        max_y = coords[-1][1]
-
-        width = (max_x - min_x + 1) * 2 + 1
-        height = (max_y - min_y + 1) * 2 + 1
-
-        self.grid = [["#" for y in range(height)] for x in range(width)]
-
-        def get_xy(coord):
-            return (
-                (coord[0] - min_x) * 2 + 1,
-                (coord[1] - min_y) * 2 + 1
-            )
-
-        def get_door_xy(x1, y1, x2, y2):
-            return ((x1 + x2) // 2, (y1 + y2) // 2)
-
-        for coord in coords:
-            node = self.tree.directory[coord]
-            x, y = get_xy(coord)
-
-            if self.grid[x][y] == "#":
-                self.grid[x][y] = "."
-
-            for child in node.children:
-                x1, y1 = get_door_xy(x, y, *get_xy(child.location))
-
-                if x1 == x:
-                    self.grid[x1][y1] = "—"
-                else:
-                    self.grid[x1][y1] = "|"
-
-        # Place X at origin
-        x, y = get_xy(self.tree.location)
-        self.grid[x][y] = "X"
-
     def get_farthest_room(self):
         return sorted(
             (node.distance for node in self.tree.directory.values()), reverse=True
@@ -152,8 +111,50 @@ class FacilityMap:
         )
 
     def __str__(self):
+        if self.tree is not None:
+            coords = sorted(self.tree.directory.keys(), key=itemgetter(0, 1))
+            min_x = coords[0][0]
+            max_x = coords[-1][0]
+
+            coords = sorted(self.tree.directory.keys(), key=itemgetter(1, 0))
+            min_y = coords[0][1]
+            max_y = coords[-1][1]
+
+            width = (max_x - min_x + 1) * 2 + 1
+            height = (max_y - min_y + 1) * 2 + 1
+
+            grid = [["#" for y in range(height)] for x in range(width)]
+
+            def get_xy(coord):
+                return (
+                    (coord[0] - min_x) * 2 + 1,
+                    (coord[1] - min_y) * 2 + 1
+                )
+
+            def get_door_xy(x1, y1, x2, y2):
+                return ((x1 + x2) // 2, (y1 + y2) // 2)
+
+            for coord in coords:
+                node = self.tree.directory[coord]
+                x, y = get_xy(coord)
+
+                if grid[x][y] == "#":
+                    grid[x][y] = "."
+
+                for child in node.children:
+                    x1, y1 = get_door_xy(x, y, *get_xy(child.location))
+
+                    if x1 == x:
+                        grid[x1][y1] = "—"
+                    else:
+                        grid[x1][y1] = "|"
+
+            # Place X at origin
+            x, y = get_xy(self.tree.location)
+            grid[x][y] = "X"
+
         return "\n".join(
             "".join(
-                str(self.grid[x][y]) for x in range(len(self.grid))
-            ) for y in range(len(self.grid[0]))
+                str(grid[x][y]) for x in range(width)
+            ) for y in range(height)
         )

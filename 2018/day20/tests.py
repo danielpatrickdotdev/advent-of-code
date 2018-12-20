@@ -131,21 +131,18 @@ class TestFacilityMap(unittest.TestCase, DataForTests):
         facility = FacilityMap()
         facility.instructions = self.test_instructions1
         facility.create_tree()
-        facility.create_grid()
         self.assertEqual(self.test_map1, str(facility))
 
     def test_create_tree2(self):
         facility = FacilityMap()
         facility.instructions = self.test_instructions2
         facility.create_tree()
-        facility.create_grid()
         self.assertEqual(self.test_map2, str(facility))
 
     def test_create_tree3(self):
         facility = FacilityMap()
         facility.instructions = self.test_instructions3
         facility.create_tree()
-        facility.create_grid()
         self.assertEqual(self.test_map3, str(facility))
 
     def test_constructor(self):
