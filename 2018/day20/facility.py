@@ -6,13 +6,6 @@ from operator import itemgetter
 
 
 class Node:
-    directions = {
-        "N": (0, -1),
-        "E": (1, 0),
-        "S": (0, 1),
-        "W": (-1, 0),
-    }
-
     def __init__(self, x=0, y=0, distance=0, root=False):
         self.x = x
         self.y = y
@@ -54,6 +47,13 @@ class Node:
 
 
 class FacilityMap:
+    directions = {
+        "N": (0, -1),
+        "E": (1, 0),
+        "S": (0, 1),
+        "W": (-1, 0),
+    }
+
     def __init__(self, path_regex="^$"):
         self.tree = Node(root=True)
         self.parse(self.tree, path_regex)
@@ -76,7 +76,7 @@ class FacilityMap:
             return start
 
     def _translate(self, x, y, d):
-        dx, dy = Node.directions[d]
+        dx, dy = self.directions[d]
         return (x + dx, y + dy)
 
     def get_farthest_room(self):
