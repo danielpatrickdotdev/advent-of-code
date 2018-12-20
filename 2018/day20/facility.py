@@ -145,6 +145,12 @@ class FacilityMap:
             (node.distance for node in self.tree.directory.values()), reverse=True
         )[0]
 
+    def get_rooms_n_doors_away(self, n):
+        return sum(
+            1 for node in self.tree.directory.values()
+            if node.distance >= n
+        )
+
     def __str__(self):
         return "\n".join(
             "".join(

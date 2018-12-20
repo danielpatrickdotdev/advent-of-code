@@ -162,6 +162,23 @@ class TestFacilityMap(unittest.TestCase, DataForTests):
         self.assertEqual(23, FacilityMap(self.test_input4).get_farthest_room())
         self.assertEqual(31, FacilityMap(self.test_input5).get_farthest_room())
 
+    def test_get_rooms_n_doors_away(self):
+        self.assertEqual(
+            2, FacilityMap(self.test_input1).get_rooms_n_doors_away(2)
+        )
+        self.assertEqual(
+            10, FacilityMap(self.test_input2).get_rooms_n_doors_away(6)
+        )
+        self.assertEqual(
+            17, FacilityMap(self.test_input3).get_rooms_n_doors_away(8)
+        )
+        self.assertEqual(
+            23, FacilityMap(self.test_input4).get_rooms_n_doors_away(12)
+        )
+        self.assertEqual(
+            26, FacilityMap(self.test_input5).get_rooms_n_doors_away(22)
+        )
+
 
 class TestSolution1(TestSolution, DataForTests):
     module = solution1
