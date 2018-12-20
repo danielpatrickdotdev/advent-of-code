@@ -4,8 +4,12 @@
 from pathlib import Path
 
 
-def solve(input_text):
-    return " ".join(input_text) + "?"
+from .facility import FacilityMap
+
+
+def solve(input_text, n=1000):
+    facility = FacilityMap(input_text[0])
+    return facility.get_rooms_n_doors_away(n)
 
 
 if __name__ == '__main__':

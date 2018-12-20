@@ -191,10 +191,10 @@ class TestSolution1(TestSolution, DataForTests):
 
 class TestSolution2(TestSolution):
     module = solution2
-    expected = "lorem ipsum?"
+    expected = 26
 
     def test_solver(self):
-        solution = self.module.solve(self.input_text)
+        solution = self.module.solve(self.input_text, 22)
         self.assertEqual(self.expected, solution)
 
 
