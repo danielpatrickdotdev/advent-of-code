@@ -112,11 +112,11 @@ class FacilityMap:
 
     def __str__(self):
         if self.tree is not None:
-            coords = sorted(self.tree.directory.keys(), key=itemgetter(0, 1))
+            coords = sorted(self.tree.directory.keys())
             min_x = coords[0][0]
             max_x = coords[-1][0]
 
-            coords = sorted(self.tree.directory.keys(), key=itemgetter(1, 0))
+            coords = sorted(self.tree.directory.keys(), key=itemgetter(1))
             min_y = coords[0][1]
             max_y = coords[-1][1]
 
