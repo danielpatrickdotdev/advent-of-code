@@ -6,16 +6,13 @@ from operator import itemgetter
 
 
 class Node:
-    def __init__(self, x=0, y=0, distance=0, root=False):
+    def __init__(self, x=0, y=0, distance=0, directory=None):
         self.x = x
         self.y = y
         self.distance = distance
         self.children = []
-
-        if root:
-            self.directory = {
-                (0, 0): self,
-            }
+        self.directory = directory or {}
+        self.directory[(x, y)] = self
 
     def update_distance(self, n):
         if self.distance > n:
@@ -31,9 +28,7 @@ class Node:
             child_node = self.directory[(x, y)]
             child_node.update_distance(self.distance + 1)
         else:
-            child_node = Node(x, y, self.distance + 1)
-            self.directory[(x, y)] = child_node
-            child_node.directory = self.directory
+            child_node = Node(x, y, self.distance + 1, self.directory)
 
         self.add_child(child_node)
         return child_node
@@ -55,7 +50,7 @@ class FacilityMap:
     }
 
     def __init__(self, path_regex="^$"):
-        self.tree = Node(root=True)
+        self.tree = Node()
         self.parse(self.tree, path_regex)
 
     def parse(self, node, path_regex, start=1):
