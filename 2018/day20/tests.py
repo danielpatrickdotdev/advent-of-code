@@ -39,17 +39,6 @@ class DataForTests:
         "^WSSEESWWWNW(S|NENNEEEENN(ESSSSW(NWSW|SSEN)"
         "|WSWWN(E|WWS(E|SS))))$"
     )
-    test_instructions1 = ["W", "N", "E"]
-    test_instructions2 = [
-        "E", "N", "W", "W", "W",
-        ["N", "E", "E", "E", "|", "S", "S", "E", ["E", "E", "|", "N"]]
-    ]
-    test_instructions3 = [
-        "E", "N", "N", "W", "S", "W", "W",
-        ["N", "E", "W", "S", "|"], "S", "S", "S", "E", "E", "N",
-        ["W", "N", "S", "E", "|"], "E", "E",
-        ["S", "W", "E", "N", "|"], "N", "N", "N",
-    ]
     test_map1 = (
         "#####\n"
         "#.|.#\n"
@@ -116,35 +105,6 @@ class DataForTests:
 
 
 class TestFacilityMap(unittest.TestCase, DataForTests):
-    def test_parse(self):
-        self.assertEqual(
-            self.test_instructions1, FacilityMap().parse(self.test_input1)
-        )
-        self.assertEqual(
-            self.test_instructions2, FacilityMap().parse(self.test_input2)
-        )
-        self.assertEqual(
-            self.test_instructions3, FacilityMap().parse(self.test_input3)
-        )
-
-    def test_create_tree1(self):
-        facility = FacilityMap()
-        facility.instructions = self.test_instructions1
-        facility.create_tree()
-        self.assertEqual(self.test_map1, str(facility))
-
-    def test_create_tree2(self):
-        facility = FacilityMap()
-        facility.instructions = self.test_instructions2
-        facility.create_tree()
-        self.assertEqual(self.test_map2, str(facility))
-
-    def test_create_tree3(self):
-        facility = FacilityMap()
-        facility.instructions = self.test_instructions3
-        facility.create_tree()
-        self.assertEqual(self.test_map3, str(facility))
-
     def test_constructor(self):
         self.assertEqual(self.test_map1, str(FacilityMap(self.test_input1)))
         self.assertEqual(self.test_map2, str(FacilityMap(self.test_input2)))

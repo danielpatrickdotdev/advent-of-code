@@ -55,48 +55,29 @@ class Node:
 
 class FacilityMap:
     def __init__(self, path_regex="^$"):
-        self.instructions = self.parse(path_regex)
-        self.tree = None
+        self.tree = Node(root=True)
+        self.parse(self.tree, path_regex)
 
-        if self.instructions:
-            self.create_tree()
-
-    def parse(self, path_regex, start=1):
-        path = []
+    def parse(self, node, path_regex, start=1):
+        parent_node = node
 
         while start < len(path_regex) and path_regex[start] not in ")$":
             if path_regex[start] == "(":
-                subpath, start = self.parse(path_regex, start + 1)
-                path.append(subpath)
-            elif path_regex[start] in "NSEW|":
-                path.append(path_regex[start])
-
-            start += 1
-
-        if path_regex[start] == "$":
-            return path
-        else:
-            return (path, start)
-
-    def _translate(self, x, y, d):
-        dx, dy = Node.directions[d]
-        return (x + dx, y + dy)
-
-    def parse_node(self, node, instructions):
-        parent_node = node
-
-        for i in instructions:
-            if type(i) is list:
-                self.parse_node(node, i)
-            elif i in "NSEW":
-                x, y = self._translate(*node.location, i)
+                start = self.parse(node, path_regex, start + 1)
+            elif path_regex[start] in "NSEW":
+                x, y = self._translate(*node.location, path_regex[start])
                 node = node.create_child(x, y)
             else:
                 node = parent_node
 
-    def create_tree(self):
-        self.tree = Node(root=True)
-        self.parse_node(self.tree, self.instructions)
+            start += 1
+
+        if path_regex[start] != "$":
+            return start
+
+    def _translate(self, x, y, d):
+        dx, dy = Node.directions[d]
+        return (x + dx, y + dy)
 
     def get_farthest_room(self):
         return sorted(
