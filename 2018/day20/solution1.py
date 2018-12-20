@@ -3,9 +3,12 @@
 
 from pathlib import Path
 
+from .facility import FacilityMap
+
 
 def solve(input_text):
-    return " ".join(input_text) + "!"
+    facility = FacilityMap(input_text[0])
+    return facility.get_farthest_room()
 
 
 if __name__ == '__main__':

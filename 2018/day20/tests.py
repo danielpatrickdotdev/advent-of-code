@@ -163,9 +163,9 @@ class TestFacilityMap(unittest.TestCase, DataForTests):
         self.assertEqual(31, FacilityMap(self.test_input5).get_farthest_room())
 
 
-class TestSolution1(TestSolution):
+class TestSolution1(TestSolution, DataForTests):
     module = solution1
-    expected = "lorem ipsum!"
+    expected = 31
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)
