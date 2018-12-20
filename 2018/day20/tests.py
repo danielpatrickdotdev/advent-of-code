@@ -30,7 +30,7 @@ class TestSolution(unittest.TestCase):
         self.input_text = get_input(self.input_path)
 
 
-class TestFacilityMap(unittest.TestCase):
+class DataForTests:
     test_input1 = "^WNE$"
     test_input2 = "^ENWWW(NEEE|SSE(EE|N))$"
     test_input3 = "^ENNWSWW(NEWS|)SSSEEN(WNSE|)EE(SWEN|)NNN$"
@@ -114,6 +114,8 @@ class TestFacilityMap(unittest.TestCase):
         "###############"
     )
 
+
+class TestFacilityMap(unittest.TestCase, DataForTests):
     def test_parse(self):
         self.assertEqual(
             self.test_instructions1, FacilityMap().parse(self.test_input1)
@@ -152,6 +154,13 @@ class TestFacilityMap(unittest.TestCase):
         self.assertEqual(self.test_map3, str(FacilityMap(self.test_input3)))
         self.assertEqual(self.test_map4, str(FacilityMap(self.test_input4)))
         self.assertEqual(self.test_map5, str(FacilityMap(self.test_input5)))
+
+    def test_get_farthest_room(self):
+        self.assertEqual(3, FacilityMap(self.test_input1).get_farthest_room())
+        self.assertEqual(10, FacilityMap(self.test_input2).get_farthest_room())
+        self.assertEqual(18, FacilityMap(self.test_input3).get_farthest_room())
+        self.assertEqual(23, FacilityMap(self.test_input4).get_farthest_room())
+        self.assertEqual(31, FacilityMap(self.test_input5).get_farthest_room())
 
 
 class TestSolution1(TestSolution):

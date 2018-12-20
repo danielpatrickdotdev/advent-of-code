@@ -140,6 +140,11 @@ class FacilityMap:
         x, y = get_xy(self.tree.location)
         self.grid[x][y] = "X"
 
+    def get_farthest_room(self):
+        return sorted(
+            (node.distance for node in self.tree.directory.values()), reverse=True
+        )[0]
+
     def __str__(self):
         return "\n".join(
             "".join(
