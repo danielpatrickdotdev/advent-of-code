@@ -61,7 +61,7 @@ class FacilityMap:
     def parse(self, node, path_regex, start=1):
         parent_node = node
 
-        while start < len(path_regex) and path_regex[start] not in ")$":
+        while path_regex[start] not in ")$":
             if path_regex[start] == "(":
                 start = self.parse(node, path_regex, start + 1)
             elif path_regex[start] in "NSEW":
