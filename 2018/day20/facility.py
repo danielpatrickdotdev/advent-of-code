@@ -13,13 +13,13 @@ class Node:
         "W": (-1, 0),
     }
 
-    def __init__(self, x=0, y=0, distance=0):
+    def __init__(self, x=0, y=0, distance=0, root=False):
         self.x = x
         self.y = y
         self.distance = distance
         self.children = []
 
-        if x == y == distance == 0:
+        if root:
             self.directory = {
                 (0, 0): self,
             }
@@ -95,7 +95,7 @@ class FacilityMap:
                 node = parent_node
 
     def create_tree(self):
-        self.tree = Node()
+        self.tree = Node(root=True)
         self.parse_node(self.tree, self.instructions)
 
     def get_farthest_room(self):
