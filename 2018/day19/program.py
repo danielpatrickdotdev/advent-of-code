@@ -30,10 +30,10 @@ class Program:
             self.next_instruction += 1
 
     def step(self):
-        opcode, a, b, c = self.instructions[self.next_instruction]
-
         self.register[self.ip] = self.next_instruction
+        opcode, a, b, c = self.instructions[self.next_instruction]
         getattr(self, opcode)(a, b, c)
+
         self.next_instruction = self.register[self.ip]
 
     def can_execute(self):
