@@ -1,11 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import time
-from collections import Counter
-
-DEBUG = False#True
-
 
 class Program:
     opcode_list = [
@@ -29,46 +24,15 @@ class Program:
                     [parts[0], int(parts[1]), int(parts[2]), int(parts[3])]
                 )
 
-        self.log = []
-        self.counts = Counter()
-        self.step_count = 0
-
     def execute(self):
         while self.can_execute():
             self.step()
-            self.step_count += 1
             self.next_instruction += 1
-
-        print("Executed {} instructions".format(len(self.log)))
-        for i, c in sorted(self.counts.items()):
-            print("Executed instruction {} {} times".format(i, c))
-
-        print("\nFirst 30 instructions:")
-        for entry in self.log[:30]:
-            print(entry)
-
-        print("\nLast 30 instructions:")
-        for entry in self.log[-30:]:
-            print(entry)
 
     def step(self):
         self.register[self.ip] = self.next_instruction
         opcode, a, b, c = self.instructions[self.next_instruction]
         getattr(self, opcode)(a, b, c)
-
-        self.counts[self.next_instruction] += 1
-        log_entry = "{} - {:2d}: {}({:2d}, {:2d}, {:2d}) ".format(
-            self.step_count, self.next_instruction, opcode, a, b, c
-        )
-
-        log_entry += "[{} {} {} {} {} {}]".format(*self.register)
-        self.log.append(log_entry)
-        if self.next_instruction == 7:
-            print(log_entry)
-
-        if DEBUG:
-            print(log_entry)
-            time.sleep(1)
 
         self.next_instruction = self.register[self.ip]
 

@@ -40,12 +40,11 @@ class TestSolution1(TestSolution):
 
 class TestSolution2(TestSolution):
     module = solution2
-    expected = 6
+    expected = 2047
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)
         self.assertEqual(self.expected, solution)
-
 
 if __name__ == '__main__':
     unittest.main()
