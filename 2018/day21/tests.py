@@ -29,15 +29,6 @@ class TestSolution(unittest.TestCase):
         self.input_text = get_input(self.input_path)
 
 
-class TestSolution1(TestSolution):
-    module = solution1
-    expected = "lorem ipsum!"
-
-    def test_solver(self):
-        solution = self.module.solve(self.input_text)
-        self.assertEqual(self.expected, solution)
-
-
 class TestSolution2(TestSolution):
     module = solution2
     expected = "lorem ipsum?"
