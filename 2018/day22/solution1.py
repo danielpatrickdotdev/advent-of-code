@@ -3,9 +3,20 @@
 
 from pathlib import Path
 
+from .common import parse
+from .caves import Caves
+
 
 def solve(input_text):
-    return " ".join(input_text) + "!"
+    depth, *target = parse(input_text)
+    caves = Caves(depth, *target)
+
+    width = target[0] + 1
+    height = target[1] + 1
+
+    return sum(
+        caves.get_risk(x, y) for x in range(width) for y in range(height)
+    )
 
 
 if __name__ == '__main__':
