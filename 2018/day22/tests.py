@@ -5,7 +5,7 @@ from pathlib import Path
 import unittest
 
 from shared.utils import get_input
-from . import solution1, solution2
+from . import solution1, solution2, common
 
 
 SOLUTION_DIR = Path(__file__).parent
@@ -27,6 +27,18 @@ class TestSolution(unittest.TestCase):
             )
         self.input_path = SOLUTION_DIR.joinpath(self.input_filename)
         self.input_text = get_input(self.input_path)
+
+
+class TestCommon(unittest.TestCase):
+    module = common
+
+    def test_parser(self):
+        depth, target_x, target_y = self.module.parse(
+            ["depth: 24680", "target: 12345,67890"]
+        )
+        self.assertEqual(24680, depth)
+        self.assertEqual(12345, target_x)
+        self.assertEqual(67890, target_y)
 
 
 class TestSolution1(TestSolution):
