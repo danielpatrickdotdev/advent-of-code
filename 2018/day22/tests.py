@@ -102,6 +102,20 @@ class TestCaveNav(unittest.TestCase):
         cavenav = CaveNav(510, 2, 2)
         self.assertEqual(self.small_cave, str(cavenav.caves))
 
+    def test_get_neighbouring_caves(self):
+        cavenav = CaveNav(510, 2, 2)
+        self.assertEqual(
+            {(0, 1), (1, 0)}, cavenav.get_neighbouring_caves(0, 0)
+        )
+        self.assertEqual(
+            {(2, 1), (1, 2)}, cavenav.get_neighbouring_caves(2, 2)
+        )
+        self.assertEqual(
+            {(0, 1), (1, 0), (2, 1), (1, 2)},
+            cavenav.get_neighbouring_caves(1, 1)
+        )
+
+
 
 class TestSolution1(TestSolution):
     module = solution1

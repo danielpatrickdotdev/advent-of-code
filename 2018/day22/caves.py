@@ -81,3 +81,19 @@ class Caves:
 class CaveNav:
     def __init__(self, depth, x, y):
         self.caves = Caves(depth, x, y)
+
+    def get_neighbouring_caves(self, x, y):
+        neighbours = [
+            (x, y - 1),  # up
+            (x, y + 1),  # down
+            (x - 1, y),  # left
+            (x + 1, y),  # right
+        ]
+
+        height = len(self.caves.caves)
+        width = len(self.caves.caves[0])
+
+        return set(
+            (x, y) for (x, y) in neighbours
+            if 0 <= x < width and 0 <= y < height
+        )
