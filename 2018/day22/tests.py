@@ -137,9 +137,50 @@ class TestCaveNav(unittest.TestCase):
         cavenav = CaveNav(510, 2, 2)
         self.assertEqual({}, cavenav.get_fastest_routes(0, 0))
 
-        # TODO: add more assertions once cavenav.update_fastest_routes
-        # implemented
+        cavenav.update_fastest_routes(0, 0)
+        self.assertEqual(
+            {"T": 0, "C": 7}, cavenav.get_fastest_routes(0, 0)
+        )
 
+    def test_update_fastest_routes(self):
+        cavenav = CaveNav(510, 2, 2)
+        cavenav.update_fastest_routes(0, 0)
+        self.assertEqual(
+            {"T": 0, "C": 7}, cavenav.get_fastest_routes(0, 0)
+        )
+
+        cavenav.update_fastest_routes(1, 0)
+        self.assertEqual(
+            {"T": 0, "C": 7}, cavenav.get_fastest_routes(0, 0)
+        )
+        self.assertEqual(
+            {"C": 8, "N": 15}, cavenav.get_fastest_routes(1, 0)
+        )
+
+        cavenav.update_fastest_routes(1, 1)
+        self.assertEqual(
+            {"T": 0, "C": 7}, cavenav.get_fastest_routes(0, 0)
+        )
+        self.assertEqual(
+            {"C": 8, "N": 15}, cavenav.get_fastest_routes(1, 0)
+        )
+        self.assertEqual(
+            {"T": 23, "N": 16}, cavenav.get_fastest_routes(1, 1)
+        )
+
+        cavenav.update_fastest_routes(0, 1)
+        self.assertEqual(
+            {"T": 0, "C": 7}, cavenav.get_fastest_routes(0, 0)
+        )
+        self.assertEqual(
+            {"C": 8, "N": 10}, cavenav.get_fastest_routes(1, 0)
+        )
+        self.assertEqual(
+            {"T": 2, "N": 9}, cavenav.get_fastest_routes(1, 1)
+        )
+        self.assertEqual(
+            {"T": 1, "C": 8}, cavenav.get_fastest_routes(0, 1)
+        )
 
 
 class TestSolution1(TestSolution):

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from collections import defaultdict
+import math
 
 
 class Caves:
@@ -114,3 +115,52 @@ class CaveNav:
 
     def get_fastest_routes(self, x, y):
         return self.routes[(x, y)]
+
+    def update_fastest_routes(self, x, y):
+        updated = False
+
+        equipment1, equipment2 = self.get_valid_equipment(x, y)
+        fastest1 = fastest2 = math.inf
+
+        # If this is the Mouth, return early
+        if x == y == 0:
+            self.routes[(x, y)] = {"C": 7, "T": 0}
+            return
+
+        # Get best neighbouring times for valid equipments
+        for neighbour in self.get_neighbouring_caves(x, y):
+            for equip, minutes in self.get_fastest_routes(*neighbour).items():
+
+                if equipment1 == equip:
+                    fastest1 = min(fastest1, minutes + 1)
+                elif equipment2 == equip:
+                    fastest2 = min(fastest2, minutes + 1)
+
+        # Fastest route may involve changing equipment after moving, also filter
+        # out equipment for which we have no route (fastest == math.inf)
+        fastest = {eq: f for (eq, f) in [
+            (equipment1, min(fastest1, fastest2 + 7)),
+            (equipment2, min(fastest2, fastest1 + 7))
+        ]
+            if f is not math.inf
+        }
+
+        # Compare to previously calculated routes, if they exist
+        current_routes = self.get_fastest_routes(x, y)
+
+        for equip, minutes in fastest.items():
+            if equip in current_routes:
+                if current_routes[equip] > minutes:
+                    current_routes[equip] = minutes
+                    updated = True
+            else:
+                updated = True
+                current_routes[equip] = minutes
+
+        # If we've updated/added times for any equipment on this square, check
+        # neighbouring squares that have already been completed and update if
+        # this provides a quicker route
+        if updated:
+            for neighbour in self.get_neighbouring_caves(x, y):
+                if neighbour in self.routes and self.routes[neighbour] != {}:
+                    self.update_fastest_routes(*neighbour)
