@@ -182,6 +182,13 @@ class TestCaveNav(unittest.TestCase):
             {"T": 1, "C": 8}, cavenav.get_fastest_routes(0, 1)
         )
 
+    def test_get_fastest_route_to_target(self):
+        cavenav = CaveNav(510, 2, 2)
+        self.assertEqual(18, cavenav.get_fastest_route_to_target())
+
+        cavenav = CaveNav(510, 10, 10)
+        self.assertEqual(45, cavenav.get_fastest_route_to_target())
+
 
 class TestSolution1(TestSolution):
     module = solution1

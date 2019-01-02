@@ -157,3 +157,85 @@ class CaveNav:
             for neighbour in self.get_neighbouring_caves(x, y):
                 if neighbour in self.routes and self.routes[neighbour] != {}:
                     self.update_fastest_routes(*neighbour)
+
+    def get_fastest_route_to_target(self):
+        # TODO this function contains quite a bit of repetion - could refactor
+        # some of the growing map section at the end
+
+        def manhattan_to_target(x, y):
+            x1, y1 = self.caves.target
+            return abs(x - x1) + abs(y - y1)
+
+        height = len(self.caves.caves)
+        width = len(self.caves.caves[0])
+
+        for y in range(height):
+            for x in range(width):
+                self.update_fastest_routes(x, y)
+
+        any_faster = True
+
+        # for as long as we find a potential faster route, we grow our cave map
+        while any_faster:
+            # Get the current fastest route
+            fastest_route = self.get_fastest_routes(*self.caves.target)["T"]
+            any_faster = False
+
+            # Grow horizontally by one column
+            x = width
+            width += 1
+            y = 0
+
+            while y < height:
+                # Create new cell in cave
+                self.caves.set_geology(x, y)
+                self.caves.set_erosion(x, y)
+                self.caves.set_cave_type(x, y)
+
+                # Calculate fastest route for cell (updates all previous cells
+                # if faster route found as a result, so may update target)
+                self.update_fastest_routes(x, y)
+
+                routes = self.get_fastest_routes(x, y)
+
+                if routes:
+                    # Fastest possible route to target via this route, assuming
+                    # all connecting cells require no equipment changes
+                    latest_route = manhattan_to_target(x, y) + min(
+                        routes.values()
+                    )
+                    # If True, add another column and row
+                    if latest_route < fastest_route:
+                        any_faster = True
+
+                y += 1
+
+            # Grow vertically by one row
+            x = 0
+            height += 1
+
+            while x < width:
+                # Create new cell in cave
+                self.caves.set_geology(x, y)
+                self.caves.set_erosion(x, y)
+                self.caves.set_cave_type(x, y)
+
+                # Calculate fastest route for cell (updates all previous cells
+                # if faster route found as a result, so may update target)
+                self.update_fastest_routes(x, y)
+
+                routes = self.get_fastest_routes(x, y)
+
+                if routes:
+                    # Fastest possible route to target via this route, assuming
+                    # all connecting cells require no equipment changes
+                    latest_route = manhattan_to_target(x, y) + min(
+                        routes.values()
+                    )
+                    # If True, add another column and row
+                    if latest_route < fastest_route:
+                        any_faster = True
+
+                x += 1
+
+        return self.get_fastest_routes(*self.caves.target)["T"]
