@@ -2,10 +2,19 @@
 # -*- coding: utf-8 -*-
 
 from pathlib import Path
+import sys
+
+from .common import parse
+from .caves import CaveNav
+
+sys.setrecursionlimit(10_000)
 
 
 def solve(input_text):
-    return " ".join(input_text) + "?"
+    depth, *target = parse(input_text)
+    cavenav = CaveNav(depth, *target)
+
+    return cavenav.get_fastest_route_to_target()
 
 
 if __name__ == '__main__':

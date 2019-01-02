@@ -201,7 +201,7 @@ class TestSolution1(TestSolution):
 
 class TestSolution2(TestSolution):
     module = solution2
-    expected = "lorem ipsum?"
+    expected = 45
 
     def test_solver(self):
         solution = self.module.solve(self.input_text)
