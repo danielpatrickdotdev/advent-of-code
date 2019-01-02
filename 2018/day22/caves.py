@@ -76,3 +76,8 @@ class Caves:
         return "\n".join(
             "".join(row) for row in self.caves
         )
+
+
+class CaveNav:
+    def __init__(self, depth, x, y):
+        self.caves = Caves(depth, x, y)

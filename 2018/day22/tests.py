@@ -6,7 +6,7 @@ import unittest
 
 from shared.utils import get_input
 from . import solution1, solution2, common
-from .caves import Caves
+from .caves import Caves, CaveNav
 
 
 SOLUTION_DIR = Path(__file__).parent
@@ -89,6 +89,18 @@ class TestCaves(unittest.TestCase):
         self.assertEqual(0, caves.get_risk(0, 1))
         self.assertEqual(2, caves.get_risk(1, 1))
         self.assertEqual(0, caves.get_risk(10, 10))
+
+
+class TestCaveNav(unittest.TestCase):
+    small_cave = (
+        "M=.\n"
+        ".|=\n"
+        ".=T"
+    )
+
+    def test_constructor(self):
+        cavenav = CaveNav(510, 2, 2)
+        self.assertEqual(self.small_cave, str(cavenav.caves))
 
 
 class TestSolution1(TestSolution):
