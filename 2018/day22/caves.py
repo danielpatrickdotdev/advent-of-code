@@ -79,6 +79,14 @@ class Caves:
 
 
 class CaveNav:
+    cave_equipment = {
+        "M": ["C", "T"],
+        "T": ["C", "T"],
+        ".": ["C", "T"],
+        "=": ["C", "N"],
+        "|": ["T", "N"],
+    }
+
     def __init__(self, depth, x, y):
         self.caves = Caves(depth, x, y)
 
@@ -97,3 +105,6 @@ class CaveNav:
             (x, y) for (x, y) in neighbours
             if 0 <= x < width and 0 <= y < height
         )
+
+    def get_valid_equipment(self, x, y):
+        return self.cave_equipment[self.caves.get_type(x, y)]

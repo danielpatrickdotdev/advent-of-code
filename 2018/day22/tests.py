@@ -115,6 +115,24 @@ class TestCaveNav(unittest.TestCase):
             cavenav.get_neighbouring_caves(1, 1)
         )
 
+    def test_get_valid_equipment(self):
+        cavenav = CaveNav(510, 2, 2)
+        self.assertEqual(
+            ["C", "T"], cavenav.get_valid_equipment(0, 0)  # Mouth
+        )
+        self.assertEqual(
+            ["C", "T"], cavenav.get_valid_equipment(2, 2)  # Target
+        )
+        self.assertEqual(
+            ["C", "T"], cavenav.get_valid_equipment(0, 1)  # Rocky
+        )
+        self.assertEqual(
+            ["C", "N"], cavenav.get_valid_equipment(1, 0)  # Wet
+        )
+        self.assertEqual(
+            ["T", "N"], cavenav.get_valid_equipment(1, 1)  # Narrow
+        )
+
 
 
 class TestSolution1(TestSolution):
