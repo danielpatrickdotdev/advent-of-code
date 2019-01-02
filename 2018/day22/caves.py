@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from collections import defaultdict
+
 
 class Caves:
     cave_risks = {
@@ -89,6 +91,7 @@ class CaveNav:
 
     def __init__(self, depth, x, y):
         self.caves = Caves(depth, x, y)
+        self.routes = defaultdict(dict)
 
     def get_neighbouring_caves(self, x, y):
         neighbours = [
@@ -108,3 +111,6 @@ class CaveNav:
 
     def get_valid_equipment(self, x, y):
         return self.cave_equipment[self.caves.get_type(x, y)]
+
+    def get_fastest_routes(self, x, y):
+        return self.routes[(x, y)]

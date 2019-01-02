@@ -133,6 +133,13 @@ class TestCaveNav(unittest.TestCase):
             ["T", "N"], cavenav.get_valid_equipment(1, 1)  # Narrow
         )
 
+    def test_get_fastest_routes(self):
+        cavenav = CaveNav(510, 2, 2)
+        self.assertEqual({}, cavenav.get_fastest_routes(0, 0))
+
+        # TODO: add more assertions once cavenav.update_fastest_routes
+        # implemented
+
 
 
 class TestSolution1(TestSolution):
