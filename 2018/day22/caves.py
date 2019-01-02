@@ -31,53 +31,46 @@ class Caves:
     def get_risk(self, x, y):
         return self.cave_risks[self.get_type(x, y)]
 
+    def set_geology(self, x, y):
+        if (x, y) in [(0, 0), self.target]:
+            self.geology[y][x] = 0
+        elif y == 0:
+            self.geology[y][x] = x * 16_807
+        elif x == 0:
+            self.geology[y][x] = y * 48_271
+        else:
+            self.geology[y][x] = self.get_erosion(
+                x, y - 1) * self.get_erosion(x - 1, y)
+
+    def set_erosion(self, x, y):
+        self.erosion[y][x] = (self.get_geology(x, y) + self.depth) % 20_183
+
+    def set_cave_type(self, x, y):
+        cave_types = ".=|"
+
+        if x == y == 0:
+            cave_type = "M"  # mouth
+        elif (x, y) == self.target:
+            cave_type = "T"  # target
+        else:
+            cave_type = cave_types[self.get_erosion(x, y) % 3]
+
+        self.caves[y][x] = cave_type
+
     def create_caverns(self, width, height):
-        def set_geology(x, y):
-            if (x, y) in [(0, 0), self.target]:
-                self.geology[-1].append(0)
-            elif y == 0:
-                self.geology[-1].append(x * 16_807)
-            elif x == 0:
-                self.geology[-1].append(y * 48_271)
-            else:
-                self.geology[-1].append(
-                    self.get_erosion(x, y - 1) * self.get_erosion(x - 1, y)
-                )
-
-        def set_erosion(x, y):
-            self.erosion[-1].append(
-                (self.get_geology(x, y) + self.depth) % 20_183
-            )
-
-        def set_cave_type(x, y):
-            cave_types = ".=|"
-
-            if x == y == 0:
-                cave_type = "M"  # mouth
-            elif (x, y) == self.target:
-                cave_type = "T"  # target
-            else:
-                cave_type = cave_types[self.get_erosion(x, y) % 3]
-
-            self.caves[-1].append(cave_type)
-
-        self.geology = []
-        self.erosion = []
-        self.caves = []
+        self.geology = defaultdict(lambda: defaultdict(lambda: None))
+        self.erosion = defaultdict(lambda: defaultdict(lambda: None))
+        self.caves = defaultdict(lambda: defaultdict(lambda: None))
 
         for y in range(height):
-            self.geology.append([])
-            self.erosion.append([])
-            self.caves.append([])
-
             for x in range(width):
-                set_geology(x, y)
-                set_erosion(x, y)
-                set_cave_type(x, y)
+                self.set_geology(x, y)
+                self.set_erosion(x, y)
+                self.set_cave_type(x, y)
 
     def __str__(self):
         return "\n".join(
-            "".join(row) for row in self.caves
+            "".join(row.values()) for row in self.caves.values()
         )
 
 
