@@ -6,6 +6,7 @@ import unittest
 
 from shared.utils import get_input
 from . import solution1, solution2
+from .nanobots import Nanobot
 
 
 SOLUTION_DIR = Path(__file__).parent
@@ -27,6 +28,47 @@ class TestSolution(unittest.TestCase):
             )
         self.input_path = SOLUTION_DIR.joinpath(self.input_filename)
         self.input_text = get_input(self.input_path)
+
+
+class TestNanobot(unittest.TestCase):
+    def test_constructor(self):
+        bot = Nanobot(0, 1, 2, 3)
+        self.assertEqual(0, bot.x)
+        self.assertEqual(1, bot.y)
+        self.assertEqual(2, bot.z)
+        self.assertEqual(3, bot.r)
+
+    def test_range_property(self):
+        bot = Nanobot(0, 1, 2, 3)
+        self.assertEqual(3, bot.range)
+
+    def test_pos_property(self):
+        bot = Nanobot(0, 1, 2, 3)
+        self.assertEqual((0, 1, 2), bot.pos)
+
+    def test_in_range(self):
+        bot1 = Nanobot(0, 1, 2, 3)
+        bot2 = Nanobot(1, 2, 3, 4)
+        bot3 = Nanobot(0, 0, 0, 0)
+        bot4 = Nanobot(0, 1, 2, 0)
+
+        self.assertTrue(bot1.in_range(bot2))
+        self.assertTrue(bot1.in_range(bot3))
+        self.assertTrue(bot1.in_range(bot4))
+
+        self.assertTrue(bot2.in_range(bot1))
+        self.assertTrue(bot2.in_range(bot4))
+
+        self.assertTrue(bot4.in_range(bot1))
+
+        self.assertFalse(bot2.in_range(bot3))
+
+        self.assertFalse(bot3.in_range(bot1))
+        self.assertFalse(bot3.in_range(bot2))
+        self.assertFalse(bot3.in_range(bot4))
+
+        self.assertFalse(bot4.in_range(bot2))
+        self.assertFalse(bot4.in_range(bot3))
 
 
 class TestSolution1(TestSolution):
