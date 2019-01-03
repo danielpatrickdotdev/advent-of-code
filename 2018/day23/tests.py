@@ -50,25 +50,17 @@ class TestNanobot(unittest.TestCase):
         bot1 = Nanobot(0, 1, 2, 3)
         bot2 = Nanobot(1, 2, 3, 4)
         bot3 = Nanobot(0, 0, 0, 0)
-        bot4 = Nanobot(0, 1, 2, 0)
 
-        self.assertTrue(bot1.in_range(bot2))
-        self.assertTrue(bot1.in_range(bot3))
-        self.assertTrue(bot1.in_range(bot4))
+        self.assertTrue(bot1.in_range(0, 1, 2))
+        self.assertTrue(bot1.in_range(1, 2, 3))
+        self.assertTrue(bot1.in_range(0, 0, 0))
+        self.assertFalse(bot1.in_range(0, 0, -1))
 
-        self.assertTrue(bot2.in_range(bot1))
-        self.assertTrue(bot2.in_range(bot4))
+        self.assertTrue(bot2.in_range(1, 0, 1))
+        self.assertFalse(bot2.in_range(0, 0, 1))
 
-        self.assertTrue(bot4.in_range(bot1))
-
-        self.assertFalse(bot2.in_range(bot3))
-
-        self.assertFalse(bot3.in_range(bot1))
-        self.assertFalse(bot3.in_range(bot2))
-        self.assertFalse(bot3.in_range(bot4))
-
-        self.assertFalse(bot4.in_range(bot2))
-        self.assertFalse(bot4.in_range(bot3))
+        self.assertTrue(bot3.in_range(0, 0, 0))
+        self.assertFalse(bot3.in_range(-1, 0, 0))
 
     def test_parser(self):
         bot = parse_nanobot("pos=<0,0,0>, r=0")

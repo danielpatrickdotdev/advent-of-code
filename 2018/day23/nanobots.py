@@ -28,8 +28,8 @@ class Nanobot:
     def range(self):
         return self.r
 
-    def in_range(self, other):
+    def in_range(self, x, y, z):
         manhattan_distance = sum(
-            abs(n1 - n2) for (n1, n2) in zip(self.pos, other.pos)
+            abs(n1 - n2) for (n1, n2) in zip(self.pos, (x, y, z))
         )
         return self.range >= manhattan_distance

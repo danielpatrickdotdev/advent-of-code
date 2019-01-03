@@ -10,7 +10,7 @@ from .nanobots import parse_nanobot
 def solve(input_text):
     bots = [parse_nanobot(line) for line in input_text]
     largest = max(bots, key=attrgetter("range"))
-    return sum(largest.in_range(bot) for bot in bots)
+    return sum(largest.in_range(*bot.pos) for bot in bots)
 
 
 if __name__ == '__main__':
