@@ -6,7 +6,7 @@ import unittest
 
 from shared.utils import get_input
 from . import solution1, solution2
-from .nanobots import Nanobot
+from .nanobots import Nanobot, parse_nanobot
 
 
 SOLUTION_DIR = Path(__file__).parent
@@ -69,6 +69,19 @@ class TestNanobot(unittest.TestCase):
 
         self.assertFalse(bot4.in_range(bot2))
         self.assertFalse(bot4.in_range(bot3))
+
+    def test_parser(self):
+        bot = parse_nanobot("pos=<0,0,0>, r=0")
+        self.assertEqual((0, 0, 0), bot.pos)
+        self.assertEqual(0, bot.range)
+
+        bot = parse_nanobot("pos=<11,22,33>, r=10")
+        self.assertEqual((11, 22, 33), bot.pos)
+        self.assertEqual(10, bot.range)
+
+        bot = parse_nanobot("pos=<-13,-22,-31>, r=100")
+        self.assertEqual((-13, -22, -31), bot.pos)
+        self.assertEqual(100, bot.range)
 
 
 class TestSolution1(TestSolution):
