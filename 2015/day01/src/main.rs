@@ -17,7 +17,7 @@ mod tests {
             (-3, ")())())"),
         ];
         for (expected, input) in to_test.iter() {
-            assert_eq!(expected, &super::solve_part1(&input.to_string()));
+            assert_eq!(expected, &super::solve_part1(&input));
         }
     }
 
@@ -32,15 +32,15 @@ mod tests {
 
         for (expected, input) in to_test.iter() {
             assert_eq!(
-                expected, &super::solve_part2(&input.to_string()).unwrap()
+                expected, &super::solve_part2(&input).unwrap()
             );
         }
 
-        assert!(&super::solve_part2(&String::from("")).is_none());
+        assert!(&super::solve_part2("").is_none());
     }
 }
 
-fn solve_part1(puzzle_input: &String) -> i32 {
+fn solve_part1(puzzle_input: &str) -> i32 {
     let mut floor = 0;
 
     for c in puzzle_input.chars() {
@@ -54,7 +54,7 @@ fn solve_part1(puzzle_input: &String) -> i32 {
     floor
 }
 
-fn solve_part2(puzzle_input: &String) -> Option<i32> {
+fn solve_part2(puzzle_input: &str) -> Option<i32> {
     let mut floor = 0;
 
     for (i, c) in puzzle_input.chars().enumerate()  {
