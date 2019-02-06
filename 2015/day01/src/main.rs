@@ -43,7 +43,7 @@ fn main() {
 mod tests {
     #[test]
     fn test_part1() {
-        let to_test: [(i32, &str); 10] = [
+        let to_test = [
             (0, ""),
             (0, "(())"),
             (0, "()()"),
@@ -62,7 +62,7 @@ mod tests {
 
     #[test]
     fn test_part2() {
-        let to_test: [(i32, &str); 4] = [
+        let to_test = [
             (1, ")"),
             (1, "))"),
             (3, "())"),
