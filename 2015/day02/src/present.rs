@@ -70,12 +70,11 @@ mod tests {
     #[test]
     fn test_surface_area() {
         let to_test = [
-            (2, 3, 4, 52),
-            (1, 1, 10, 42),
+            (Present { l: 2, w: 3, h: 4 }, 52),
+            (Present { l: 1, w: 1, h: 10 }, 42),
         ];
 
-        for (l, w, h, area) in to_test.iter() {
-            let p = Present {l: *l, w: *w, h: *h};
+        for (p, area) in to_test.iter() {
             assert_eq!(*area, p.surface_area());
         }
     }
@@ -83,13 +82,12 @@ mod tests {
     #[test]
     fn test_smallest_side_area() {
         let to_test = [
-            (2, 3, 4, 6),
-            (1, 1, 10, 1),
-            (10, 1, 1, 1),
+            (Present { l: 2, w: 3, h: 4 }, 6),
+            (Present { l: 1, w: 1, h: 10 }, 1),
+            (Present { l: 10, w: 1, h: 1 }, 1),
         ];
 
-        for (l, w, h, area) in to_test.iter() {
-            let p = Present {l: *l, w: *w, h: *h};
+        for (p, area) in to_test.iter() {
             assert_eq!(*area, p.smallest_side_area());
         }
     }
@@ -97,13 +95,12 @@ mod tests {
     #[test]
     fn test_wrapping_paper_required() {
         let to_test = [
-            (2, 3, 4, 58),
-            (1, 1, 10, 43),
-            (10, 1, 1, 43),
+            (Present { l: 2, w: 3, h: 4 }, 58),
+            (Present { l: 1, w: 1, h: 10 }, 43),
+            (Present { l: 10, w: 1, h: 1 }, 43),
         ];
 
-        for (l, w, h, area) in to_test.iter() {
-            let p = Present {l: *l, w: *w, h: *h};
+        for (p, area) in to_test.iter() {
             assert_eq!(*area, p.wrapping_paper_required());
         }
     }
@@ -111,13 +108,12 @@ mod tests {
     #[test]
     fn test_ribbon_required() {
         let to_test = [
-            (2, 3, 4, 34),
-            (1, 1, 10, 14),
-            (10, 1, 1, 14),
+            (Present { l: 2, w: 3, h: 4 }, 34),
+            (Present { l: 1, w: 1, h: 10 }, 14),
+            (Present { l: 10, w: 1, h: 1 }, 14),
         ];
 
-        for (l, w, h, length) in to_test.iter() {
-            let p = Present {l: *l, w: *w, h: *h};
+        for (p, length) in to_test.iter() {
             assert_eq!(*length, p.ribbon_required());
         }
     }
