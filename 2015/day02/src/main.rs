@@ -3,20 +3,23 @@ mod present;
 use self::present::Present;
 
 fn solve_part1(puzzle_input: &str) -> i32 {
-    puzzle_input.lines()
+    puzzle_input
+        .lines()
         .map(|line| Present::new(line))
         .map(|present| present.wrapping_paper_required())
         .sum()
 }
 
 fn solve_part2(puzzle_input: &str) -> i32 {
-    puzzle_input.lines()
+    puzzle_input
+        .lines()
         .map(|line| Present::new(line))
         .map(|present| present.ribbon_required())
         .sum()
 }
 
 fn main() {
+    #[rustfmt::skip]
     let puzzle_input = fs::read_to_string("input/input.txt")
         .expect("problem reading file");
 

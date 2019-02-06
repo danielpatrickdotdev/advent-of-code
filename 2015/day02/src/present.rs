@@ -54,7 +54,7 @@ mod tests {
 
     #[test]
     fn test_constructor() {
-        let to_test: [(&str, i32, i32, i32); 2] = [
+        let to_test = [
             ("1x1x1", 1, 1, 1),
             ("11x22x33", 11, 22, 33),
         ];
