@@ -14,7 +14,7 @@ impl Present {
         let w = Present::parse_dim(&mut iter, "width");
         let h = Present::parse_dim(&mut iter, "height");
 
-        Present {l, w, h}
+        Present { l, w, h }
     }
 
     pub fn wrapping_paper_required(&self) -> i32 {
@@ -33,8 +33,10 @@ impl Present {
     // Private helper functions & methods
 
     fn parse_dim(iter: &mut Split<&str>, dim: &str) -> i32 {
-        iter.next().expect(&format!("No {} provided", dim))
-            .parse().expect(&format!("Invalid {} provided", dim))
+        iter.next()
+            .expect(&format!("No {} provided", dim))
+            .parse()
+            .expect(&format!("Invalid {} provided", dim))
     }
 
     fn surface_area(&self) -> i32 {
@@ -54,6 +56,7 @@ mod tests {
 
     #[test]
     fn test_constructor() {
+        #[rustfmt::skip]
         let to_test = [
             ("1x1x1", 1, 1, 1),
             ("11x22x33", 11, 22, 33),
