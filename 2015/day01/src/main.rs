@@ -14,14 +14,14 @@ fn solve_part1(puzzle_input: &str) -> i32 {
 fn solve_part2(puzzle_input: &str) -> Option<i32> {
     let mut floor = 0;
 
-    for (i, c) in puzzle_input.chars().enumerate()  {
+    for (i, c) in puzzle_input.chars().enumerate() {
         if c == '(' {
             floor += 1;
         } else if c == ')' {
             floor -= 1;
         }
         if floor < 0 {
-            return Some(i as i32 + 1)
+            return Some(i as i32 + 1);
         }
     }
 
@@ -29,6 +29,7 @@ fn solve_part2(puzzle_input: &str) -> Option<i32> {
 }
 
 fn main() {
+    #[rustfmt::skip]
     let puzzle_input = fs::read_to_string("input/input.txt")
         .expect("problem reading file");
 
@@ -62,6 +63,7 @@ mod tests {
 
     #[test]
     fn test_part2() {
+        #[rustfmt::skip]
         let to_test = [
             (1, ")"),
             (1, "))"),
@@ -70,9 +72,7 @@ mod tests {
         ];
 
         for (expected, input) in to_test.iter() {
-            assert_eq!(
-                expected, &super::solve_part2(&input).unwrap()
-            );
+            assert_eq!(expected, &super::solve_part2(&input).unwrap());
         }
 
         assert!(&super::solve_part2("").is_none());
