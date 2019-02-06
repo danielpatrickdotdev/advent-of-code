@@ -1,45 +1,5 @@
 use std::fs;
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_part1() {
-        let to_test: [(i32, &str); 10] = [
-            (0, ""),
-            (0, "(())"),
-            (0, "()()"),
-            (3, "((("),
-            (3, "(()(()("),
-            (3, "))((((("),
-            (-1, "())"),
-            (-1, "))("),
-            (-3, ")))"),
-            (-3, ")())())"),
-        ];
-        for (expected, input) in to_test.iter() {
-            assert_eq!(expected, &super::solve_part1(&input));
-        }
-    }
-
-    #[test]
-    fn test_part2() {
-        let to_test: [(i32, &str); 4] = [
-            (1, ")"),
-            (1, "))"),
-            (3, "())"),
-            (5, "()())"),
-        ];
-
-        for (expected, input) in to_test.iter() {
-            assert_eq!(
-                expected, &super::solve_part2(&input).unwrap()
-            );
-        }
-
-        assert!(&super::solve_part2("").is_none());
-    }
-}
-
 fn solve_part1(puzzle_input: &str) -> i32 {
     let mut floor = 0;
 
@@ -80,4 +40,44 @@ fn main() {
 
     let result2 = solve_part2(&puzzle_input);
     println!("Part2: {}", result2.unwrap());
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_part1() {
+        let to_test: [(i32, &str); 10] = [
+            (0, ""),
+            (0, "(())"),
+            (0, "()()"),
+            (3, "((("),
+            (3, "(()(()("),
+            (3, "))((((("),
+            (-1, "())"),
+            (-1, "))("),
+            (-3, ")))"),
+            (-3, ")())())"),
+        ];
+        for (expected, input) in to_test.iter() {
+            assert_eq!(expected, &super::solve_part1(&input));
+        }
+    }
+
+    #[test]
+    fn test_part2() {
+        let to_test: [(i32, &str); 4] = [
+            (1, ")"),
+            (1, "))"),
+            (3, "())"),
+            (5, "()())"),
+        ];
+
+        for (expected, input) in to_test.iter() {
+            assert_eq!(
+                expected, &super::solve_part2(&input).unwrap()
+            );
+        }
+
+        assert!(&super::solve_part2("").is_none());
+    }
 }
