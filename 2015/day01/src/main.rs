@@ -1,17 +1,14 @@
 use std::fs;
 
 fn solve_part1(puzzle_input: &str) -> i32 {
-    let mut floor = 0;
-
-    for c in puzzle_input.chars() {
-        if c == '(' {
-            floor += 1;
-        } else if c == ')' {
-            floor -= 1;
-        }
-    }
-
-    floor
+    puzzle_input
+        .chars()
+        .map(|c| match c {
+            '(' => 1,
+            ')' => -1,
+            _ => 0,
+        })
+        .sum()
 }
 
 fn solve_part2(puzzle_input: &str) -> Option<i32> {
